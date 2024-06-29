@@ -1702,6 +1702,15 @@ table(page_blocks0_2_train_SLSMOTE$Class)
 Balanceig:
 
 ```{r, eval=FALSE}
+abalone9_18_train_DBSMOTE <- DBSMOTE(abalone9_18_train, 1, 4)
+table(abalone9_18_train$Class)
+table(abalone9_18_train_DBSMOTE$Class)
+
+# write.csv(abalone9_18_train_DBSMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv", row.names = FALSE)
+```
+
+
+```{r, eval=FALSE}
 abalone9_18_train_DBSMOTE <- smotefamily::DBSMOTE(abalone9_18_train[,-c(1,ncol(abalone9_18_train))], abalone9_18_train[,ncol(abalone9_18_train)])
 
 abalone9_18_train_DBSMOTE <- abalone9_18_train_DBSMOTE$data %>% rename(Class=class)%>% 
@@ -1735,6 +1744,15 @@ table(page_blocks_1_3_4_train_DBSMOTE$Class)
 ```
 
 ```{r, eval=FALSE}
+page_blocks_1_3_4_train_DBSMOTE <- DBSMOTE(page_blocks_1_3_4_train, 1, 4)
+table(page_blocks_1_3_4_train$Class)
+table(page_blocks_1_3_4_train_DBSMOTE$Class)
+
+# write.csv(page_blocks_1_3_4_train_DBSMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv", row.names = FALSE)
+```
+
+
+```{r, eval=FALSE}
 page_blocks_1_3_4_train_DBSMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv", show_col_types = FALSE)
 table(page_blocks_1_3_4_train_DBSMOTE$Class)
 ```
@@ -1747,8 +1765,9 @@ Balanceig:
 # Balanceig amb DBSMOTE
 glass_0_1_6_vs_2_train_DBSMOTE <- DBSMOTE(glass_0_1_6_vs_2_train, 1, 4)
 table(glass_0_1_6_vs_2_train_DBSMOTE$Class)
-# write.csv(glass_0_1_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)
 table(glass_0_1_6_vs_2_train$Class)
+
+# write.csv(glass_0_1_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
 #### glass_0_1_4_6_vs_2
@@ -1759,6 +1778,14 @@ glass_0_1_4_6_vs_2_train_DBSMOTE <- smotefamily::DBSMOTE(glass_0_1_4_6_vs_2_trai
 glass_0_1_4_6_vs_2_train_DBSMOTE <- glass_0_1_4_6_vs_2_train_DBSMOTE$data %>% rename(Class=class)%>% 
   mutate(idx = c(1:nrow(glass_0_1_4_6_vs_2_train_DBSMOTE$data))) %>% relocate(idx)
 
+table(glass_0_1_4_6_vs_2_train$Class)
+table(glass_0_1_4_6_vs_2_train_DBSMOTE$Class)
+
+# write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)
+```
+
+```{r, eval=FALSE}
+glass_0_1_4_6_vs_2_train_DBSMOTE <- DBSMOTE(glass_0_1_4_6_vs_2_train, 1, 4)
 table(glass_0_1_4_6_vs_2_train$Class)
 table(glass_0_1_4_6_vs_2_train_DBSMOTE$Class)
 
@@ -1782,6 +1809,14 @@ table(abalone19_peque_train$Class)
 table(abalone19_peque_train_DBSMOTE$Class)
 
 # write.csv(abalone19_peque_train_DBSMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_DBSMOTE.csv", row.names = FALSE)
+```
+
+```{r, eval=FALSE}
+abalone19_peque_train_DBSMOTE <- DBSMOTE(abalone19_peque_train, 1, 4)
+table(abalone19_peque_train$Class)
+table(abalone19_peque_train_DBSMOTE$Class)
+
+# write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/abalone19_peque_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
 ```{r, eval=FALSE}

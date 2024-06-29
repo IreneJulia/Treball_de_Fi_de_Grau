@@ -2007,99 +2007,128 @@ negative positive
 <h4 class="anchored" data-anchor-id="abalone9_18-6">abalone9_18</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_DBSMOTE <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(abalone9_18_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone9_18_train))], abalone9_18_train[,<span class="fu">ncol</span>(abalone9_18_train)])</span>
-<span id="cb156-2"><a href="#cb156-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb156-3"><a href="#cb156-3" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_DBSMOTE <span class="ot">&lt;-</span> abalone9_18_train_DBSMOTE<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
-<span id="cb156-4"><a href="#cb156-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(abalone9_18_train_DBSMOTE<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
-<span id="cb156-5"><a href="#cb156-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb156-6"><a href="#cb156-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span>
-<span id="cb156-7"><a href="#cb156-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_DBSMOTE<span class="sc">$</span>Class)</span>
-<span id="cb156-8"><a href="#cb156-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb156-9"><a href="#cb156-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone9_18_train_DBSMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(abalone9_18_train, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb156-2"><a href="#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span>
+<span id="cb156-3"><a href="#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb156-4"><a href="#cb156-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-5"><a href="#cb156-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone9_18_train_DBSMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_DBSMOTE <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(abalone9_18_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone9_18_train))], abalone9_18_train[,<span class="fu">ncol</span>(abalone9_18_train)])</span>
+<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-3"><a href="#cb157-3" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_DBSMOTE <span class="ot">&lt;-</span> abalone9_18_train_DBSMOTE<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
+<span id="cb157-4"><a href="#cb157-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(abalone9_18_train_DBSMOTE<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
+<span id="cb157-5"><a href="#cb157-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-6"><a href="#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span>
+<span id="cb157-7"><a href="#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb157-8"><a href="#cb157-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-9"><a href="#cb157-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone9_18_train_DBSMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="page_blocks_1_3_4-6" class="level4">
 <h4 class="anchored" data-anchor-id="page_blocks_1_3_4-6">page_blocks_1_3_4</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_DBSMOTE <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(page_blocks_1_3_4_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks_1_3_4_train))], page_blocks_1_3_4_train[,<span class="fu">ncol</span>(page_blocks_1_3_4_train)])</span>
-<span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-3"><a href="#cb158-3" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_DBSMOTE <span class="ot">&lt;-</span> page_blocks_1_3_4_train_DBSMOTE<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
-<span id="cb158-4"><a href="#cb158-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(page_blocks_1_3_4_train_DBSMOTE<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
-<span id="cb158-5"><a href="#cb158-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-6"><a href="#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span>
-<span id="cb158-7"><a href="#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_DBSMOTE<span class="sc">$</span>Class)</span>
-<span id="cb158-8"><a href="#cb158-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-9"><a href="#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks_1_3_4_train_DBSMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_DBSMOTE <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(page_blocks_1_3_4_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks_1_3_4_train))], page_blocks_1_3_4_train[,<span class="fu">ncol</span>(page_blocks_1_3_4_train)])</span>
+<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-3"><a href="#cb159-3" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_DBSMOTE <span class="ot">&lt;-</span> page_blocks_1_3_4_train_DBSMOTE<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
+<span id="cb159-4"><a href="#cb159-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(page_blocks_1_3_4_train_DBSMOTE<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
+<span id="cb159-5"><a href="#cb159-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-6"><a href="#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span>
+<span id="cb159-7"><a href="#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb159-8"><a href="#cb159-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-9"><a href="#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks_1_3_4_train_DBSMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(page_blocks_1_3_4_train, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span>
+<span id="cb160-3"><a href="#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb160-4"><a href="#cb160-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-5"><a href="#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks_1_3_4_train_DBSMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass_0_1_6_vs_2-6" class="level4">
 <h4 class="anchored" data-anchor-id="glass_0_1_6_vs_2-6">glass_0_1_6_vs_2</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
-<span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(glass_0_1_6_vs_2_train, <span class="dv">1</span>, <span class="dv">4</span>)</span>
-<span id="cb160-3"><a href="#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_DBSMOTE<span class="sc">$</span>Class)</span>
-<span id="cb160-4"><a href="#cb160-4" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)</span></span>
-<span id="cb160-5"><a href="#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
+<span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(glass_0_1_6_vs_2_train, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb162-3"><a href="#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb162-4"><a href="#cb162-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span>
+<span id="cb162-5"><a href="#cb162-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-6"><a href="#cb162-6" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass_0_1_4_6_vs_2-6" class="level4">
 <h4 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-6">glass_0_1_4_6_vs_2</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_DBSMOTE <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(glass_0_1_4_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train))], glass_0_1_4_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train)])</span>
-<span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb161-3"><a href="#cb161-3" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_DBSMOTE <span class="ot">&lt;-</span> glass_0_1_4_6_vs_2_train_DBSMOTE<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
-<span id="cb161-4"><a href="#cb161-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(glass_0_1_4_6_vs_2_train_DBSMOTE<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
-<span id="cb161-5"><a href="#cb161-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb161-6"><a href="#cb161-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span>
-<span id="cb161-7"><a href="#cb161-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_DBSMOTE<span class="sc">$</span>Class)</span>
-<span id="cb161-8"><a href="#cb161-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb161-9"><a href="#cb161-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_DBSMOTE <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(glass_0_1_4_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train))], glass_0_1_4_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train)])</span>
+<span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-3"><a href="#cb163-3" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_DBSMOTE <span class="ot">&lt;-</span> glass_0_1_4_6_vs_2_train_DBSMOTE<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
+<span id="cb163-4"><a href="#cb163-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(glass_0_1_4_6_vs_2_train_DBSMOTE<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
+<span id="cb163-5"><a href="#cb163-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-6"><a href="#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span>
+<span id="cb163-7"><a href="#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb163-8"><a href="#cb163-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-9"><a href="#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(glass_0_1_4_6_vs_2_train, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb164-2"><a href="#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span>
+<span id="cb164-3"><a href="#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb164-4"><a href="#cb164-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb164-5"><a href="#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="abalone19_peque-6" class="level4">
 <h4 class="anchored" data-anchor-id="abalone19_peque-6">abalone19_peque</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_DBSMOTE <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(abalone19_peque_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone19_peque_train))], abalone19_peque_train[,<span class="fu">ncol</span>(abalone19_peque_train)])</span>
-<span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-3"><a href="#cb163-3" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_DBSMOTE <span class="ot">&lt;-</span> abalone19_peque_train_DBSMOTE<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
-<span id="cb163-4"><a href="#cb163-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(abalone19_peque_train_DBSMOTE<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
-<span id="cb163-5"><a href="#cb163-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-6"><a href="#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span>
-<span id="cb163-7"><a href="#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_DBSMOTE<span class="sc">$</span>Class)</span>
-<span id="cb163-8"><a href="#cb163-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-9"><a href="#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone19_peque_train_DBSMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_DBSMOTE <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(abalone19_peque_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone19_peque_train))], abalone19_peque_train[,<span class="fu">ncol</span>(abalone19_peque_train)])</span>
+<span id="cb166-2"><a href="#cb166-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-3"><a href="#cb166-3" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_DBSMOTE <span class="ot">&lt;-</span> abalone19_peque_train_DBSMOTE<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
+<span id="cb166-4"><a href="#cb166-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(abalone19_peque_train_DBSMOTE<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
+<span id="cb166-5"><a href="#cb166-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-6"><a href="#cb166-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span>
+<span id="cb166-7"><a href="#cb166-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb166-8"><a href="#cb166-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-9"><a href="#cb166-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone19_peque_train_DBSMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19_peque/abalone19_peque_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb164-2"><a href="#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(abalone19_peque_train, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb167-2"><a href="#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span>
+<span id="cb167-3"><a href="#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb167-4"><a href="#cb167-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-5"><a href="#cb167-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/abalone19_peque_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19_peque/abalone19_peque_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb168-2"><a href="#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass2-6" class="level4">
 <h4 class="anchored" data-anchor-id="glass2-6">glass2</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
-<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a>glass2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(glass2_train, <span class="dv">1</span>,<span class="dv">5</span>)</span>
-<span id="cb165-3"><a href="#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_DBSMOTE<span class="sc">$</span>Class)</span>
-<span id="cb165-4"><a href="#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass2_train_DBSMOTE, file = "Taules_de_dades/glass2/glass2_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
+<span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a>glass2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(glass2_train, <span class="dv">1</span>,<span class="dv">5</span>)</span>
+<span id="cb169-3"><a href="#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb169-4"><a href="#cb169-4" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass2_train_DBSMOTE, file = "Taules_de_dades/glass2/glass2_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a>glass2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb166-2"><a href="#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a>glass2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb170-2"><a href="#cb170-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 negative positive 
@@ -2111,14 +2140,14 @@ negative positive
 <h4 class="anchored" data-anchor-id="page-blocks0-6">page-blocks0</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
-<span id="cb168-2"><a href="#cb168-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(page_blocks0_train, <span class="dv">50</span>, <span class="dv">9</span>)</span>
-<span id="cb168-3"><a href="#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_DBSMOTE<span class="sc">$</span>Class)</span>
-<span id="cb168-4"><a href="#cb168-4" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_train_DBSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
+<span id="cb172-2"><a href="#cb172-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(page_blocks0_train, <span class="dv">50</span>, <span class="dv">9</span>)</span>
+<span id="cb172-3"><a href="#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb172-4"><a href="#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_train_DBSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb173-2"><a href="#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 negative positive 
@@ -2126,25 +2155,25 @@ negative positive
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a>exemple_DBSMOTE2 <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(page_blocks0_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_train))], page_blocks0_train[,<span class="fu">ncol</span>(page_blocks0_train)]); exemple_DBSMOTE2</span>
-<span id="cb171-2"><a href="#cb171-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb171-3"><a href="#cb171-3" aria-hidden="true" tabindex="-1"></a>exemple_balancejat2 <span class="ot">&lt;-</span> exemple_DBSMOTE2<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
-<span id="cb171-4"><a href="#cb171-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(exemple_DBSMOTE2<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
-<span id="cb171-5"><a href="#cb171-5" aria-hidden="true" tabindex="-1"></a>train_DBSMOTE <span class="ot">&lt;-</span> exemple_balancejat2[,<span class="sc">-</span>(<span class="fu">ncol</span>(exemple_balancejat2)<span class="sc">-</span><span class="dv">1</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a>exemple_DBSMOTE2 <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">DBSMOTE</span>(page_blocks0_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_train))], page_blocks0_train[,<span class="fu">ncol</span>(page_blocks0_train)]); exemple_DBSMOTE2</span>
+<span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb175-3"><a href="#cb175-3" aria-hidden="true" tabindex="-1"></a>exemple_balancejat2 <span class="ot">&lt;-</span> exemple_DBSMOTE2<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Class=</span>class)<span class="sc">%&gt;%</span> </span>
+<span id="cb175-4"><a href="#cb175-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(exemple_DBSMOTE2<span class="sc">$</span>data))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
+<span id="cb175-5"><a href="#cb175-5" aria-hidden="true" tabindex="-1"></a>train_DBSMOTE <span class="ot">&lt;-</span> exemple_balancejat2[,<span class="sc">-</span>(<span class="fu">ncol</span>(exemple_balancejat2)<span class="sc">-</span><span class="dv">1</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="page_blocks0_1-5" class="level5">
 <h5 class="anchored" data-anchor-id="page_blocks0_1-5">page_blocks0_1</h5>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
-<span id="cb172-2"><a href="#cb172-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(page_blocks0_1_train, <span class="dv">50</span>, <span class="dv">9</span>)</span>
-<span id="cb172-3"><a href="#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_DBSMOTE<span class="sc">$</span>Class)</span>
-<span id="cb172-4"><a href="#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_1_train_DBSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_DBSMOTE.csv", row.names = FALSE)</span></span>
-<span id="cb172-5"><a href="#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
+<span id="cb176-2"><a href="#cb176-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(page_blocks0_1_train, <span class="dv">50</span>, <span class="dv">9</span>)</span>
+<span id="cb176-3"><a href="#cb176-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb176-4"><a href="#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_1_train_DBSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_DBSMOTE.csv", row.names = FALSE)</span></span>
+<span id="cb176-5"><a href="#cb176-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb173-2"><a href="#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 negative positive 
@@ -2156,14 +2185,14 @@ negative positive
 <h5 class="anchored" data-anchor-id="page_blocks0_2-5">page_blocks0_2</h5>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
-<span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(page_blocks0_2_train, <span class="dv">50</span>, <span class="dv">9</span>)</span>
-<span id="cb175-3"><a href="#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_DBSMOTE<span class="sc">$</span>Class)</span>
-<span id="cb175-4"><a href="#cb175-4" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_DBSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb DBSMOTE</span></span>
+<span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">DBSMOTE</span>(page_blocks0_2_train, <span class="dv">50</span>, <span class="dv">9</span>)</span>
+<span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_DBSMOTE<span class="sc">$</span>Class)</span>
+<span id="cb179-4"><a href="#cb179-4" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_DBSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_DBSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb176-2"><a href="#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb180"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_DBSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2_train_DBSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb180-2"><a href="#cb180-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_DBSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 negative positive 
@@ -2178,93 +2207,93 @@ negative positive
 <section id="abalone9_18-7" class="level4">
 <h4 class="anchored" data-anchor-id="abalone9_18-7">abalone9_18</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
-<span id="cb178-2"><a href="#cb178-2" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(abalone9_18_train, <span class="dv">470</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb178-3"><a href="#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span>
-<span id="cb178-4"><a href="#cb178-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_MWMOTE<span class="sc">$</span>Class)</span>
-<span id="cb178-5"><a href="#cb178-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone9_18_train_MWMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
+<span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(abalone9_18_train, <span class="dv">470</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb182-3"><a href="#cb182-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span>
+<span id="cb182-4"><a href="#cb182-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_MWMOTE<span class="sc">$</span>Class)</span>
+<span id="cb182-5"><a href="#cb182-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone9_18_train_MWMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="page_blocks_1_3_4-7" class="level4">
 <h4 class="anchored" data-anchor-id="page_blocks_1_3_4-7">page_blocks_1_3_4</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
-<span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE3</span>(page_blocks_1_3_4_train, <span class="dv">200</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span>
-<span id="cb179-4"><a href="#cb179-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_MWMOTE<span class="sc">$</span>Class)</span>
-<span id="cb179-5"><a href="#cb179-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks_1_3_4_train_MWMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
+<span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE3</span>(page_blocks_1_3_4_train, <span class="dv">200</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb183-3"><a href="#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span>
+<span id="cb183-4"><a href="#cb183-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_MWMOTE<span class="sc">$</span>Class)</span>
+<span id="cb183-5"><a href="#cb183-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks_1_3_4_train_MWMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass_0_1_6_vs_2-7" class="level4">
 <h4 class="anchored" data-anchor-id="glass_0_1_6_vs_2-7">glass_0_1_6_vs_2</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb180"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
-<span id="cb180-2"><a href="#cb180-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(glass_0_1_6_vs_2_train, <span class="dv">110</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb180-3"><a href="#cb180-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span>
-<span id="cb180-4"><a href="#cb180-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_MWMOTE<span class="sc">$</span>Class)</span>
-<span id="cb180-5"><a href="#cb180-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_6_vs_2_train_MWMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
+<span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(glass_0_1_6_vs_2_train, <span class="dv">110</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb184-3"><a href="#cb184-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span>
+<span id="cb184-4"><a href="#cb184-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_MWMOTE<span class="sc">$</span>Class)</span>
+<span id="cb184-5"><a href="#cb184-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_6_vs_2_train_MWMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass_0_1_4_6_vs_2-7" class="level4">
 <h4 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-7">glass_0_1_4_6_vs_2</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
-<span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(glass_0_1_4_6_vs_2_train, <span class="dv">120</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb181-3"><a href="#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span>
-<span id="cb181-4"><a href="#cb181-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_MWMOTE<span class="sc">$</span>Class)</span>
-<span id="cb181-5"><a href="#cb181-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_4_6_vs_2_train_MWMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
+<span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(glass_0_1_4_6_vs_2_train, <span class="dv">120</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb185-3"><a href="#cb185-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span>
+<span id="cb185-4"><a href="#cb185-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_MWMOTE<span class="sc">$</span>Class)</span>
+<span id="cb185-5"><a href="#cb185-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_4_6_vs_2_train_MWMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="abalone19_peque-7" class="level4">
 <h4 class="anchored" data-anchor-id="abalone19_peque-7">abalone19_peque</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
-<span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(abalone19_peque_train, <span class="dv">200</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb182-3"><a href="#cb182-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span>
-<span id="cb182-4"><a href="#cb182-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_MWMOTE<span class="sc">$</span>Class)</span>
-<span id="cb182-5"><a href="#cb182-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone19_peque_train_MWMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
+<span id="cb186-2"><a href="#cb186-2" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(abalone19_peque_train, <span class="dv">200</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb186-3"><a href="#cb186-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span>
+<span id="cb186-4"><a href="#cb186-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_MWMOTE<span class="sc">$</span>Class)</span>
+<span id="cb186-5"><a href="#cb186-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone19_peque_train_MWMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass2-7" class="level4">
 <h4 class="anchored" data-anchor-id="glass2-7">glass2</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
-<span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a>glass2_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE3</span>(glass2_train, <span class="dv">110</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb183-3"><a href="#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train<span class="sc">$</span>Class)</span>
-<span id="cb183-4"><a href="#cb183-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_MWMOTE<span class="sc">$</span>Class)</span>
-<span id="cb183-5"><a href="#cb183-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass2_train_MWMOTE, file = "Taules_de_dades/glass2/glass2_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb187"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
+<span id="cb187-2"><a href="#cb187-2" aria-hidden="true" tabindex="-1"></a>glass2_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE3</span>(glass2_train, <span class="dv">110</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb187-3"><a href="#cb187-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train<span class="sc">$</span>Class)</span>
+<span id="cb187-4"><a href="#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_MWMOTE<span class="sc">$</span>Class)</span>
+<span id="cb187-5"><a href="#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass2_train_MWMOTE, file = "Taules_de_dades/glass2/glass2_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="page_blocks0" class="level4">
 <h4 class="anchored" data-anchor-id="page_blocks0">page_blocks0</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
-<span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(page_blocks0_train,<span class="dv">1500</span>,<span class="dv">60</span>,<span class="dv">100</span>,<span class="dv">200</span>,<span class="dv">23</span>,<span class="dv">22</span>,<span class="dv">24</span>)</span>
-<span id="cb184-3"><a href="#cb184-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train<span class="sc">$</span>Class)</span>
-<span id="cb184-4"><a href="#cb184-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_MWMOTE<span class="sc">$</span>Class)</span>
-<span id="cb184-5"><a href="#cb184-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb184-6"><a href="#cb184-6" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_train_MWMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
+<span id="cb188-2"><a href="#cb188-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE</span>(page_blocks0_train,<span class="dv">1500</span>,<span class="dv">60</span>,<span class="dv">100</span>,<span class="dv">200</span>,<span class="dv">23</span>,<span class="dv">22</span>,<span class="dv">24</span>)</span>
+<span id="cb188-3"><a href="#cb188-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train<span class="sc">$</span>Class)</span>
+<span id="cb188-4"><a href="#cb188-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_MWMOTE<span class="sc">$</span>Class)</span>
+<span id="cb188-5"><a href="#cb188-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-6"><a href="#cb188-6" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_train_MWMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="page_blocks0_1-6" class="level5">
 <h5 class="anchored" data-anchor-id="page_blocks0_1-6">page_blocks0_1</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
-<span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE3</span>(page_blocks0_1_train, <span class="dv">200</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb185-3"><a href="#cb185-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span>
-<span id="cb185-4"><a href="#cb185-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_MWMOTE<span class="sc">$</span>Class)</span>
-<span id="cb185-5"><a href="#cb185-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb185-6"><a href="#cb185-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_MWMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
+<span id="cb189-2"><a href="#cb189-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE3</span>(page_blocks0_1_train, <span class="dv">200</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb189-3"><a href="#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span>
+<span id="cb189-4"><a href="#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_MWMOTE<span class="sc">$</span>Class)</span>
+<span id="cb189-5"><a href="#cb189-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb189-6"><a href="#cb189-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_MWMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="page_blocks0_2-6" class="level5">
 <h5 class="anchored" data-anchor-id="page_blocks0_2-6">page_blocks0_2</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
-<span id="cb186-2"><a href="#cb186-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE3</span>(page_blocks0_2_train, <span class="dv">200</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb186-3"><a href="#cb186-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train<span class="sc">$</span>Class)</span>
-<span id="cb186-4"><a href="#cb186-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_MWMOTE<span class="sc">$</span>Class)</span>
-<span id="cb186-5"><a href="#cb186-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb186-6"><a href="#cb186-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_MWMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MWMOTE</span></span>
+<span id="cb190-2"><a href="#cb190-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_MWMOTE <span class="ot">&lt;-</span> <span class="fu">MWMOTE3</span>(page_blocks0_2_train, <span class="dv">200</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb190-3"><a href="#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train<span class="sc">$</span>Class)</span>
+<span id="cb190-4"><a href="#cb190-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_MWMOTE<span class="sc">$</span>Class)</span>
+<span id="cb190-5"><a href="#cb190-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-6"><a href="#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_MWMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_MWMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -2275,15 +2304,15 @@ negative positive
 <h4 class="anchored" data-anchor-id="abalone9_18-8">abalone9_18</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb187"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
-<span id="cb187-2"><a href="#cb187-2" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(abalone9_18_train, <span class="dv">3</span>,<span class="dv">10</span>)</span>
-<span id="cb187-3"><a href="#cb187-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_MDO<span class="sc">$</span>Class)</span>
-<span id="cb187-4"><a href="#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
-<span id="cb187-5"><a href="#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone9_18_train_MDO, file = "Taules_de_dades/abalone9_18/abalone9_18_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
+<span id="cb191-2"><a href="#cb191-2" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(abalone9_18_train, <span class="dv">3</span>,<span class="dv">10</span>)</span>
+<span id="cb191-3"><a href="#cb191-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_MDO<span class="sc">$</span>Class)</span>
+<span id="cb191-4"><a href="#cb191-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
+<span id="cb191-5"><a href="#cb191-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone9_18_train_MDO, file = "Taules_de_dades/abalone9_18/abalone9_18_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb188-2"><a href="#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb192-2"><a href="#cb192-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 negative positive 
@@ -2295,15 +2324,15 @@ negative positive
 <h4 class="anchored" data-anchor-id="page_blocks_1_3_4-8">page_blocks_1_3_4</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
-<span id="cb190-2"><a href="#cb190-2" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(page_blocks_1_3_4_train, <span class="dv">3</span>,<span class="dv">8</span>)</span>
-<span id="cb190-3"><a href="#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_MDO<span class="sc">$</span>Class)</span>
-<span id="cb190-4"><a href="#cb190-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
-<span id="cb190-5"><a href="#cb190-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks_1_3_4_train_MDO, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
+<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(page_blocks_1_3_4_train, <span class="dv">3</span>,<span class="dv">8</span>)</span>
+<span id="cb194-3"><a href="#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_MDO<span class="sc">$</span>Class)</span>
+<span id="cb194-4"><a href="#cb194-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
+<span id="cb194-5"><a href="#cb194-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks_1_3_4_train_MDO, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb191-2"><a href="#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb195-2"><a href="#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 negative positive 
@@ -2315,48 +2344,48 @@ negative positive
 <h4 class="anchored" data-anchor-id="glass_0_1_6_vs_2-8">glass_0_1_6_vs_2</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
-<span id="cb193-2"><a href="#cb193-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(glass_0_1_6_vs_2_train, <span class="dv">2</span>,<span class="dv">7</span>)</span>
-<span id="cb193-3"><a href="#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_MDO<span class="sc">$</span>Class)</span>
-<span id="cb193-4"><a href="#cb193-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
-<span id="cb193-5"><a href="#cb193-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_6_vs_2_train_MDO, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
+<span id="cb197-2"><a href="#cb197-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(glass_0_1_6_vs_2_train, <span class="dv">2</span>,<span class="dv">7</span>)</span>
+<span id="cb197-3"><a href="#cb197-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_MDO<span class="sc">$</span>Class)</span>
+<span id="cb197-4"><a href="#cb197-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
+<span id="cb197-5"><a href="#cb197-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_6_vs_2_train_MDO, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass_0_1_4_6_vs_2-8" class="level4">
 <h4 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-8">glass_0_1_4_6_vs_2</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
-<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(glass_0_1_4_6_vs_2_train, <span class="dv">2</span>,<span class="dv">7</span>)</span>
-<span id="cb194-3"><a href="#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_MDO<span class="sc">$</span>Class)</span>
-<span id="cb194-4"><a href="#cb194-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
-<span id="cb194-5"><a href="#cb194-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_4_6_vs_2_train_MDO, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
+<span id="cb198-2"><a href="#cb198-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(glass_0_1_4_6_vs_2_train, <span class="dv">2</span>,<span class="dv">7</span>)</span>
+<span id="cb198-3"><a href="#cb198-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_MDO<span class="sc">$</span>Class)</span>
+<span id="cb198-4"><a href="#cb198-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
+<span id="cb198-5"><a href="#cb198-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_4_6_vs_2_train_MDO, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="abalone19_peque-8" class="level4">
 <h4 class="anchored" data-anchor-id="abalone19_peque-8">abalone19_peque</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
-<span id="cb195-2"><a href="#cb195-2" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(abalone19_peque_train, <span class="dv">1</span>,<span class="dv">4</span>)</span>
-<span id="cb195-3"><a href="#cb195-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_MDO<span class="sc">$</span>Class)</span>
-<span id="cb195-4"><a href="#cb195-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
-<span id="cb195-5"><a href="#cb195-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone19_peque_train_MDO, file = "Taules_de_dades/abalone19/abalone19_peque_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
+<span id="cb199-2"><a href="#cb199-2" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(abalone19_peque_train, <span class="dv">1</span>,<span class="dv">4</span>)</span>
+<span id="cb199-3"><a href="#cb199-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_MDO<span class="sc">$</span>Class)</span>
+<span id="cb199-4"><a href="#cb199-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
+<span id="cb199-5"><a href="#cb199-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone19_peque_train_MDO, file = "Taules_de_dades/abalone19/abalone19_peque_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass2-8" class="level4">
 <h4 class="anchored" data-anchor-id="glass2-8">glass2</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
-<span id="cb196-2"><a href="#cb196-2" aria-hidden="true" tabindex="-1"></a>glass2_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(glass2_train,<span class="dv">1</span>,<span class="dv">13</span>)</span>
-<span id="cb196-3"><a href="#cb196-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_MDO<span class="sc">$</span>Class)</span>
-<span id="cb196-4"><a href="#cb196-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
-<span id="cb196-5"><a href="#cb196-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(glass2_train_MDO, <span class="at">file =</span> <span class="st">"Taules_de_dades/glass2/glass2_train_MDO.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
+<span id="cb200-2"><a href="#cb200-2" aria-hidden="true" tabindex="-1"></a>glass2_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(glass2_train,<span class="dv">1</span>,<span class="dv">13</span>)</span>
+<span id="cb200-3"><a href="#cb200-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_MDO<span class="sc">$</span>Class)</span>
+<span id="cb200-4"><a href="#cb200-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
+<span id="cb200-5"><a href="#cb200-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(glass2_train_MDO, <span class="at">file =</span> <span class="st">"Taules_de_dades/glass2/glass2_train_MDO.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1" aria-hidden="true" tabindex="-1"></a>glass2_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb197-2"><a href="#cb197-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb201"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a>glass2_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb201-2"><a href="#cb201-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 negative positive 
@@ -2368,15 +2397,15 @@ negative positive
 <h4 class="anchored" data-anchor-id="page-blocks0-7">page-blocks0</h4>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
-<span id="cb199-2"><a href="#cb199-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(page_blocks0_train, <span class="dv">3</span>,<span class="dv">5</span>)</span>
-<span id="cb199-3"><a href="#cb199-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_MDO<span class="sc">$</span>Class)</span>
-<span id="cb199-4"><a href="#cb199-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
-<span id="cb199-5"><a href="#cb199-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_train_MDO, file = "Taules_de_dades/page_blocks0/page_blocks0_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb203"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
+<span id="cb203-2"><a href="#cb203-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(page_blocks0_train, <span class="dv">3</span>,<span class="dv">5</span>)</span>
+<span id="cb203-3"><a href="#cb203-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_MDO<span class="sc">$</span>Class)</span>
+<span id="cb203-4"><a href="#cb203-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
+<span id="cb203-5"><a href="#cb203-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_train_MDO, file = "Taules_de_dades/page_blocks0/page_blocks0_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb200-2"><a href="#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb204-2"><a href="#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 negative positive 
@@ -2387,15 +2416,15 @@ negative positive
 <h5 class="anchored" data-anchor-id="page_blocks0_1-7">page_blocks0_1</h5>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
-<span id="cb202-2"><a href="#cb202-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(page_blocks0_1_train, <span class="dv">2</span>,<span class="dv">4</span>)</span>
-<span id="cb202-3"><a href="#cb202-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_MDO<span class="sc">$</span>Class)</span>
-<span id="cb202-4"><a href="#cb202-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
-<span id="cb202-5"><a href="#cb202-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_MDO, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
+<span id="cb206-2"><a href="#cb206-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(page_blocks0_1_train, <span class="dv">2</span>,<span class="dv">4</span>)</span>
+<span id="cb206-3"><a href="#cb206-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_MDO<span class="sc">$</span>Class)</span>
+<span id="cb206-4"><a href="#cb206-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
+<span id="cb206-5"><a href="#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_MDO, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb203"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb203-2"><a href="#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_MDO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train_MDO.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_MDO<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 negative positive 
@@ -2407,11 +2436,11 @@ negative positive
 <h5 class="anchored" data-anchor-id="page_blocks0_2-7">page_blocks0_2</h5>
 <p>Balanceig:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
-<span id="cb205-2"><a href="#cb205-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(page_blocks0_2_train, <span class="dv">2</span>,<span class="dv">4</span>)</span>
-<span id="cb205-3"><a href="#cb205-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_MDO<span class="sc">$</span>Class)</span>
-<span id="cb205-4"><a href="#cb205-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
-<span id="cb205-5"><a href="#cb205-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_MDO, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanceig amb MDO</span></span>
+<span id="cb209-2"><a href="#cb209-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_MDO <span class="ot">&lt;-</span> <span class="fu">MDO</span>(page_blocks0_2_train, <span class="dv">2</span>,<span class="dv">4</span>)</span>
+<span id="cb209-3"><a href="#cb209-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_MDO<span class="sc">$</span>Class)</span>
+<span id="cb209-4"><a href="#cb209-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PROBLEMA: no control es nombre de dades que se fan</span></span>
+<span id="cb209-5"><a href="#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_MDO, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_MDO.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -2419,7 +2448,7 @@ negative positive
 <section id="rose" class="level3">
 <h3 class="anchored" data-anchor-id="rose">ROSE</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'ROSE' was built under R version 4.2.3</code></pre>
 </div>
@@ -2430,90 +2459,90 @@ negative positive
 <section id="abalone9_18-9" class="level4">
 <h4 class="anchored" data-anchor-id="abalone9_18-9">abalone9_18</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_abalone9_18_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> abalone9_18_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">450</span>)<span class="sc">$</span>data</span>
-<span id="cb209-2"><a href="#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span>
-<span id="cb209-3"><a href="#cb209-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb209-4"><a href="#cb209-4" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(abalone9_18_train, dades_sintetiques_abalone9_18_ROSE)</span>
-<span id="cb209-5"><a href="#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_ROSE<span class="sc">$</span>Class)</span>
-<span id="cb209-6"><a href="#cb209-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone9_18_train_ROSE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb213"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_abalone9_18_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> abalone9_18_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">450</span>)<span class="sc">$</span>data</span>
+<span id="cb213-2"><a href="#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span>
+<span id="cb213-3"><a href="#cb213-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb213-4"><a href="#cb213-4" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(abalone9_18_train, dades_sintetiques_abalone9_18_ROSE)</span>
+<span id="cb213-5"><a href="#cb213-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb213-6"><a href="#cb213-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone9_18_train_ROSE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="page_blocks_1_3_4-9" class="level4">
 <h4 class="anchored" data-anchor-id="page_blocks_1_3_4-9">page_blocks_1_3_4</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_page_blocks_1_3_4_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> page_blocks_1_3_4_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">300</span>)<span class="sc">$</span>data</span>
-<span id="cb210-2"><a href="#cb210-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span>
-<span id="cb210-3"><a href="#cb210-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb210-4"><a href="#cb210-4" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(page_blocks_1_3_4_train, dades_sintetiques_page_blocks_1_3_4_ROSE)</span>
-<span id="cb210-5"><a href="#cb210-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_ROSE<span class="sc">$</span>Class)</span>
-<span id="cb210-6"><a href="#cb210-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks_1_3_4_train_ROSE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_page_blocks_1_3_4_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> page_blocks_1_3_4_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">300</span>)<span class="sc">$</span>data</span>
+<span id="cb214-2"><a href="#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span>
+<span id="cb214-3"><a href="#cb214-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb214-4"><a href="#cb214-4" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(page_blocks_1_3_4_train, dades_sintetiques_page_blocks_1_3_4_ROSE)</span>
+<span id="cb214-5"><a href="#cb214-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb214-6"><a href="#cb214-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks_1_3_4_train_ROSE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass_0_1_6_vs_2-9" class="level4">
 <h4 class="anchored" data-anchor-id="glass_0_1_6_vs_2-9">glass_0_1_6_vs_2</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb211"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb211-1"><a href="#cb211-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_glass_0_1_6_vs_2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> glass_0_1_6_vs_2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">110</span>)<span class="sc">$</span>data</span>
-<span id="cb211-2"><a href="#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span>
-<span id="cb211-3"><a href="#cb211-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb211-4"><a href="#cb211-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(glass_0_1_6_vs_2_train, dades_sintetiques_glass_0_1_6_vs_2_ROSE)</span>
-<span id="cb211-5"><a href="#cb211-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_ROSE<span class="sc">$</span>Class)</span>
-<span id="cb211-6"><a href="#cb211-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_6_vs_2_train_ROSE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_glass_0_1_6_vs_2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> glass_0_1_6_vs_2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">110</span>)<span class="sc">$</span>data</span>
+<span id="cb215-2"><a href="#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span>
+<span id="cb215-3"><a href="#cb215-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-4"><a href="#cb215-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(glass_0_1_6_vs_2_train, dades_sintetiques_glass_0_1_6_vs_2_ROSE)</span>
+<span id="cb215-5"><a href="#cb215-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb215-6"><a href="#cb215-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_6_vs_2_train_ROSE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass_0_1_4_6_vs_2-9" class="level4">
 <h4 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-9">glass_0_1_4_6_vs_2</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_glass_0_1_4_6_vs_2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> glass_0_1_4_6_vs_2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">110</span>)<span class="sc">$</span>data</span>
-<span id="cb212-2"><a href="#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span>
-<span id="cb212-3"><a href="#cb212-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb212-4"><a href="#cb212-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(glass_0_1_4_6_vs_2_train, dades_sintetiques_glass_0_1_4_6_vs_2_ROSE)</span>
-<span id="cb212-5"><a href="#cb212-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_ROSE<span class="sc">$</span>Class)</span>
-<span id="cb212-6"><a href="#cb212-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_4_6_vs_2_train_ROSE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_glass_0_1_4_6_vs_2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> glass_0_1_4_6_vs_2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">110</span>)<span class="sc">$</span>data</span>
+<span id="cb216-2"><a href="#cb216-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span>
+<span id="cb216-3"><a href="#cb216-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-4"><a href="#cb216-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(glass_0_1_4_6_vs_2_train, dades_sintetiques_glass_0_1_4_6_vs_2_ROSE)</span>
+<span id="cb216-5"><a href="#cb216-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb216-6"><a href="#cb216-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_4_6_vs_2_train_ROSE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="abalone19_peque-9" class="level4">
 <h4 class="anchored" data-anchor-id="abalone19_peque-9">abalone19_peque</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb213"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_abalone19_peque_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> abalone19_peque_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">200</span>)<span class="sc">$</span>data</span>
-<span id="cb213-2"><a href="#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span>
-<span id="cb213-3"><a href="#cb213-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb213-4"><a href="#cb213-4" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(abalone19_peque_train, dades_sintetiques_abalone19_peque_ROSE)</span>
-<span id="cb213-5"><a href="#cb213-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_ROSE<span class="sc">$</span>Class)</span>
-<span id="cb213-6"><a href="#cb213-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone19_peque_train_ROSE, file = "Taules_de_dades/abalone19/abalone19_peque_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb217"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href="#cb217-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_abalone19_peque_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> abalone19_peque_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">200</span>)<span class="sc">$</span>data</span>
+<span id="cb217-2"><a href="#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span>
+<span id="cb217-3"><a href="#cb217-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb217-4"><a href="#cb217-4" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(abalone19_peque_train, dades_sintetiques_abalone19_peque_ROSE)</span>
+<span id="cb217-5"><a href="#cb217-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb217-6"><a href="#cb217-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone19_peque_train_ROSE, file = "Taules_de_dades/abalone19/abalone19_peque_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="page_blocks0_1-8" class="level4">
 <h4 class="anchored" data-anchor-id="page_blocks0_1-8">page_blocks0_1</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_page_blocks0_1_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> page_blocks0_1_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">300</span>)<span class="sc">$</span>data</span>
-<span id="cb214-2"><a href="#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span>
-<span id="cb214-3"><a href="#cb214-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb214-4"><a href="#cb214-4" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(page_blocks0_1_train, dades_sintetiques_page_blocks0_1_ROSE)</span>
-<span id="cb214-5"><a href="#cb214-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_ROSE<span class="sc">$</span>Class)</span>
-<span id="cb214-6"><a href="#cb214-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_ROSE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb218"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb218-1"><a href="#cb218-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_page_blocks0_1_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> page_blocks0_1_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">300</span>)<span class="sc">$</span>data</span>
+<span id="cb218-2"><a href="#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span>
+<span id="cb218-3"><a href="#cb218-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb218-4"><a href="#cb218-4" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(page_blocks0_1_train, dades_sintetiques_page_blocks0_1_ROSE)</span>
+<span id="cb218-5"><a href="#cb218-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb218-6"><a href="#cb218-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_ROSE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="page_blocks0_2-8" class="level4">
 <h4 class="anchored" data-anchor-id="page_blocks0_2-8">page_blocks0_2</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_page_blocks0_2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> page_blocks0_2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">300</span>)<span class="sc">$</span>data</span>
-<span id="cb215-2"><a href="#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train<span class="sc">$</span>Class)</span>
-<span id="cb215-3"><a href="#cb215-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb215-4"><a href="#cb215-4" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(page_blocks0_2_train, dades_sintetiques_page_blocks0_2_ROSE)</span>
-<span id="cb215-5"><a href="#cb215-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_ROSE<span class="sc">$</span>Class)</span>
-<span id="cb215-6"><a href="#cb215-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_ROSE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb219"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb219-1"><a href="#cb219-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_page_blocks0_2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> page_blocks0_2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">300</span>)<span class="sc">$</span>data</span>
+<span id="cb219-2"><a href="#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train<span class="sc">$</span>Class)</span>
+<span id="cb219-3"><a href="#cb219-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-4"><a href="#cb219-4" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(page_blocks0_2_train, dades_sintetiques_page_blocks0_2_ROSE)</span>
+<span id="cb219-5"><a href="#cb219-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb219-6"><a href="#cb219-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_ROSE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="glass2-9" class="level4">
 <h4 class="anchored" data-anchor-id="glass2-9">glass2</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_glass2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> glass2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">150</span>)<span class="sc">$</span>data</span>
-<span id="cb216-2"><a href="#cb216-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train<span class="sc">$</span>Class)</span>
-<span id="cb216-3"><a href="#cb216-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dades_sintetiques_glass2_ROSE<span class="sc">$</span>Class)</span>
-<span id="cb216-4"><a href="#cb216-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb216-5"><a href="#cb216-5" aria-hidden="true" tabindex="-1"></a>glass2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(glass2_train, dades_sintetiques_glass2_ROSE)</span>
-<span id="cb216-6"><a href="#cb216-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_ROSE<span class="sc">$</span>Class)</span>
-<span id="cb216-7"><a href="#cb216-7" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass2_train_ROSE, file = "Taules_de_dades/glass2/glass2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_glass2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> glass2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">150</span>)<span class="sc">$</span>data</span>
+<span id="cb220-2"><a href="#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train<span class="sc">$</span>Class)</span>
+<span id="cb220-3"><a href="#cb220-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dades_sintetiques_glass2_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb220-4"><a href="#cb220-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb220-5"><a href="#cb220-5" aria-hidden="true" tabindex="-1"></a>glass2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(glass2_train, dades_sintetiques_glass2_ROSE)</span>
+<span id="cb220-6"><a href="#cb220-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb220-7"><a href="#cb220-7" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass2_train_ROSE, file = "Taules_de_dades/glass2/glass2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
