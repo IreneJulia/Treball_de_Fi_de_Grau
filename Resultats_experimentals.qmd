@@ -1,0 +1,2078 @@
+---
+title: "Resultats experimentals"
+author: "Irene LiFeng Julià Pérez"
+format:
+  html:
+    toc: true
+    toc-depth: 5
+    theme: united
+editor: visual
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(GGally)
+library(smotefamily)
+library(factoextra)
+library(dbscan)
+library(fpc)
+library(igraph)
+library(dplyr)
+library(e1071)
+library(knitr)
+library(ROCR)
+library(ROSE)
+library(MASS)
+library(kableExtra)
+library(pROC)
+```
+En aquest document realitzarem totes les classificacions i l'estudi estadístic ANOVA.
+
+
+# Dades
+
+Carregam totes les taules de dades necessàries
+
+## abalone9_18
+```{r}
+abalone9_18 <- read_csv("Taules_de_dades/abalone9_18/abalone9-18.dat", show_col_types = FALSE)
+abalone9_18 <- abalone9_18 %>% 
+  mutate(idx = c(1:nrow(abalone9_18))) %>% relocate(idx)%>% dplyr::select(-Sex)
+abalone9_18_train <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train.csv", show_col_types = FALSE)
+abalone9_18_test <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_test.csv", show_col_types = FALSE)
+IR_abalone9_18 <- round(as.numeric(table(abalone9_18$Class)[1]/table(abalone9_18$Class)[2]),3)
+```
+
+
+## page_blocks_1_3_4
+```{r}
+page_blocks_1_3_4 <- read_csv("Taules_de_dades/page_blocks_1_3_4/page-blocks-1-3_vs_4.dat", show_col_types = FALSE)
+page_blocks_1_3_4 <- page_blocks_1_3_4 %>% 
+  mutate(idx = c(1:nrow(page_blocks_1_3_4))) %>% relocate(idx)
+page_blocks_1_3_4_train <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train.csv", show_col_types = FALSE)
+page_blocks_1_3_4_test <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_test.csv", show_col_types = FALSE)
+IR_page_blocks_1_3_4 <- round(as.numeric(table(page_blocks_1_3_4$Class)[1]/table(page_blocks_1_3_4$Class)[2]),3)
+```
+
+## glass_0_1_6_vs_2
+
+```{r}
+glass_0_1_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass-0-1-6_vs_2.dat", show_col_types = FALSE)
+glass_0_1_6_vs_2 <- glass_0_1_6_vs_2 %>% 
+  mutate(idx = c(1:nrow(glass_0_1_6_vs_2))) %>% relocate(idx)
+glass_0_1_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_test <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_test.csv", show_col_types = FALSE)
+IR_glass_0_1_6_vs_2 <- round(as.numeric(table(glass_0_1_6_vs_2$Class)[1]/table(glass_0_1_6_vs_2$Class)[2]),3); IR_glass_0_1_6_vs_2
+```
+
+## glass_0_1_4_6_vs_2
+
+```{r}
+glass_0_1_4_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass-0-1-4-6_vs_2.dat", show_col_types = FALSE)
+glass_0_1_4_6_vs_2 <- glass_0_1_4_6_vs_2 %>% 
+  mutate(idx = c(1:nrow(glass_0_1_4_6_vs_2))) %>% relocate(idx)
+glass_0_1_4_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_test <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_test.csv", show_col_types = FALSE)
+IR_glass_0_1_4_6_vs_2 <- round(as.numeric(table(glass_0_1_4_6_vs_2$Class)[1]/table(glass_0_1_4_6_vs_2$Class)[2]),3); IR_glass_0_1_4_6_vs_2
+```
+
+
+
+## abalone19_peque
+
+```{r}
+abalone19_peque <- read_csv("Taules_de_dades/abalone19/abalone19_peque.csv", show_col_types = FALSE)
+abalone19_peque_train <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train.csv", show_col_types = FALSE)
+abalone19_peque_test <- read_csv("Taules_de_dades/abalone19/abalone19_peque_test.csv", show_col_types = FALSE)
+IR_abalone19_peque <- round(as.numeric(table(abalone19_peque$Class)[1]/table(abalone19_peque$Class)[2]),3); IR_abalone19_peque
+```
+
+## glass2
+
+```{r}
+glass2 <- read_csv("Taules_de_dades/glass2/glass2.dat", show_col_types = FALSE)
+glass2_train <- read_csv("Taules_de_dades/glass2/glass2_train.csv", show_col_types = FALSE)
+glass2_test <- read_csv("Taules_de_dades/glass2/glass2_test.csv", show_col_types = FALSE)
+IR_glass2 <- round(as.numeric(table(glass2$Class)[1]/table(glass2$Class)[2]),3); IR_glass2
+```
+## page-blocks0
+```{r}
+page_blocks0 <- read_csv("Taules_de_dades/page_blocks0/page-blocks0.dat", show_col_types = FALSE)
+page_blocks0 <- page_blocks0 %>% 
+  mutate(idx = c(1:nrow(page_blocks0))) %>% relocate(idx)
+page_blocks0_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train.csv", show_col_types = FALSE)
+page_blocks0_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_test.csv", show_col_types = FALSE)
+IR_page_blocks0 <- round(as.numeric(table(page_blocks0$Class)[1]/table(page_blocks0$Class)[2]),3)
+```
+
+### page_blocks0_1
+```{r}
+page_blocks0_1 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1.csv", show_col_types = FALSE)
+page_blocks0_1_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train.csv", show_col_types = FALSE)
+page_blocks0_1_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_test.csv", show_col_types = FALSE)
+IR_page_blocks0_1 <- round(as.numeric(table(page_blocks0_1$Class)[1]/table(page_blocks0_1$Class)[2]),3)
+```
+
+### page_blocks0_2
+```{r}
+page_blocks0_2 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2.csv", show_col_types = FALSE)
+page_blocks0_2_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train.csv", show_col_types = FALSE)
+page_blocks0_2_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_test.csv", show_col_types = FALSE)
+IR_page_blocks0_2 <- round(as.numeric(table(page_blocks0_2$Class)[1]/table(page_blocks0_2$Class)[2]),3)
+```
+
+
+
+
+
+
+
+
+
+
+# Analisi exploratori 
+
+Vegem ara una taula que resumeix la informació més important de cada taula de dades:
+
+
+```{r}
+taula2_info <- matrix(NA, nrow = 8, ncol = 5)
+
+# Convertir la matriz en un data frame
+taula2_info <- as.data.frame(taula2_info)
+
+# Asignar los nombres de las columnas
+rownames(taula2_info) <- c("abalone9_18", "page_blocks_1_3_4", "glass_0_1_6_vs_2", "glass_0_1_4_6_vs_2", "abalone19_peque", "page_blocks0_1", "page_blocks0_2", "glass2")
+
+# Asignar los nombres de las filas
+colnames(taula2_info) <- c("#Exemples","#exemples negatius", "#exemples positius", "#variables quantitatives", "IR")
+
+# pima, vehicle1, glass1, page_blocks0, new_thyroid1, abalone19, glass0, haberman, abalone9_18, page_blocks_1_3_4
+
+taula2_info[,1] = c(nrow(abalone9_18), nrow(page_blocks_1_3_4), nrow(glass_0_1_6_vs_2), nrow(glass_0_1_4_6_vs_2), nrow(abalone19_peque), nrow(page_blocks0_1), nrow(page_blocks0_2), nrow(glass2))
+
+taula2_info[,2] = c(as.numeric(table(abalone9_18$Class)[1]), as.numeric(table(page_blocks_1_3_4$Class)[1]), as.numeric(table(glass_0_1_6_vs_2$Class)[1]), as.numeric(table(glass_0_1_4_6_vs_2$Class)[1]), as.numeric(table(abalone19_peque$Class)[1]), as.numeric(table(page_blocks0_1$Class)[1]), as.numeric(table(page_blocks0_2$Class)[1]), as.numeric(table(glass2$Class)[1]))
+
+taula2_info[,3] = c(as.numeric(table(abalone9_18$Class)[2]), as.numeric(table(page_blocks_1_3_4$Class)[2]), as.numeric(table(glass_0_1_6_vs_2$Class)[2]), as.numeric(table(glass_0_1_4_6_vs_2$Class)[2]), as.numeric(table(abalone19_peque$Class)[2]), as.numeric(table(page_blocks0_1$Class)[2]), as.numeric(table(page_blocks0_2$Class)[2]), as.numeric(table(glass2$Class)[2]))
+
+taula2_info[,4] = c(ncol(abalone9_18), ncol(page_blocks_1_3_4), ncol(glass_0_1_6_vs_2), ncol(glass_0_1_4_6_vs_2), ncol(abalone19_peque), ncol(page_blocks0_1), ncol(page_blocks0_2),  ncol(glass2))-1
+
+taula2_info[,5] = c(IR_abalone9_18, IR_page_blocks_1_3_4, IR_glass_0_1_6_vs_2, IR_glass_0_1_4_6_vs_2, IR_abalone19_peque, IR_page_blocks0_1, IR_page_blocks0_2, IR_glass2)
+
+# Mostrar la tabla usando kable
+kable(taula2_info, align = 'c', caption = "Resum de les taules de dades desbalancejades", knitr.table.format = "rmarkdown")
+```
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+taula2_info_train_test <- matrix(NA, nrow = 8, ncol = 2)
+
+# Convertir la matriz en un data frame
+taula2_info_train_test <- as.data.frame(taula2_info_train_test)
+
+# Asignar los nombres de las columnas
+rownames(taula2_info_train_test) <- c("abalone9_18", "page_blocks_1_3_4", "glass_0_1_6_vs_2", "glass_0_1_4_6_vs_2", "abalone19_peque", "page_blocks0_1", "page_blocks0_2", "glass2")
+
+# Asignar los nombres de las filas
+colnames(taula2_info_train_test) <- c("# Training (maj, min)","# Test (maj, min)")
+
+# pima, vehicle1, glass1, page_blocks0, new_thyroid1, abalone19, glass0, haberman, abalone9_18, page_blocks_1_3_4
+
+taula2_info_train_test[,1] = c(paste(nrow(abalone9_18_train), "(",as.numeric(table(abalone9_18_train$Class)[1]) , ",", as.numeric(table(abalone9_18_train$Class)[2]), ")"), paste(nrow(page_blocks_1_3_4_train), "(",as.numeric(table(page_blocks_1_3_4_train$Class)[1]) , ",", as.numeric(table(page_blocks_1_3_4_train$Class)[2]), ")"), paste(nrow(glass_0_1_6_vs_2_train), "(",as.numeric(table(glass_0_1_6_vs_2_train$Class)[1]) , ",", as.numeric(table(glass_0_1_6_vs_2_train$Class)[2]), ")"), paste(nrow(glass_0_1_4_6_vs_2_train), "(",as.numeric(table(glass_0_1_4_6_vs_2_train$Class)[1]) , ",", as.numeric(table(glass_0_1_4_6_vs_2_train$Class)[2]), ")"), paste(nrow(abalone19_peque_train), "(",as.numeric(table(abalone19_peque_train$Class)[1]) , ",", as.numeric(table(abalone19_peque_train$Class)[2]), ")"), paste(nrow(page_blocks0_1_train), "(",as.numeric(table(page_blocks0_1_train$Class)[1]) , ",", as.numeric(table(page_blocks0_1_train$Class)[2]), ")"), paste(nrow(page_blocks0_2_train), "(",as.numeric(table(page_blocks0_2_train$Class)[1]) , ",", as.numeric(table(page_blocks0_2_train$Class)[2]), ")"), paste(nrow(glass2_train), "(",as.numeric(table(glass2_train$Class)[1]) , ",", as.numeric(table(glass2_train$Class)[2]), ")"))
+
+
+
+taula2_info_train_test[,2] = c(paste(nrow(abalone9_18_test), "(",as.numeric(table(abalone9_18_test$Class)[1]) , ",", as.numeric(table(abalone9_18_test$Class)[2]), ")"), paste(nrow(page_blocks_1_3_4_test), "(",as.numeric(table(page_blocks_1_3_4_test$Class)[1]) , ",", as.numeric(table(page_blocks_1_3_4_test$Class)[2]), ")"), paste(nrow(glass_0_1_6_vs_2_test), "(",as.numeric(table(glass_0_1_6_vs_2_test$Class)[1]) , ",", as.numeric(table(glass_0_1_6_vs_2_test$Class)[2]), ")"), paste(nrow(glass_0_1_4_6_vs_2_test), "(",as.numeric(table(glass_0_1_4_6_vs_2_test$Class)[1]) , ",", as.numeric(table(glass_0_1_4_6_vs_2_test$Class)[2]), ")"), paste(nrow(abalone19_peque_test), "(",as.numeric(table(abalone19_peque_test$Class)[1]) , ",", as.numeric(table(abalone19_peque_test$Class)[2]), ")"), paste(nrow(page_blocks0_1_test), "(",as.numeric(table(page_blocks0_1_test$Class)[1]) , ",", as.numeric(table(page_blocks0_1_test$Class)[2]), ")"), paste(nrow(page_blocks0_2_test), "(",as.numeric(table(page_blocks0_2_test$Class)[1]) , ",", as.numeric(table(page_blocks0_2_test$Class)[2]), ")"), paste(nrow(glass2_test), "(",as.numeric(table(glass2_test$Class)[1]) , ",", as.numeric(table(glass2_test$Class)[2]), ")"))
+
+
+# Mostrar la tabla usando kable
+kable(taula2_info_train_test, align = 'c', caption = "Divisió entre training i test", knitr.table.format = "rmarkdown")
+```
+
+
+
+
+# Dades balancejades
+
+A continuació carregarem les taules de dades balancejades realitzades en el document "Balanceig.qmd"
+
+
+```{r}
+abalone9_18_train_SMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_SMOTE.csv", show_col_types = FALSE)
+abalone9_18_train_BorderlineSMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_BorderlineSMOTE.csv", show_col_types = FALSE)
+abalone9_18_train_ADOMS <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_ADOMS.csv", show_col_types = FALSE)
+abalone9_18_train_ADASYN <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_ADASYN.csv", show_col_types = FALSE)
+abalone9_18_train_SLSMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_SLSMOTE.csv", show_col_types = FALSE)
+abalone9_18_train_DBSMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv", show_col_types = FALSE) # feta amb la funcio de smotefamily::dbsmote
+abalone9_18_train_MWMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_MWMOTE.csv", show_col_types = FALSE)
+abalone9_18_train_MDO <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_MDO.csv", show_col_types = FALSE)
+abalone9_18_train_ROSE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_ROSE.csv", show_col_types = FALSE)
+```
+
+
+```{r}
+page_blocks_1_3_4_train_SMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_SMOTE.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train_BorderlineSMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_BorderlineSMOTE.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train_ADOMS <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ADOMS.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train_ADASYN <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ADASYN.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train_SLSMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_SLSMOTE.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train_DBSMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv", show_col_types = FALSE) # feta amb la funcio de smotefamily::dbsmote
+page_blocks_1_3_4_train_MWMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MWMOTE.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train_MDO <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MDO.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train_ROSE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ROSE.csv", show_col_types = FALSE)
+```
+
+
+```{r}
+glass_0_1_6_vs_2_train_SMOTE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_SMOTE.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_ADOMS <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ADOMS.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_ADASYN <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ADASYN.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_SLSMOTE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_SLSMOTE.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_DBSMOTE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_DBSMOTE.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_MWMOTE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MWMOTE.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_MDO <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MDO.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_ROSE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ROSE.csv", show_col_types = FALSE)
+```
+
+```{r}
+glass_0_1_4_6_vs_2_train_SMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_SMOTE.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train_ADOMS <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ADOMS.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train_ADASYN <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ADASYN.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train_SLSMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_SLSMOTE.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train_DBSMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", show_col_types = FALSE) # feta amb la funcio de smotefamily::dbsmote
+glass_0_1_4_6_vs_2_train_MWMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MWMOTE.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train_MDO <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MDO.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train_ROSE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ROSE.csv", show_col_types = FALSE)
+```
+
+
+```{r}
+abalone19_peque_train_SMOTE <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_SMOTE.csv", show_col_types = FALSE)
+abalone19_peque_train_BorderlineSMOTE <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_BorderlineSMOTE.csv", show_col_types = FALSE)
+abalone19_peque_train_ADOMS <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_ADOMS.csv", show_col_types = FALSE)
+abalone19_peque_train_ADASYN <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_ADASYN.csv", show_col_types = FALSE)
+abalone19_peque_train_SLSMOTE <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_SLSMOTE.csv", show_col_types = FALSE)
+abalone19_peque_train_DBSMOTE <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_DBSMOTE.csv", show_col_types = FALSE) # feta amb la funcio de smotefamily::dbsmote
+abalone19_peque_train_MWMOTE <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_MWMOTE.csv", show_col_types = FALSE)
+abalone19_peque_train_MDO <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_MDO.csv", show_col_types = FALSE)
+abalone19_peque_train_ROSE <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_ROSE.csv", show_col_types = FALSE)
+```
+
+
+```{r}
+page_blocks0_1_train_SMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_SMOTE.csv", show_col_types = FALSE)
+page_blocks0_1_train_BorderlineSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_BorderlineSMOTE.csv", show_col_types = FALSE)
+page_blocks0_1_train_ADOMS <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_ADOMS.csv", show_col_types = FALSE)
+page_blocks0_1_train_ADASYN <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_ADASYN.csv", show_col_types = FALSE)
+page_blocks0_1_train_SLSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_SLSMOTE.csv", show_col_types = FALSE)
+page_blocks0_1_train_DBSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_DBSMOTE.csv", show_col_types = FALSE)
+page_blocks0_1_train_MWMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_MWMOTE.csv", show_col_types = FALSE)
+page_blocks0_1_train_MDO <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_MDO.csv", show_col_types = FALSE)
+page_blocks0_1_train_ROSE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_ROSE.csv", show_col_types = FALSE)
+```
+
+```{r}
+page_blocks0_2_train_SMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_SMOTE.csv", show_col_types = FALSE)
+page_blocks0_2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
+page_blocks0_2_train_ADOMS <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_ADOMS.csv", show_col_types = FALSE)
+page_blocks0_2_train_ADASYN <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_ADASYN.csv", show_col_types = FALSE)
+page_blocks0_2_train_SLSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_SLSMOTE.csv", show_col_types = FALSE)
+page_blocks0_2_train_DBSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_DBSMOTE.csv", show_col_types = FALSE)
+page_blocks0_2_train_MWMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_MWMOTE.csv", show_col_types = FALSE)
+page_blocks0_2_train_MDO <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_MDO.csv", show_col_types = FALSE)
+page_blocks0_2_train_ROSE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_ROSE.csv", show_col_types = FALSE)
+```
+
+
+
+```{r}
+glass2_train_SMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_SMOTE.csv", show_col_types = FALSE)
+glass2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
+glass2_train_ADOMS <- read_csv("Taules_de_dades/glass2/glass2_train_ADOMS.csv", show_col_types = FALSE)
+glass2_train_ADASYN <- read_csv("Taules_de_dades/glass2/glass2_train_ADASYN.csv", show_col_types = FALSE)
+glass2_train_SLSMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_SLSMOTE.csv", show_col_types = FALSE)
+glass2_train_DBSMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_DBSMOTE.csv", show_col_types = FALSE)
+glass2_train_MWMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_MWMOTE.csv", show_col_types = FALSE)
+glass2_train_MDO <- read_csv("Taules_de_dades/glass2/glass2_train_MDO.csv", show_col_types = FALSE)
+glass2_train_ROSE <- read_csv("Taules_de_dades/glass2/glass2_train_ROSE.csv", show_col_types = FALSE)
+```
+
+
+
+
+
+
+## Taula informativa sobre els balanceig
+
+
+```{r}
+taula_info_balanceig <- matrix(NA, nrow = 8, ncol = 10)
+
+# Convertir la matriz en un data frame
+taula_info_balanceig <- as.data.frame(taula_info_balanceig)
+
+# Asignar los nombres de las columnas
+rownames(taula_info_balanceig) <- c("abalone9_18", "page_blocks_1_3_4", "glass_0_1_6_vs_2", "glass_0_1_4_6_vs_2", "abalone19_peque", "page_blocks0_1", "page_blocks0_2", "glass2")
+
+# Asignar los nombres de las filas
+colnames(taula_info_balanceig) <- c("#negatius", "#positius SMOTE", "#positius Borderline-SMOTE", "#positius ADOMS", "#positius ADASYN", "#positius ROSE", "#positius Safe-Level SMOTE", "#positius DBSMOTE", "#positius MWMOTE", "#positius MDO")
+# "#exemples positius SMOTE", "#exemples positius Borderline-SMOTE", "#exemples positius ADOMS", "#exemples positius ADASYN", "#exemples positius ROSE", "#exemples positius Safe-Level SMOTE", "#exemples positius DBSMOTE", "#exemples positius MWMOTE", "#exemples positius MDO"
+
+# pima, vehicle1, glass1, page_blocks0, new_thyroid1, abalone19, glass0, haberman, abalone9_18, page_blocks_1_3_4
+
+taula_info_balanceig[,1] = c(as.numeric(table(abalone9_18_train$Class)[1]), as.numeric(table(page_blocks_1_3_4_train$Class)[1]), as.numeric(table(glass_0_1_6_vs_2_train$Class)[1]),  as.numeric(table(glass_0_1_4_6_vs_2_train$Class)[1]), as.numeric(table(abalone19_peque_train$Class)[1]), as.numeric(table(page_blocks0_1_train$Class)[1]), as.numeric(table(page_blocks0_2_train$Class)[1]), as.numeric(table(glass2_train$Class)[1]))
+
+taula_info_balanceig[,2] = c(as.numeric(table(abalone9_18_train_SMOTE$Class)[2]), as.numeric(table(page_blocks_1_3_4_train_SMOTE$Class)[2]), as.numeric(table(glass_0_1_6_vs_2_train_SMOTE$Class)[2]), as.numeric(table(glass_0_1_4_6_vs_2_train_SMOTE$Class)[2]),  as.numeric(table(abalone19_peque_train_SMOTE$Class)[2]),  as.numeric(table(page_blocks0_1_train_SMOTE$Class)[2]),  as.numeric(table(page_blocks0_2_train_SMOTE$Class)[2]),  as.numeric(table(glass2_train_SMOTE$Class)[2]))
+
+taula_info_balanceig[,3] = c(as.numeric(table(abalone9_18_train_BorderlineSMOTE$Class)[2]), as.numeric(table(page_blocks_1_3_4_train_BorderlineSMOTE$Class)[2]), as.numeric(table(glass_0_1_6_vs_2_train_BorderlineSMOTE$Class)[2]), as.numeric(table(glass_0_1_4_6_vs_2_train_BorderlineSMOTE$Class)[2]), as.numeric(table(abalone19_peque_train_BorderlineSMOTE$Class)[2]), as.numeric(table(page_blocks0_1_train_BorderlineSMOTE$Class)[2]), as.numeric(table(page_blocks0_2_train_BorderlineSMOTE$Class)[2]), as.numeric(table(glass2_train_BorderlineSMOTE$Class)[2]))
+  
+taula_info_balanceig[,4] = c(as.numeric(table(abalone9_18_train_ADOMS$Class)[2]), as.numeric(table(page_blocks_1_3_4_train_ADOMS$Class)[2]), as.numeric(table(glass_0_1_6_vs_2_train_ADOMS$Class)[2]),  as.numeric(table(glass_0_1_4_6_vs_2_train_ADOMS$Class)[2]),  as.numeric(table(abalone19_peque_train_ADOMS$Class)[2]),  as.numeric(table(page_blocks0_1_train_ADOMS$Class)[2]),  as.numeric(table(page_blocks0_2_train_ADOMS$Class)[2]),  as.numeric(table(glass2_train_ADOMS$Class)[2]))
+  
+taula_info_balanceig[,5] = c(as.numeric(table(abalone9_18_train_ADASYN$Class)[2]), as.numeric(table(page_blocks_1_3_4_train_ADASYN$Class)[2]),  as.numeric(table(glass_0_1_6_vs_2_train_ADASYN$Class)[2]),  as.numeric(table(glass_0_1_4_6_vs_2_train_ADASYN$Class)[2]), as.numeric(table(abalone19_peque_train_ADASYN$Class)[2]), as.numeric(table(page_blocks0_1_train_ADASYN$Class)[2]), as.numeric(table(page_blocks0_2_train_ADASYN$Class)[2]), as.numeric(table(glass2_train_ADASYN$Class)[2]))
+  
+taula_info_balanceig[,6] = c(as.numeric(table(abalone9_18_train_ROSE$Class)[2]), as.numeric(table(page_blocks_1_3_4_train_ROSE$Class)[2]),  as.numeric(table(glass_0_1_6_vs_2_train_ROSE$Class)[2]),  as.numeric(table(glass_0_1_4_6_vs_2_train_ROSE$Class)[2]), as.numeric(table(abalone19_peque_train_ROSE$Class)[2]), as.numeric(table(page_blocks0_1_train_ROSE$Class)[2]), as.numeric(table(page_blocks0_2_train_ROSE$Class)[2]), as.numeric(table(glass2_train_ROSE$Class)[2]))
+  
+# taula_info_balanceig[,7] = c(as.numeric(table(pima$Class)[2]), as.numeric(table(vehicle1$Class)[2]), as.numeric(table(glass1$Class)[2]), as.numeric(table(page_blocks0$Class)[2]), as.numeric(table(new_thyroid1$Class)[2]), as.numeric(table(abalone19$Class)[2]), as.numeric(table(glass0$Class)[2]), as.numeric(table(haberman$Class)[2]), as.numeric(table(abalone9_18$Class)[2]), as.numeric(table(page_blocks_1_3_4$Class)[2]))
+  
+taula_info_balanceig[,7] = c(as.numeric(table(abalone9_18_train_SLSMOTE$Class)[2]), as.numeric(table(page_blocks_1_3_4_train_SLSMOTE$Class)[2]), as.numeric(table(glass_0_1_6_vs_2_train_SLSMOTE$Class)[2]), as.numeric(table(glass_0_1_4_6_vs_2_train_SLSMOTE$Class)[2]), as.numeric(table(abalone19_peque_train_SLSMOTE$Class)[2]), as.numeric(table(page_blocks0_1_train_SLSMOTE$Class)[2]), as.numeric(table(page_blocks0_2_train_SLSMOTE$Class)[2]), as.numeric(table(glass2_train_SLSMOTE$Class)[2]))
+  
+taula_info_balanceig[,8] = c(as.numeric(table(abalone9_18_train_DBSMOTE$Class)[2]), as.numeric(table(page_blocks_1_3_4_train_DBSMOTE$Class)[2]), as.numeric(table(glass_0_1_6_vs_2_train_DBSMOTE$Class)[2]), as.numeric(table(glass_0_1_4_6_vs_2_train_DBSMOTE$Class)[2]), as.numeric(table(abalone19_peque_train_DBSMOTE$Class)[2]), as.numeric(table(page_blocks0_1_train_DBSMOTE$Class)[2]), as.numeric(table(page_blocks0_2_train_DBSMOTE$Class)[2]), as.numeric(table(glass2_train_DBSMOTE$Class)[2]))
+  
+taula_info_balanceig[,9] =c(as.numeric(table(abalone9_18_train_MWMOTE$Class)[2]), as.numeric(table(page_blocks_1_3_4_train_MWMOTE$Class)[2]), as.numeric(table(glass_0_1_6_vs_2_train_MWMOTE$Class)[2]), as.numeric(table(glass_0_1_4_6_vs_2_train_MWMOTE$Class)[2]), as.numeric(table(abalone19_peque_train_MWMOTE$Class)[2]), as.numeric(table(page_blocks0_1_train_MWMOTE$Class)[2]), as.numeric(table(page_blocks0_2_train_MWMOTE$Class)[2]), as.numeric(table(glass2_train_MWMOTE$Class)[2]))
+
+taula_info_balanceig[,10] = c(as.numeric(table(abalone9_18_train_MDO$Class)[2]), as.numeric(table(page_blocks_1_3_4_train_MDO$Class)[2]),  as.numeric(table(glass_0_1_6_vs_2_train_MDO$Class)[2]),  as.numeric(table(glass_0_1_4_6_vs_2_train_MDO$Class)[2]), as.numeric(table(abalone19_peque_train_MDO$Class)[2]), as.numeric(table(page_blocks0_1_train_MDO$Class)[2]), as.numeric(table(page_blocks0_2_train_MDO$Class)[2]), as.numeric(table(glass2_train_MDO$Class)[2]))
+
+
+# Mostrar la tabla usando kable
+kable(taula_info_balanceig, align = 'c', caption = "Resum de les taules de dades balancejades", knitr.table.format = "rmarkdown")
+```
+
+
+# Càlcul dels AUC
+
+## Funcions AUC
+
+Realitzem una funció que ens doni l'AUC de cada classificador, donat el conjunt training i test:
+
+
+
+```{r}
+# AUC Regressió logística
+AUC_RegLog <- function(training, test){
+  # Training: Conjunt de dades d'entrenament (balancejades o no)
+  # Test: Conjunt de dades del test
+  # Outpunt: AUC de la classificació utilitzant Regressió logística
+  
+  D1 <- training %>% mutate(Class = case_when(
+      Class == "positive" ~ 1,
+      Class == "negative" ~ 0)) %>% dplyr::select(-idx)
+
+  D2 <- test %>% dplyr::select(-c(idx))
+  
+  glm.fit <- glm(Class ~., data = D1, family = binomial)
+  glm.probs <- predict(glm.fit, D2, type = "response")
+  roc <- roc(D2$Class,glm.probs)
+  AUC <- auc(roc)
+  
+  return(AUC)
+}
+
+
+# AUC LDA
+AUC_LDA <- function(training, test){
+  
+  # Training: Conjunt de dades d'entrenament (balancejades o no)
+  # Test: Conjunt de dades del test
+  # Outpunt: AUC de la classificació utilitzant LDA
+  
+  
+  lda.fit <- lda(Class ~ ., data = training[,-1])
+  lda.pred <- predict(lda.fit, test[,-c(1)], type = "response")
+  
+  roc <- roc(test$Class, lda.pred$posterior[,2])
+  AUC_LDA <- auc(roc)
+  
+  return(AUC_LDA)
+}
+
+
+# AUC QDA
+AUC_QDA <- function(training, test){
+  
+  # Training: Conjunt de dades d'entrenament (balancejades o no)
+  # Test: Conjunt de dades del test
+  # Outpunt: AUC de la classificació utilitzant QDA
+
+  qda.fit <- qda(Class ~ ., data = training[,-1])
+  qda.pred <- predict(qda.fit, test[,-c(1)], type = "response")
+
+  roc <- roc(test$Class, qda.pred$posterior[,2])
+  AUC_QDA <- auc(roc)
+  
+  return(AUC_QDA)
+}
+
+
+AUC_NB <- function(training, test){
+  
+  # Training: Conjunt de dades d'entrenament (balancejades o no)
+  # Test: Conjunt de dades del test
+  # Outpunt: AUC de la classificació utilitzant Naive Bayes
+  
+  nb.fit <- naiveBayes(Class ~ ., data = training[,-1])
+  nb.probs <- predict(nb.fit, test[,-c(1)], type = "raw")
+  
+  roc <- roc(test$Class, nb.probs[,2])
+  AUC_NB <- auc(roc)
+  
+  return(AUC_NB)
+}
+```
+
+
+
+
+
+```{r, eval=FALSE}
+# AUC Regressió logística
+AUC_RegLog <- function(training, test){
+  
+  # Training: Conjunt de dades d'entrenament (balancejades o no)
+  # Test: Conjunt de dades del test
+  # Outpunt: AUC de la classificació utilitzant Regressió logística
+  
+  D1 <- training %>% mutate(Class = case_when(
+        Class == "positive" ~ 1,
+        Class == "negative" ~ 0)) %>% dplyr::select(-idx)
+  
+  D2 <- test %>% dplyr::select(-c(idx,Class))
+  
+  Real_01 <- test %>% mutate(Class = case_when(
+      Class == "positive" ~ 1,
+      Class == "negative" ~ 0)) %>% dplyr::pull(Class)
+  
+  glm.fit <- glm(Class ~ ., data = D1, family = binomial) # Model de classificació de Regressió Logística
+  
+  glm.probs <- predict(glm.fit, D2, type = "response")
+  glm.pred <- rep(0,nrow(D2))
+  glm.pred[glm.probs > 0.5] <- 1
+  
+  pred_fit_RL <- prediction(glm.pred , Real_01)
+  auc_RL <- as.numeric(performance(pred_fit_RL,"auc")@y.values)
+  return(auc_RL)
+}
+
+
+# AUC LDA
+AUC_LDA <- function(training, test){
+  
+  # Training: Conjunt de dades d'entrenament (balancejades o no)
+  # Test: Conjunt de dades del test
+  # Outpunt: AUC de la classificació utilitzant LDA
+  
+  Real_01 <- test %>% mutate(Class = case_when(
+      Class == "positive" ~ 1,
+      Class == "negative" ~ 0)) %>% dplyr::pull(Class)
+  
+  lda.fit <- lda(Class ~ ., data = training[,-1]) # Model de classificació LDA
+  lda.pred <- predict(lda.fit, test[,-c(1,ncol(test))], type = "response")
+  
+  Pred_01_LDA <- rep(0,nrow(test))
+  Pred_01_LDA[as.vector(lda.pred$class) == "positive"] <- 1
+  
+  pred_fit_LDA <- prediction(Pred_01_LDA , Real_01)
+  auc_LDA <- as.numeric(performance(pred_fit_LDA,"auc")@y.values)
+  return(auc_LDA)
+}
+
+
+# AUC QDA
+AUC_QDA <- function(training, test){
+  
+  # Training: Conjunt de dades d'entrenament (balancejades o no)
+  # Test: Conjunt de dades del test
+  # Outpunt: AUC de la classificació utilitzant QDA
+
+  Real_01 <- test %>% mutate(Class = case_when(
+      Class == "positive" ~ 1,
+      Class == "negative" ~ 0)) %>% dplyr::pull(Class)
+  
+  qda.fit <- qda(Class ~ ., data = training[,-1]) # Model de classificació LDA
+  qda.pred <- predict(qda.fit, test[,-c(1,ncol(test))], type = "response")
+  
+  Pred_01_QDA <- rep(0,nrow(test))
+  Pred_01_QDA[as.vector(qda.pred$class) == "positive"] <- 1
+  
+  pred_fit_QDA <- prediction(Pred_01_QDA , Real_01)
+  auc_QDA <- as.numeric(performance(pred_fit_QDA,"auc")@y.values)
+  return(auc_QDA)
+}
+
+
+AUC_NB <- function(training, test){
+  
+  # Training: Conjunt de dades d'entrenament (balancejades o no)
+  # Test: Conjunt de dades del test
+  # Outpunt: AUC de la classificació utilitzant Naive Bayes
+  
+  Real_01 <- test %>% mutate(Class = case_when(
+      Class == "positive" ~ 1,
+      Class == "negative" ~ 0)) %>% dplyr::pull(Class)
+  
+  nb.fit <- naiveBayes(Class ~ ., data = training[,-1]) # Model classificació Naive Bayes
+  nb.probs <- predict(nb.fit, test[,-c(1,ncol(test))], type = "raw")
+  
+  Pred_01_nb <- rep(0,nrow(test))
+  Pred_01_nb[nb.probs[,2] > 0.5] <- 1
+  
+  pred_fit_nb <- prediction(Pred_01_nb , Real_01)
+  auc_nb <- as.numeric(performance(pred_fit_nb,"auc")@y.values)
+  return(auc_nb)
+}
+```
+
+
+A continuació aplicarem a totes les taules de dades balancejaces cada un dels quatre classificadors. Finalment, resumirem tots els AUC calculats en diverses taules.
+
+## Sense balanceig
+
+Calcularem els AUCs resultants de la classificació utilitzant els conjunt d'entrenament sense balancejar.
+
+### abalone9_18
+
+Classificació:
+```{r}
+# Regressió logística:
+
+D1_abalone9_18 <- abalone9_18_train %>% mutate(Class = case_when(
+      Class == "positive" ~ 1,
+      Class == "negative" ~ 0)) %>% dplyr::select(-idx)
+
+D2_abalone9_18 <- abalone9_18_test %>% dplyr::select(-c(idx))
+
+glm.fit_abalone9_18 <- glm(Class ~., data = D1_abalone9_18, family = binomial)
+glm.probs_abalone9_18 <- predict(glm.fit_abalone9_18, D2_abalone9_18, type = "response")
+roc <- roc(D2_abalone9_18$Class,glm.probs_abalone9_18)
+plot(roc,col="red",lwd=2, main="Corba ROC del classificador Regressió Logística del \n  conjunt de dades `abalone9_18` sense balancejar",cex.main=1.1)
+AUC_RegLog_abalone9_18 <- auc(roc); AUC_RegLog_abalone9_18
+```
+
+
+
+```{r}
+# LDA:
+
+lda.fit_abalone9_18 <- lda(Class ~ ., data = abalone9_18_train[,-1])
+
+lda.pred_abalone9_18 <- predict(lda.fit_abalone9_18, abalone9_18_test[,-c(1)], type = "response")
+prediccions.LDA <- as.factor(ifelse(lda.pred_abalone9_18$Class=="negative",0,1))
+
+roc <- roc(abalone9_18_test$Class,lda.pred_abalone9_18$posterior[,2])
+plot(roc,col="red",lwd=2,main="Corba ROC i AUC del classificador LDA del \n conjunt de dades `abalone9_18` sense balancejar",cex.main=1.1)
+AUC_LDA_abalone9_18 <- auc(roc); AUC_LDA_abalone9_18
+```
+
+
+```{r, eval=FALSE}
+## Matriu de confusió:
+table(lda.pred_abalone9_18$class, abalone9_18_test$Class)
+
+# Corba ROC i AUC del classificador LDA sense balanceig
+
+Pred_01_LDA_abalone9_18 <- rep(0,nrow(D2_abalone9_18))
+Pred_01_LDA_abalone9_18[as.vector(lda.pred_abalone9_18$class) == "positive"] <- 1
+
+pred_fit_LDA_abalone9_18 <- prediction(Pred_01_LDA_abalone9_18 , Real_01_abalone9_18)
+
+
+
+
+plot(performance(pred_fit_LDA_abalone9_18, "tpr", "fpr"), main = "Corba ROC i AUC del classificador LDA del \n conjunt de dades `abalone9_18` sense balancejar",cex.main=1.1)
+abline(a=0,b=1,col="blue",lty=2)
+grid()
+AUC_LDA_abalone9_18 <- as.numeric(performance(pred_fit_LDA_abalone9_18,"auc")@y.values)
+legend("bottomright",legend=paste("AUC =",round(AUC_LDA_abalone9_18,4)))
+```
+
+```{r}
+# QDA:
+
+qda.fit_abalone9_18 <- qda(Class ~ ., data = abalone9_18_train[,-1])
+
+qda.pred_abalone9_18 <- predict(qda.fit_abalone9_18, abalone9_18_test[,-c(1)], type = "response")
+prediccions.QDA <- as.factor(ifelse(qda.pred_abalone9_18$Class=="negative",0,1))
+
+roc <- roc(abalone9_18_test$Class,qda.pred_abalone9_18$posterior[,2])
+plot(roc,col="red",lwd=2,main="Corba ROC i AUC del classificador QDA \n del conjunt de dades `abalone9_18` sense balancejarv")
+AUC_QDA_abalone9_18 <- auc(roc); AUC_QDA_abalone9_18
+```
+
+```{r, eval=FALSE}
+# Corba ROC i AUC del classificador QDA sense balanceig
+
+Pred_01_QDA_abalone9_18 <- rep(0,nrow(D2_abalone9_18))
+Pred_01_QDA_abalone9_18[as.vector(qda.pred_abalone9_18$class) == "positive"] <- 1
+
+pred_fit_QDA_abalone9_18 <- prediction(Pred_01_QDA_abalone9_18 , Real_01_abalone9_18)
+plot(performance(pred_fit_QDA_abalone9_18, "tpr", "fpr"), main = "Corba ROC i AUC del classificador QDA del \n conjunt de dades `abalone9_18` sense balancejar",cex.main=1.1)
+abline(a=0,b=1,col="blue",lty=2)
+grid()
+AUC_QDA_abalone9_18 <- as.numeric(performance(pred_fit_QDA_abalone9_18,"auc")@y.values)
+legend("bottomright",legend=paste("AUC =",round(AUC_QDA_abalone9_18,4)))
+```
+
+
+```{r}
+# Naive Bayes
+
+nb.fit_abalone9_18 <- naiveBayes(Class ~ ., data = abalone9_18_train[,-1])
+nb.probs_abalone9_18 <- predict(nb.fit_abalone9_18, abalone9_18_test[,-c(1,ncol(abalone9_18))], type = "raw")
+
+roc <- roc(abalone9_18_test$Class, nb.probs_abalone9_18[,2])
+plot(roc,col="red",lwd=2,main="Corba ROC i AUC del classificador Naive Bayes \n del conjunt de dades `abalone9_18` sense balancejar")
+AUC_NB_abalone9_18 <- auc(roc); AUC_NB_abalone9_18
+```
+
+
+```{r, eval=FALSE}
+nb.probs_abalone9_18[,2]
+
+nb.preds_abalone9_18 <- rep("negative",nrow(D2_abalone9_18))
+nb.preds_abalone9_18[nb.probs_abalone9_18[,2] > 0.5] <- "positive"
+
+# Matriu de confusió
+table(nb.preds_abalone9_18, abalone9_18_test$Class)
+
+# Corba ROC i AUC del classificador Naive Bayes sense balanceig
+
+Pred_01_nb_abalone9_18 <- rep(0,nrow(D2_abalone9_18))
+Pred_01_nb_abalone9_18[nb.probs_abalone9_18[,2] > 0.5] <- 1
+
+pred_fit_nb_abalone9_18 <- prediction(Pred_01_nb_abalone9_18 , Real_01_abalone9_18)
+plot(performance(pred_fit_nb_abalone9_18, "tpr", "fpr"), main = "Corba ROC i AUC del classificador Naive Bayes \n del conjunt de dades `abalone9_18` sense balancejar")
+abline(a=0,b=1,col="blue",lty=2)
+grid()
+AUC_NB_abalone9_18 <- as.numeric(performance(pred_fit_nb_abalone9_18,"auc")@y.values)
+legend("bottomright",legend=paste("AUC =",round(AUC_NB_abalone9_18,4)))
+```
+
+
+### page_blocks_1_3_4
+
+Classificació:
+
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4 <- AUC_RegLog(page_blocks_1_3_4_train, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4 <- AUC_LDA(page_blocks_1_3_4_train, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4 <- AUC_QDA(page_blocks_1_3_4_train, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4 <-AUC_NB(page_blocks_1_3_4_train, page_blocks_1_3_4_test))
+```
+
+### glass_0_1_6_vs_2
+
+Classificació:
+
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2 <- AUC_RegLog(glass_0_1_6_vs_2_train, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2 <- AUC_LDA(glass_0_1_6_vs_2_train, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2 <- AUC_QDA(glass_0_1_6_vs_2_train, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2 <-AUC_NB(glass_0_1_6_vs_2_train, glass_0_1_6_vs_2_test))
+```
+
+### glass_0_1_4_6_vs_2
+
+Classificació:
+
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2 <- AUC_RegLog(glass_0_1_4_6_vs_2_train, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2 <- AUC_LDA(glass_0_1_4_6_vs_2_train, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2 <- AUC_QDA(glass_0_1_4_6_vs_2_train, glass_0_1_4_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2 <-AUC_NB(glass_0_1_4_6_vs_2_train, glass_0_1_4_6_vs_2_test))
+```
+
+### abalone19_peque
+
+Classificació:
+
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque <- AUC_RegLog(abalone19_peque_train, abalone19_peque_test))
+(AUC_LDA_abalone19_peque <- AUC_LDA(abalone19_peque_train, abalone19_peque_test))
+(AUC_QDA_abalone19_peque <- AUC_QDA(abalone19_peque_train, abalone19_peque_test))
+(AUC_NB_abalone19_peque <-AUC_NB(abalone19_peque_train, abalone19_peque_test))
+```
+
+#### page_blocks0_1
+
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1 <- AUC_RegLog(page_blocks0_1_train, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1 <- AUC_LDA(page_blocks0_1_train, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1 <- AUC_QDA(page_blocks0_1_train, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1 <-AUC_NB(page_blocks0_1_train, page_blocks0_1_test))
+```
+#### page_blocks0_2
+
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2 <- AUC_RegLog(page_blocks0_2_train, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2 <- AUC_LDA(page_blocks0_2_train, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2 <- AUC_QDA(page_blocks0_2_train, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2 <-AUC_NB(page_blocks0_2_train, page_blocks0_2_test))
+```
+
+### glass2
+
+Classificació:
+
+```{r, results = 'hold'}
+(AUC_RegLog_glass2 <- AUC_RegLog(glass2_train, glass2_test))
+(AUC_LDA_glass2 <- AUC_LDA(glass2_train, glass2_test))
+(AUC_QDA_glass2 <- AUC_QDA(glass2_train, glass2_test))
+(AUC_NB_glass2 <-AUC_NB(glass2_train, glass2_test))
+```
+
+
+
+## Dades balancejades
+
+Calcularem els AUCs resultant de la classificació utilitzant els conjunt d'entrenament balancejats.
+
+### SMOTE
+
+#### abalone9_18
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone9_18_SMOTE <- AUC_RegLog(abalone9_18_train_SMOTE, abalone9_18_test))
+(AUC_LDA_abalone9_18_SMOTE <- AUC_LDA(abalone9_18_train_SMOTE, abalone9_18_test))
+(AUC_QDA_abalone9_18_SMOTE <- AUC_QDA(abalone9_18_train_SMOTE, abalone9_18_test))
+(AUC_NB_abalone9_18_SMOTE <- AUC_NB(abalone9_18_train_SMOTE, abalone9_18_test))
+```
+
+#### page_blocks_1_3_4
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4_SMOTE <- AUC_RegLog(page_blocks_1_3_4_train_SMOTE, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4_SMOTE <- AUC_LDA(page_blocks_1_3_4_train_SMOTE, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4_SMOTE <- AUC_QDA(page_blocks_1_3_4_train_SMOTE, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4_SMOTE <- AUC_NB(page_blocks_1_3_4_train_SMOTE, page_blocks_1_3_4_test))
+```
+
+#### glass_0_1_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2_SMOTE <- AUC_RegLog(glass_0_1_6_vs_2_train_SMOTE, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2_SMOTE <- AUC_LDA(glass_0_1_6_vs_2_train_SMOTE, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2_SMOTE <- AUC_QDA(glass_0_1_6_vs_2_train_SMOTE, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2_SMOTE <- AUC_NB(glass_0_1_6_vs_2_train_SMOTE, glass_0_1_6_vs_2_test))
+```
+
+#### glass_0_1_4_6_vs_2
+
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2_SMOTE <- AUC_RegLog(glass_0_1_4_6_vs_2_train_SMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2_SMOTE <- AUC_LDA(glass_0_1_4_6_vs_2_train_SMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2_SMOTE <- AUC_QDA(glass_0_1_4_6_vs_2_train_SMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2_SMOTE <- AUC_NB(glass_0_1_4_6_vs_2_train_SMOTE, glass_0_1_4_6_vs_2_test))
+```
+
+#### abalone19_peque
+
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque_SMOTE <- AUC_RegLog(abalone19_peque_train_SMOTE, abalone19_peque_test))
+(AUC_LDA_abalone19_peque_SMOTE <- AUC_LDA(abalone19_peque_train_SMOTE, abalone19_peque_test))
+(AUC_QDA_abalone19_peque_SMOTE <- AUC_QDA(abalone19_peque_train_SMOTE, abalone19_peque_test))
+(AUC_NB_abalone19_peque_SMOTE <- AUC_NB(abalone19_peque_train_SMOTE, abalone19_peque_test))
+```
+
+
+#### page_blocks0_1
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1_SMOTE <- AUC_RegLog(page_blocks0_1_train_SMOTE, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1_SMOTE <- AUC_LDA(page_blocks0_1_train_SMOTE, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1_SMOTE <- AUC_QDA(page_blocks0_1_train_SMOTE, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1_SMOTE <- AUC_NB(page_blocks0_1_train_SMOTE, page_blocks0_1_test))
+```
+
+#### page_blocks0_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2_SMOTE <- AUC_RegLog(page_blocks0_2_train_SMOTE, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2_SMOTE <- AUC_LDA(page_blocks0_2_train_SMOTE, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2_SMOTE <- AUC_QDA(page_blocks0_2_train_SMOTE, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2_SMOTE <- AUC_NB(page_blocks0_2_train_SMOTE, page_blocks0_2_test))
+```
+
+
+#### glass2
+
+```{r, results = 'hold'}
+(AUC_RegLog_glass2_SMOTE <- AUC_RegLog(glass2_train_SMOTE, glass2_test))
+(AUC_LDA_glass2_SMOTE <- AUC_LDA(glass2_train_SMOTE, glass2_test))
+(AUC_QDA_glass2_SMOTE <- AUC_QDA(glass2_train_SMOTE, glass2_test))
+(AUC_NB_glass2_SMOTE <- AUC_NB(glass2_train_SMOTE, glass2_test))
+```
+
+
+
+### Borderline SMOTE
+
+#### abalone9_18
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone9_18_BorderlineSMOTE <- AUC_RegLog(abalone9_18_train_BorderlineSMOTE, abalone9_18_test))
+(AUC_LDA_abalone9_18_BorderlineSMOTE <- AUC_LDA(abalone9_18_train_BorderlineSMOTE, abalone9_18_test))
+(AUC_QDA_abalone9_18_BorderlineSMOTE <- AUC_QDA(abalone9_18_train_BorderlineSMOTE, abalone9_18_test))
+(AUC_NB_abalone9_18_BorderlineSMOTE <- AUC_NB(abalone9_18_train_BorderlineSMOTE, abalone9_18_test))
+```
+
+#### page_blocks_1_3_4
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4_BorderlineSMOTE <- AUC_RegLog(page_blocks_1_3_4_train_BorderlineSMOTE, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4_BorderlineSMOTE <- AUC_LDA(page_blocks_1_3_4_train_BorderlineSMOTE, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4_BorderlineSMOTE <- AUC_QDA(page_blocks_1_3_4_train_BorderlineSMOTE, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4_BorderlineSMOTE <- AUC_NB(page_blocks_1_3_4_train_BorderlineSMOTE, page_blocks_1_3_4_test))
+```
+
+#### glass_0_1_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2_BorderlineSMOTE <- AUC_RegLog(glass_0_1_6_vs_2_train_BorderlineSMOTE, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2_BorderlineSMOTE <- AUC_LDA(glass_0_1_6_vs_2_train_BorderlineSMOTE, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2_BorderlineSMOTE <- AUC_QDA(glass_0_1_6_vs_2_train_BorderlineSMOTE, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2_BorderlineSMOTE <- AUC_NB(glass_0_1_6_vs_2_train_BorderlineSMOTE, glass_0_1_6_vs_2_test))
+```
+
+#### glass_0_1_4_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2_BorderlineSMOTE <- AUC_RegLog(glass_0_1_4_6_vs_2_train_BorderlineSMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2_BorderlineSMOTE <- AUC_LDA(glass_0_1_4_6_vs_2_train_BorderlineSMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2_BorderlineSMOTE <- AUC_QDA(glass_0_1_4_6_vs_2_train_BorderlineSMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2_BorderlineSMOTE <- AUC_NB(glass_0_1_4_6_vs_2_train_BorderlineSMOTE, glass_0_1_4_6_vs_2_test))
+```
+
+#### abalone19_peque
+
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque_BorderlineSMOTE <- AUC_RegLog(abalone19_peque_train_BorderlineSMOTE, abalone19_peque_test))
+(AUC_LDA_abalone19_peque_BorderlineSMOTE <- AUC_LDA(abalone19_peque_train_BorderlineSMOTE, abalone19_peque_test))
+(AUC_QDA_abalone19_peque_BorderlineSMOTE <- AUC_QDA(abalone19_peque_train_BorderlineSMOTE, abalone19_peque_test))
+(AUC_NB_abalone19_peque_BorderlineSMOTE <- AUC_NB(abalone19_peque_train_BorderlineSMOTE, abalone19_peque_test))
+```
+
+#### page_blocks0_1
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1_BorderlineSMOTE <- AUC_RegLog(page_blocks0_1_train_BorderlineSMOTE, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1_BorderlineSMOTE <- AUC_LDA(page_blocks0_1_train_BorderlineSMOTE, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1_BorderlineSMOTE <- AUC_QDA(page_blocks0_1_train_BorderlineSMOTE, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1_BorderlineSMOTE <- AUC_NB(page_blocks0_1_train_BorderlineSMOTE, page_blocks0_1_test))
+```
+
+#### page_blocks0_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2_BorderlineSMOTE <- AUC_RegLog(page_blocks0_2_train_BorderlineSMOTE, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2_BorderlineSMOTE <- AUC_LDA(page_blocks0_2_train_BorderlineSMOTE, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2_BorderlineSMOTE <- AUC_QDA(page_blocks0_2_train_BorderlineSMOTE, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2_BorderlineSMOTE <- AUC_NB(page_blocks0_2_train_BorderlineSMOTE, page_blocks0_2_test))
+```
+
+#### glass2
+
+```{r, results = 'hold'}
+(AUC_RegLog_glass2_BorderlineSMOTE <- AUC_RegLog(glass2_train_BorderlineSMOTE, glass2_test))
+(AUC_LDA_glass2_BorderlineSMOTE <- AUC_LDA(glass2_train_BorderlineSMOTE, glass2_test))
+(AUC_QDA_glass2_BorderlineSMOTE <- AUC_QDA(glass2_train_BorderlineSMOTE, glass2_test))
+(AUC_NB_glass2_BorderlineSMOTE <- AUC_NB(glass2_train_BorderlineSMOTE, glass2_test))
+```
+
+
+
+### ADOMS
+
+#### abalone9_18 
+
+Classificació abalone9_18:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone9_18_ADOMS <- AUC_RegLog(abalone9_18_train_ADOMS, abalone9_18_test))
+(AUC_LDA_abalone9_18_ADOMS <- AUC_LDA(abalone9_18_train_ADOMS, abalone9_18_test))
+(AUC_QDA_abalone9_18_ADOMS <- AUC_QDA(abalone9_18_train_ADOMS, abalone9_18_test))
+(AUC_NB_abalone9_18_ADOMS <- AUC_NB(abalone9_18_train_ADOMS, abalone9_18_test))
+```
+
+#### page_blocks_1_3_4 
+
+Classificació page_blocks_1_3_4:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4_ADOMS <- AUC_RegLog(page_blocks_1_3_4_train_ADOMS, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4_ADOMS <- AUC_LDA(page_blocks_1_3_4_train_ADOMS, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4_ADOMS <- AUC_QDA(page_blocks_1_3_4_train_ADOMS, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4_ADOMS <- AUC_NB(page_blocks_1_3_4_train_ADOMS, page_blocks_1_3_4_test))
+```
+
+#### glass_0_1_6_vs_2
+
+Classificació glass_0_1_6_vs_2:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2_ADOMS <- AUC_RegLog(glass_0_1_6_vs_2_train_ADOMS, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2_ADOMS <- AUC_LDA(glass_0_1_6_vs_2_train_ADOMS, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2_ADOMS <- AUC_QDA(glass_0_1_6_vs_2_train_ADOMS, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2_ADOMS <- AUC_NB(glass_0_1_6_vs_2_train_ADOMS, glass_0_1_6_vs_2_test))
+```
+
+#### glass_0_1_4_6_vs_2
+
+Classificació glass_0_1_6_vs_2:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2_ADOMS <- AUC_RegLog(glass_0_1_4_6_vs_2_train_ADOMS, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2_ADOMS <- AUC_LDA(glass_0_1_4_6_vs_2_train_ADOMS, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2_ADOMS <- AUC_QDA(glass_0_1_4_6_vs_2_train_ADOMS, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2_ADOMS <- AUC_NB(glass_0_1_4_6_vs_2_train_ADOMS, glass_0_1_4_6_vs_2_test))
+```
+
+#### abalone19_peque 
+
+Classificació abalone19_peque:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque_ADOMS <- AUC_RegLog(abalone19_peque_train_ADOMS, abalone19_peque_test))
+(AUC_LDA_abalone19_peque_ADOMS <- AUC_LDA(abalone19_peque_train_ADOMS, abalone19_peque_test))
+(AUC_QDA_abalone19_peque_ADOMS <- AUC_QDA(abalone19_peque_train_ADOMS, abalone19_peque_test))
+(AUC_NB_abalone19_peque_ADOMS <- AUC_NB(abalone19_peque_train_ADOMS, abalone19_peque_test))
+```
+
+#### page_blocks0_1 
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1_ADOMS <- AUC_RegLog(page_blocks0_1_train_ADOMS, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1_ADOMS <- AUC_LDA(page_blocks0_1_train_ADOMS, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1_ADOMS <- AUC_QDA(page_blocks0_1_train_ADOMS, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1_ADOMS <- AUC_NB(page_blocks0_1_train_ADOMS, page_blocks0_1_test))
+```
+
+#### page_blocks0_2 
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2_ADOMS <- AUC_RegLog(page_blocks0_2_train_ADOMS, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2_ADOMS <- AUC_LDA(page_blocks0_2_train_ADOMS, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2_ADOMS <- AUC_QDA(page_blocks0_2_train_ADOMS, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2_ADOMS <- AUC_NB(page_blocks0_2_train_ADOMS, page_blocks0_2_test))
+```
+
+
+
+#### glass2 
+
+Classificació glass2:
+```{r, results = 'hold'}
+(AUC_RegLog_glass2_ADOMS <- AUC_RegLog(glass2_train_ADOMS, glass2_test))
+(AUC_LDA_glass2_ADOMS <- AUC_LDA(glass2_train_ADOMS, glass2_test))
+(AUC_QDA_glass2_ADOMS <- AUC_QDA(glass2_train_ADOMS, glass2_test))
+(AUC_NB_glass2_ADOMS <- AUC_NB(glass2_train_ADOMS, glass2_test))
+```
+
+
+### ADASYN
+
+#### abalone9_18
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone9_18_ADASYN <- AUC_RegLog(abalone9_18_train_ADASYN, abalone9_18_test))
+(AUC_LDA_abalone9_18_ADASYN <- AUC_LDA(abalone9_18_train_ADASYN, abalone9_18_test))
+(AUC_QDA_abalone9_18_ADASYN <- AUC_QDA(abalone9_18_train_ADASYN, abalone9_18_test))
+(AUC_NB_abalone9_18_ADASYN <- AUC_NB(abalone9_18_train_ADASYN, abalone9_18_test))
+```
+
+#### page_blocks_1_3_4
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4_ADASYN <- AUC_RegLog(page_blocks_1_3_4_train_ADASYN, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4_ADASYN <- AUC_LDA(page_blocks_1_3_4_train_ADASYN, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4_ADASYN <- AUC_QDA(page_blocks_1_3_4_train_ADASYN, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4_ADASYN <- AUC_NB(page_blocks_1_3_4_train_ADASYN, page_blocks_1_3_4_test))
+```
+
+#### glass_0_1_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2_ADASYN <- AUC_RegLog(glass_0_1_6_vs_2_train_ADASYN, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2_ADASYN <- AUC_LDA(glass_0_1_6_vs_2_train_ADASYN, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2_ADASYN <- AUC_QDA(glass_0_1_6_vs_2_train_ADASYN, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2_ADASYN <- AUC_NB(glass_0_1_6_vs_2_train_ADASYN, glass_0_1_6_vs_2_test))
+```
+
+#### glass_0_1_4_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2_ADASYN <- AUC_RegLog(glass_0_1_4_6_vs_2_train_ADASYN, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2_ADASYN <- AUC_LDA(glass_0_1_4_6_vs_2_train_ADASYN, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2_ADASYN <- AUC_QDA(glass_0_1_4_6_vs_2_train_ADASYN, glass_0_1_4_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2_ADASYN <- AUC_NB(glass_0_1_4_6_vs_2_train_ADASYN, glass_0_1_4_6_vs_2_test))
+```
+
+#### abalone19_peque
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque_ADASYN <- AUC_RegLog(abalone19_peque_train_ADASYN, abalone19_peque_test))
+(AUC_LDA_abalone19_peque_ADASYN <- AUC_LDA(abalone19_peque_train_ADASYN, abalone19_peque_test))
+(AUC_QDA_abalone19_peque_ADASYN <- AUC_QDA(abalone19_peque_train_ADASYN, abalone19_peque_test))
+(AUC_NB_abalone19_peque_ADASYN <- AUC_NB(abalone19_peque_train_ADASYN, abalone19_peque_test))
+```
+
+#### page_blocks0_1
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1_ADASYN <- AUC_RegLog(page_blocks0_1_train_ADASYN, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1_ADASYN <- AUC_LDA(page_blocks0_1_train_ADASYN, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1_ADASYN <- AUC_QDA(page_blocks0_1_train_ADASYN, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1_ADASYN <- AUC_NB(page_blocks0_1_train_ADASYN, page_blocks0_1_test))
+```
+
+#### page_blocks0_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2_ADASYN <- AUC_RegLog(page_blocks0_2_train_ADASYN, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2_ADASYN <- AUC_LDA(page_blocks0_2_train_ADASYN, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2_ADASYN <- AUC_QDA(page_blocks0_2_train_ADASYN, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2_ADASYN <- AUC_NB(page_blocks0_2_train_ADASYN, page_blocks0_2_test))
+```
+
+
+#### glass2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass2_ADASYN <- AUC_RegLog(glass2_train_ADASYN, glass2_test))
+(AUC_LDA_glass2_ADASYN <- AUC_LDA(glass2_train_ADASYN, glass2_test))
+(AUC_QDA_glass2_ADASYN <- AUC_QDA(glass2_train_ADASYN, glass2_test))
+(AUC_NB_glass2_ADASYN <- AUC_NB(glass2_train_ADASYN, glass2_test))
+```
+
+
+
+
+### Safe-Level SMOTE
+
+#### abalone9_18
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone9_18_SLSMOTE <- AUC_RegLog(abalone9_18_train_SLSMOTE, abalone9_18_test))
+(AUC_LDA_abalone9_18_SLSMOTE <- AUC_LDA(abalone9_18_train_SLSMOTE, abalone9_18_test))
+(AUC_QDA_abalone9_18_SLSMOTE <- AUC_QDA(abalone9_18_train_SLSMOTE, abalone9_18_test))
+(AUC_NB_abalone9_18_SLSMOTE <- AUC_NB(abalone9_18_train_SLSMOTE, abalone9_18_test))
+```
+
+#### page_blocks_1_3_4
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4_SLSMOTE <- AUC_RegLog(page_blocks_1_3_4_train_SLSMOTE, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4_SLSMOTE <- AUC_LDA(page_blocks_1_3_4_train_SLSMOTE, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4_SLSMOTE <- AUC_QDA(page_blocks_1_3_4_train_SLSMOTE, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4_SLSMOTE <- AUC_NB(page_blocks_1_3_4_train_SLSMOTE, page_blocks_1_3_4_test))
+```
+
+#### glass_0_1_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2_SLSMOTE <- AUC_RegLog(glass_0_1_6_vs_2_train_SLSMOTE, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2_SLSMOTE <- AUC_LDA(glass_0_1_6_vs_2_train_SLSMOTE, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2_SLSMOTE <- AUC_QDA(glass_0_1_6_vs_2_train_SLSMOTE, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2_SLSMOTE <- AUC_NB(glass_0_1_6_vs_2_train_SLSMOTE, glass_0_1_6_vs_2_test))
+```
+
+#### glass_0_1_4_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2_SLSMOTE <- AUC_RegLog(glass_0_1_4_6_vs_2_train_SLSMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2_SLSMOTE <- AUC_LDA(glass_0_1_4_6_vs_2_train_SLSMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2_SLSMOTE <- AUC_QDA(glass_0_1_4_6_vs_2_train_SLSMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2_SLSMOTE <- AUC_NB(glass_0_1_4_6_vs_2_train_SLSMOTE, glass_0_1_4_6_vs_2_test))
+```
+
+#### abalone19_peque
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque_SLSMOTE <- AUC_RegLog(abalone19_peque_train_SLSMOTE, abalone19_peque_test))
+(AUC_LDA_abalone19_peque_SLSMOTE <- AUC_LDA(abalone19_peque_train_SLSMOTE, abalone19_peque_test))
+(AUC_QDA_abalone19_peque_SLSMOTE <- AUC_QDA(abalone19_peque_train_SLSMOTE, abalone19_peque_test))
+(AUC_NB_abalone19_peque_SLSMOTE <- AUC_NB(abalone19_peque_train_SLSMOTE, abalone19_peque_test))
+```
+
+#### page_blocks0_1
+
+Classificació PIMA:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1_SLSMOTE <- AUC_RegLog(page_blocks0_1_train_SLSMOTE, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1_SLSMOTE <- AUC_LDA(page_blocks0_1_train_SLSMOTE, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1_SLSMOTE <- AUC_QDA(page_blocks0_1_train_SLSMOTE, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1_SLSMOTE <- AUC_NB(page_blocks0_1_train_SLSMOTE, page_blocks0_1_test))
+```
+
+#### page_blocks0_2
+
+Classificació PIMA:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2_SLSMOTE <- AUC_RegLog(page_blocks0_2_train_SLSMOTE, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2_SLSMOTE <- AUC_LDA(page_blocks0_2_train_SLSMOTE, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2_SLSMOTE <- AUC_QDA(page_blocks0_2_train_SLSMOTE, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2_SLSMOTE <- AUC_NB(page_blocks0_2_train_SLSMOTE, page_blocks0_2_test))
+```
+
+#### glass2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass2_SLSMOTE <- AUC_RegLog(glass2_train_SLSMOTE, glass2_test))
+(AUC_LDA_glass2_SLSMOTE <- AUC_LDA(glass2_train_SLSMOTE, glass2_test))
+(AUC_QDA_glass2_SLSMOTE <- AUC_QDA(glass2_train_SLSMOTE, glass2_test))
+(AUC_NB_glass2_SLSMOTE <- AUC_NB(glass2_train_SLSMOTE, glass2_test))
+```
+
+
+
+### DBSMOTE
+
+#### abalone9_18
+
+Classificació abalone9_18:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone9_18_DBSMOTE <- AUC_RegLog(abalone9_18_train_DBSMOTE, abalone9_18_test))
+(AUC_LDA_abalone9_18_DBSMOTE <- AUC_LDA(abalone9_18_train_DBSMOTE, abalone9_18_test))
+(AUC_QDA_abalone9_18_DBSMOTE <- AUC_QDA(abalone9_18_train_DBSMOTE, abalone9_18_test))
+(AUC_NB_abalone9_18_DBSMOTE <- AUC_NB(abalone9_18_train_DBSMOTE, abalone9_18_test))
+```
+
+
+
+#### page_blocks_1_3_4
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4_DBSMOTE <- AUC_RegLog(page_blocks_1_3_4_train_DBSMOTE, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4_DBSMOTE <- AUC_LDA(page_blocks_1_3_4_train_DBSMOTE, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4_DBSMOTE <- AUC_QDA(page_blocks_1_3_4_train_DBSMOTE, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4_DBSMOTE <- AUC_NB(page_blocks_1_3_4_train_DBSMOTE, page_blocks_1_3_4_test))
+```
+
+
+#### glass_0_1_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2_DBSMOTE <- AUC_RegLog(glass_0_1_6_vs_2_train_DBSMOTE, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2_DBSMOTE <- AUC_LDA(glass_0_1_6_vs_2_train_DBSMOTE, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2_DBSMOTE <- AUC_QDA(glass_0_1_6_vs_2_train_DBSMOTE, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2_DBSMOTE <- AUC_NB(glass_0_1_6_vs_2_train_DBSMOTE, glass_0_1_6_vs_2_test))
+```
+
+#### glass_0_1_4_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2_DBSMOTE <- AUC_RegLog(glass_0_1_4_6_vs_2_train_DBSMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2_DBSMOTE <- AUC_LDA(glass_0_1_4_6_vs_2_train_DBSMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2_DBSMOTE <- AUC_QDA(glass_0_1_4_6_vs_2_train_DBSMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2_DBSMOTE <- AUC_NB(glass_0_1_4_6_vs_2_train_DBSMOTE, glass_0_1_4_6_vs_2_test))
+```
+
+#### abalone19_peque
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque_DBSMOTE <- AUC_RegLog(abalone19_peque_train_DBSMOTE, abalone19_peque_test))
+(AUC_LDA_abalone19_peque_DBSMOTE <- AUC_LDA(abalone19_peque_train_DBSMOTE, abalone19_peque_test))
+(AUC_QDA_abalone19_peque_DBSMOTE <- AUC_QDA(abalone19_peque_train_DBSMOTE, abalone19_peque_test))
+(AUC_NB_abalone19_peque_DBSMOTE <- AUC_NB(abalone19_peque_train_DBSMOTE, abalone19_peque_test))
+```
+
+#### page_blocks0_1
+
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1_DBSMOTE <- AUC_RegLog(page_blocks0_1_train_DBSMOTE, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1_DBSMOTE <- AUC_LDA(page_blocks0_1_train_DBSMOTE, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1_DBSMOTE <- AUC_QDA(page_blocks0_1_train_DBSMOTE, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1_DBSMOTE <- AUC_NB(page_blocks0_1_train_DBSMOTE, page_blocks0_1_test))
+```
+
+#### page_blocks0_2
+
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2_DBSMOTE <- AUC_RegLog(page_blocks0_2_train_DBSMOTE, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2_DBSMOTE <- AUC_LDA(page_blocks0_2_train_DBSMOTE, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2_DBSMOTE <- AUC_QDA(page_blocks0_2_train_DBSMOTE, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2_DBSMOTE <- AUC_NB(page_blocks0_2_train_DBSMOTE, page_blocks0_2_test))
+```
+
+#### glass2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass2_DBSMOTE <- AUC_RegLog(glass2_train_DBSMOTE, glass2_test))
+(AUC_LDA_glass2_DBSMOTE <- AUC_LDA(glass2_train_DBSMOTE, glass2_test))
+(AUC_QDA_glass2_DBSMOTE <- AUC_QDA(glass2_train_DBSMOTE, glass2_test))
+(AUC_NB_glass2_DBSMOTE <- AUC_NB(glass2_train_DBSMOTE, glass2_test))
+```
+
+
+
+### MWMOTE
+
+#### abalone9_18
+
+```{r, results = 'hold'}
+(AUC_RegLog_abalone9_18_MWMOTE <- AUC_RegLog(abalone9_18_train_MWMOTE, abalone9_18_test))
+(AUC_LDA_abalone9_18_MWMOTE <- AUC_LDA(abalone9_18_train_MWMOTE, abalone9_18_test))
+(AUC_QDA_abalone9_18_MWMOTE <- AUC_QDA(abalone9_18_train_MWMOTE, abalone9_18_test))
+(AUC_NB_abalone9_18_MWMOTE <- AUC_NB(abalone9_18_train_MWMOTE, abalone9_18_test))
+```
+
+#### page_blocks_1_3_4
+
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4_MWMOTE <- AUC_RegLog(page_blocks_1_3_4_train_MWMOTE, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4_MWMOTE <- AUC_LDA(page_blocks_1_3_4_train_MWMOTE, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4_MWMOTE <- AUC_QDA(page_blocks_1_3_4_train_MWMOTE, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4_MWMOTE <- AUC_NB(page_blocks_1_3_4_train_MWMOTE, page_blocks_1_3_4_test))
+```
+
+#### glass_0_1_6_vs_2
+
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2_MWMOTE <- AUC_RegLog(glass_0_1_6_vs_2_train_MWMOTE, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2_MWMOTE <- AUC_LDA(glass_0_1_6_vs_2_train_MWMOTE, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2_MWMOTE <- AUC_QDA(glass_0_1_6_vs_2_train_MWMOTE, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2_MWMOTE <- AUC_NB(glass_0_1_6_vs_2_train_MWMOTE, glass_0_1_6_vs_2_test))
+```
+
+#### glass_0_1_4_6_vs_2
+
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2_MWMOTE <- AUC_RegLog(glass_0_1_4_6_vs_2_train_MWMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2_MWMOTE <- AUC_LDA(glass_0_1_4_6_vs_2_train_MWMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2_MWMOTE <- AUC_QDA(glass_0_1_4_6_vs_2_train_MWMOTE, glass_0_1_4_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2_MWMOTE <- AUC_NB(glass_0_1_4_6_vs_2_train_MWMOTE, glass_0_1_4_6_vs_2_test))
+```
+
+#### abalone19_peque
+
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque_MWMOTE <- AUC_RegLog(abalone19_peque_train_MWMOTE, abalone19_peque_test))
+(AUC_LDA_abalone19_peque_MWMOTE <- AUC_LDA(abalone19_peque_train_MWMOTE, abalone19_peque_test))
+(AUC_QDA_abalone19_peque_MWMOTE <- AUC_QDA(abalone19_peque_train_MWMOTE, abalone19_peque_test))
+(AUC_NB_abalone19_peque_MWMOTE <- AUC_NB(abalone19_peque_train_MWMOTE, abalone19_peque_test))
+```
+
+#### page_blocks0_1
+
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1_MWMOTE <- AUC_RegLog(page_blocks0_1_train_MWMOTE, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1_MWMOTE <- AUC_LDA(page_blocks0_1_train_MWMOTE, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1_MWMOTE <- AUC_QDA(page_blocks0_1_train_MWMOTE, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1_MWMOTE <- AUC_NB(page_blocks0_1_train_MWMOTE, page_blocks0_1_test))
+```
+
+#### page_blocks0_2
+
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2_MWMOTE <- AUC_RegLog(page_blocks0_2_train_MWMOTE, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2_MWMOTE <- AUC_LDA(page_blocks0_2_train_MWMOTE, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2_MWMOTE <- AUC_QDA(page_blocks0_2_train_MWMOTE, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2_MWMOTE <- AUC_NB(page_blocks0_2_train_MWMOTE, page_blocks0_2_test))
+```
+
+
+#### glass2
+
+```{r, results = 'hold'}
+(AUC_RegLog_glass2_MWMOTE <- AUC_RegLog(glass2_train_MWMOTE, glass2_test))
+(AUC_LDA_glass2_MWMOTE <- AUC_LDA(glass2_train_MWMOTE, glass2_test))
+(AUC_QDA_glass2_MWMOTE <- AUC_QDA(glass2_train_MWMOTE, glass2_test))
+(AUC_NB_glass2_MWMOTE <- AUC_NB(glass2_train_MWMOTE, glass2_test))
+```
+
+
+
+### MDO
+
+#### abalone9_18
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone9_18_MDO <- AUC_RegLog(abalone9_18_train_MDO, abalone9_18_test))
+(AUC_LDA_abalone9_18_MDO <- AUC_LDA(abalone9_18_train_MDO, abalone9_18_test))
+(AUC_QDA_abalone9_18_MDO <- AUC_QDA(abalone9_18_train_MDO, abalone9_18_test))
+(AUC_NB_abalone9_18_MDO <- AUC_NB(abalone9_18_train_MDO, abalone9_18_test))
+```
+
+
+
+#### page_blocks_1_3_4
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4_MDO <- AUC_RegLog(page_blocks_1_3_4_train_MDO, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4_MDO <- AUC_LDA(page_blocks_1_3_4_train_MDO, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4_MDO <- AUC_QDA(page_blocks_1_3_4_train_MDO, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4_MDO <- AUC_NB(page_blocks_1_3_4_train_MDO, page_blocks_1_3_4_test))
+```
+
+#### glass_0_1_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2_MDO <- AUC_RegLog(glass_0_1_6_vs_2_train_MDO, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2_MDO <- AUC_LDA(glass_0_1_6_vs_2_train_MDO, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2_MDO <- AUC_QDA(glass_0_1_6_vs_2_train_MDO, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2_MDO <- AUC_NB(glass_0_1_6_vs_2_train_MDO, glass_0_1_6_vs_2_test))
+```
+
+#### glass_0_1_4_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2_MDO <- AUC_RegLog(glass_0_1_4_6_vs_2_train_MDO, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2_MDO <- AUC_LDA(glass_0_1_4_6_vs_2_train_MDO, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2_MDO <- AUC_QDA(glass_0_1_4_6_vs_2_train_MDO, glass_0_1_4_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2_MDO <- AUC_NB(glass_0_1_4_6_vs_2_train_MDO, glass_0_1_4_6_vs_2_test))
+```
+
+#### abalone19_peque
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque_MDO <- AUC_RegLog(abalone19_peque_train_MDO, abalone19_peque_test))
+(AUC_LDA_abalone19_peque_MDO <- AUC_LDA(abalone19_peque_train_MDO, abalone19_peque_test))
+(AUC_QDA_abalone19_peque_MDO <- AUC_QDA(abalone19_peque_train_MDO, abalone19_peque_test))
+(AUC_NB_abalone19_peque_MDO <- AUC_NB(abalone19_peque_train_MDO, abalone19_peque_test))
+```
+
+#### page_blocks0_1
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1_MDO <- AUC_RegLog(page_blocks0_1_train_MDO, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1_MDO <- AUC_LDA(page_blocks0_1_train_MDO, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1_MDO <- AUC_QDA(page_blocks0_1_train_MDO, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1_MDO <- AUC_NB(page_blocks0_1_train_MDO, page_blocks0_1_test))
+```
+
+#### page_blocks0_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2_MDO <- AUC_RegLog(page_blocks0_2_train_MDO, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2_MDO <- AUC_LDA(page_blocks0_2_train_MDO, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2_MDO <- AUC_QDA(page_blocks0_2_train_MDO, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2_MDO <- AUC_NB(page_blocks0_2_train_MDO, page_blocks0_2_test))
+```
+
+
+#### glass2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass2_MDO <- AUC_RegLog(glass2_train_MDO, glass2_test))
+(AUC_LDA_glass2_MDO <- AUC_LDA(glass2_train_MDO, glass2_test))
+(AUC_QDA_glass2_MDO <- AUC_QDA(glass2_train_MDO, glass2_test))
+(AUC_NB_glass2_MDO <- AUC_NB(glass2_train_MDO, glass2_test))
+```
+
+
+
+
+### ROSE
+
+#### page_blocks0_1
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_1_ROSE <- AUC_RegLog(page_blocks0_1_train_ROSE, page_blocks0_1_test))
+(AUC_LDA_page_blocks0_1_ROSE <- AUC_LDA(page_blocks0_1_train_ROSE, page_blocks0_1_test))
+(AUC_QDA_page_blocks0_1_ROSE <- AUC_QDA(page_blocks0_1_train_ROSE, page_blocks0_1_test))
+(AUC_NB_page_blocks0_1_ROSE <- AUC_NB(page_blocks0_1_train_ROSE, page_blocks0_1_test))
+```
+
+#### page_blocks0_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks0_2_ROSE <- AUC_RegLog(page_blocks0_2_train_ROSE, page_blocks0_2_test))
+(AUC_LDA_page_blocks0_2_ROSE <- AUC_LDA(page_blocks0_2_train_ROSE, page_blocks0_2_test))
+(AUC_QDA_page_blocks0_2_ROSE <- AUC_QDA(page_blocks0_2_train_ROSE, page_blocks0_2_test))
+(AUC_NB_page_blocks0_2_ROSE <- AUC_NB(page_blocks0_2_train_ROSE, page_blocks0_2_test))
+```
+
+#### abalone9_18
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone9_18_ROSE <- AUC_RegLog(abalone9_18_train_ROSE, abalone9_18_test))
+(AUC_LDA_abalone9_18_ROSE <- AUC_LDA(abalone9_18_train_ROSE, abalone9_18_test))
+(AUC_QDA_abalone9_18_ROSE <- AUC_QDA(abalone9_18_train_ROSE, abalone9_18_test))
+(AUC_NB_abalone9_18_ROSE <- AUC_NB(abalone9_18_train_ROSE, abalone9_18_test))
+```
+
+#### page_blocks_1_3_4
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_page_blocks_1_3_4_ROSE <- AUC_RegLog(page_blocks_1_3_4_train_ROSE, page_blocks_1_3_4_test))
+(AUC_LDA_page_blocks_1_3_4_ROSE <- AUC_LDA(page_blocks_1_3_4_train_ROSE, page_blocks_1_3_4_test))
+(AUC_QDA_page_blocks_1_3_4_ROSE <- AUC_QDA(page_blocks_1_3_4_train_ROSE, page_blocks_1_3_4_test))
+(AUC_NB_page_blocks_1_3_4_ROSE <- AUC_NB(page_blocks_1_3_4_train_ROSE, page_blocks_1_3_4_test))
+```
+
+#### glass_0_1_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_6_vs_2_ROSE <- AUC_RegLog(glass_0_1_6_vs_2_train_ROSE, glass_0_1_6_vs_2_test))
+(AUC_LDA_glass_0_1_6_vs_2_ROSE <- AUC_LDA(glass_0_1_6_vs_2_train_ROSE, glass_0_1_6_vs_2_test))
+(AUC_QDA_glass_0_1_6_vs_2_ROSE <- AUC_QDA(glass_0_1_6_vs_2_train_ROSE, glass_0_1_6_vs_2_test))
+(AUC_NB_glass_0_1_6_vs_2_ROSE <- AUC_NB(glass_0_1_6_vs_2_train_ROSE, glass_0_1_6_vs_2_test))
+```
+
+#### glass_0_1_4_6_vs_2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass_0_1_4_6_vs_2_ROSE <- AUC_RegLog(glass_0_1_4_6_vs_2_train_ROSE, glass_0_1_4_6_vs_2_test))
+(AUC_LDA_glass_0_1_4_6_vs_2_ROSE <- AUC_LDA(glass_0_1_4_6_vs_2_train_ROSE, glass_0_1_4_6_vs_2_test))
+(AUC_QDA_glass_0_1_4_6_vs_2_ROSE <- AUC_QDA(glass_0_1_4_6_vs_2_train_ROSE, glass_0_1_4_6_vs_2_test))
+(AUC_NB_glass_0_1_4_6_vs_2_ROSE <- AUC_NB(glass_0_1_4_6_vs_2_train_ROSE, glass_0_1_4_6_vs_2_test))
+```
+
+#### abalone19_peque
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_abalone19_peque_ROSE <- AUC_RegLog(abalone19_peque_train_ROSE, abalone19_peque_test))
+(AUC_LDA_abalone19_peque_ROSE <- AUC_LDA(abalone19_peque_train_ROSE, abalone19_peque_test))
+(AUC_QDA_abalone19_peque_ROSE <- AUC_QDA(abalone19_peque_train_ROSE, abalone19_peque_test))
+(AUC_NB_abalone19_peque_ROSE <- AUC_NB(abalone19_peque_train_ROSE, abalone19_peque_test))
+```
+
+#### glass2
+
+Classificació:
+```{r, results = 'hold'}
+(AUC_RegLog_glass2_ROSE <- AUC_RegLog(glass2_train_ROSE, glass2_test))
+(AUC_LDA_glass2_ROSE <- AUC_LDA(glass2_train_ROSE, glass2_test))
+(AUC_QDA_glass2_ROSE <- AUC_QDA(glass2_train_ROSE, glass2_test))
+(AUC_NB_glass2_ROSE <- AUC_NB(glass2_train_ROSE, glass2_test))
+```
+
+## Taula AUC
+
+Anem a resumir tots els AUCs que hem obtingut en la següent taula:
+
+```{r}
+# Cream una taula buida amb 11 files y 10 columnes
+tabla2_ANOVA2V <- matrix(NA, nrow = 32, ncol = 10)
+
+# Convertir la matriz en un data frame
+tabla2_ANOVA2V <- as.data.frame(tabla2_ANOVA2V)
+
+colnames(tabla2_ANOVA2V) <- c("Sense balancejar", "SMOTE", "Borderline-SMOTE", "ADOMS", "ADASYN", "ROSE", "Safe-Level SMOTE", "DBSMOTE", "MWMOTE", "MDO")
+
+# Asignar los nombres de las columnas
+#rownames(tabla2_ANOVA2V) <- c(rep("RegLog", 10),rep("LDA", 10),rep("QDA", 10),rep("NB", 10))
+# "new-thyroid1" depues de page-blocks
+
+# Asignar los nombres de las filas
+colnames(tabla2_ANOVA2V) <- c("Sense balancejar", "SMOTE", "Borderline-SMOTE", "ADOMS", "ADASYN", "ROSE", "Safe-Level SMOTE", "DBSMOTE", "MWMOTE", "MDO")
+
+k=1
+
+# REGRESSIÓ LOGISTICA
+
+tabla2_ANOVA2V[k,] <- c(AUC_RegLog_abalone9_18, AUC_RegLog_abalone9_18_SMOTE, AUC_RegLog_abalone9_18_BorderlineSMOTE, AUC_RegLog_abalone9_18_ADOMS, AUC_RegLog_abalone9_18_ADASYN, AUC_RegLog_abalone9_18_ROSE, AUC_RegLog_abalone9_18_SLSMOTE, AUC_RegLog_abalone9_18_DBSMOTE, AUC_RegLog_abalone9_18_MWMOTE, AUC_RegLog_abalone9_18_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_RegLog_page_blocks_1_3_4, AUC_RegLog_page_blocks_1_3_4_SMOTE, AUC_RegLog_page_blocks_1_3_4_BorderlineSMOTE, AUC_RegLog_page_blocks_1_3_4_ADOMS, AUC_RegLog_page_blocks_1_3_4_ADASYN, AUC_RegLog_page_blocks_1_3_4_ROSE, AUC_RegLog_page_blocks_1_3_4_SLSMOTE, AUC_RegLog_page_blocks_1_3_4_DBSMOTE, AUC_RegLog_page_blocks_1_3_4_MWMOTE, AUC_RegLog_page_blocks_1_3_4_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_RegLog_glass_0_1_6_vs_2, AUC_RegLog_glass_0_1_6_vs_2_SMOTE, AUC_RegLog_glass_0_1_6_vs_2_BorderlineSMOTE, AUC_RegLog_glass_0_1_6_vs_2_ADOMS, AUC_RegLog_glass_0_1_6_vs_2_ADASYN, AUC_RegLog_glass_0_1_6_vs_2_ROSE, AUC_RegLog_glass_0_1_6_vs_2_SLSMOTE, AUC_RegLog_glass_0_1_6_vs_2_DBSMOTE, AUC_RegLog_glass_0_1_6_vs_2_MWMOTE, AUC_RegLog_glass_0_1_6_vs_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_RegLog_glass_0_1_4_6_vs_2, AUC_RegLog_glass_0_1_4_6_vs_2_SMOTE, AUC_RegLog_glass_0_1_4_6_vs_2_BorderlineSMOTE, AUC_RegLog_glass_0_1_4_6_vs_2_ADOMS, AUC_RegLog_glass_0_1_4_6_vs_2_ADASYN, AUC_RegLog_glass_0_1_4_6_vs_2_ROSE, AUC_RegLog_glass_0_1_4_6_vs_2_SLSMOTE, AUC_RegLog_glass_0_1_4_6_vs_2_DBSMOTE, AUC_RegLog_glass_0_1_4_6_vs_2_MWMOTE, AUC_RegLog_glass_0_1_4_6_vs_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_RegLog_abalone19_peque, AUC_RegLog_abalone19_peque_SMOTE, AUC_RegLog_abalone19_peque_BorderlineSMOTE, AUC_RegLog_abalone19_peque_ADOMS, AUC_RegLog_abalone19_peque_ADASYN, AUC_RegLog_abalone19_peque_ROSE, AUC_RegLog_abalone19_peque_SLSMOTE, AUC_RegLog_abalone19_peque_DBSMOTE, AUC_RegLog_abalone19_peque_MWMOTE, AUC_RegLog_abalone19_peque_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_RegLog_page_blocks0_1, AUC_RegLog_page_blocks0_1_SMOTE, AUC_RegLog_page_blocks0_1_BorderlineSMOTE, AUC_RegLog_page_blocks0_1_ADOMS, AUC_RegLog_page_blocks0_1_ADASYN, AUC_RegLog_page_blocks0_1_ROSE, AUC_RegLog_page_blocks0_1_SLSMOTE, AUC_RegLog_page_blocks0_1_DBSMOTE, AUC_RegLog_page_blocks0_1_MWMOTE, AUC_RegLog_page_blocks0_1_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_RegLog_page_blocks0_2, AUC_RegLog_page_blocks0_2_SMOTE, AUC_RegLog_page_blocks0_2_BorderlineSMOTE, AUC_RegLog_page_blocks0_2_ADOMS, AUC_RegLog_page_blocks0_2_ADASYN, AUC_RegLog_page_blocks0_2_ROSE, AUC_RegLog_page_blocks0_2_SLSMOTE, AUC_RegLog_page_blocks0_2_DBSMOTE, AUC_RegLog_page_blocks0_2_MWMOTE, AUC_RegLog_page_blocks0_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_RegLog_glass2, AUC_RegLog_glass2_SMOTE, AUC_RegLog_glass2_BorderlineSMOTE, AUC_RegLog_glass2_ADOMS, AUC_RegLog_glass2_ADASYN, AUC_RegLog_glass2_ROSE, AUC_RegLog_glass2_SLSMOTE, AUC_RegLog_glass2_DBSMOTE, AUC_RegLog_glass2_MWMOTE, AUC_RegLog_glass2_MDO) 
+k = k + 1
+
+# LDA
+
+tabla2_ANOVA2V[k,] <- c(AUC_LDA_abalone9_18, AUC_LDA_abalone9_18_SMOTE, AUC_LDA_abalone9_18_BorderlineSMOTE, AUC_LDA_abalone9_18_ADOMS, AUC_LDA_abalone9_18_ADASYN, AUC_LDA_abalone9_18_ROSE, AUC_LDA_abalone9_18_SLSMOTE, AUC_LDA_abalone9_18_DBSMOTE, AUC_LDA_abalone9_18_MWMOTE, AUC_LDA_abalone9_18_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_LDA_page_blocks_1_3_4, AUC_LDA_page_blocks_1_3_4_SMOTE, AUC_LDA_page_blocks_1_3_4_BorderlineSMOTE, AUC_LDA_page_blocks_1_3_4_ADOMS, AUC_LDA_page_blocks_1_3_4_ADASYN, AUC_LDA_page_blocks_1_3_4_ROSE, AUC_LDA_page_blocks_1_3_4_SLSMOTE, AUC_LDA_page_blocks_1_3_4_DBSMOTE, AUC_LDA_page_blocks_1_3_4_MWMOTE, AUC_LDA_page_blocks_1_3_4_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_LDA_glass_0_1_6_vs_2, AUC_LDA_glass_0_1_6_vs_2_SMOTE, AUC_LDA_glass_0_1_6_vs_2_BorderlineSMOTE, AUC_LDA_glass_0_1_6_vs_2_ADOMS, AUC_LDA_glass_0_1_6_vs_2_ADASYN, AUC_LDA_glass_0_1_6_vs_2_ROSE, AUC_LDA_glass_0_1_6_vs_2_SLSMOTE, AUC_LDA_glass_0_1_6_vs_2_DBSMOTE, AUC_LDA_glass_0_1_6_vs_2_MWMOTE, AUC_LDA_glass_0_1_6_vs_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_LDA_glass_0_1_4_6_vs_2, AUC_LDA_glass_0_1_4_6_vs_2_SMOTE, AUC_LDA_glass_0_1_4_6_vs_2_BorderlineSMOTE, AUC_LDA_glass_0_1_4_6_vs_2_ADOMS, AUC_LDA_glass_0_1_4_6_vs_2_ADASYN, AUC_LDA_glass_0_1_4_6_vs_2_ROSE, AUC_LDA_glass_0_1_4_6_vs_2_SLSMOTE, AUC_LDA_glass_0_1_4_6_vs_2_DBSMOTE, AUC_LDA_glass_0_1_4_6_vs_2_MWMOTE, AUC_LDA_glass_0_1_4_6_vs_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_LDA_abalone19_peque, AUC_LDA_abalone19_peque_SMOTE, AUC_LDA_abalone19_peque_BorderlineSMOTE, AUC_LDA_abalone19_peque_ADOMS, AUC_LDA_abalone19_peque_ADASYN, AUC_LDA_abalone19_peque_ROSE, AUC_LDA_abalone19_peque_SLSMOTE, AUC_LDA_abalone19_peque_DBSMOTE, AUC_LDA_abalone19_peque_MWMOTE, AUC_LDA_abalone19_peque_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_LDA_page_blocks0_1, AUC_LDA_page_blocks0_1_SMOTE, AUC_LDA_page_blocks0_1_BorderlineSMOTE, AUC_LDA_page_blocks0_1_ADOMS, AUC_LDA_page_blocks0_1_ADASYN, AUC_LDA_page_blocks0_1_ROSE, AUC_LDA_page_blocks0_1_SLSMOTE, AUC_LDA_page_blocks0_1_DBSMOTE, AUC_LDA_page_blocks0_1_MWMOTE, AUC_LDA_page_blocks0_1_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_LDA_page_blocks0_2, AUC_LDA_page_blocks0_2_SMOTE, AUC_LDA_page_blocks0_2_BorderlineSMOTE, AUC_LDA_page_blocks0_2_ADOMS, AUC_LDA_page_blocks0_2_ADASYN, AUC_LDA_page_blocks0_2_ROSE, AUC_LDA_page_blocks0_2_SLSMOTE, AUC_LDA_page_blocks0_2_DBSMOTE, AUC_LDA_page_blocks0_2_MWMOTE, AUC_LDA_page_blocks0_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_LDA_glass2, AUC_LDA_glass2_SMOTE, AUC_LDA_glass2_BorderlineSMOTE, AUC_LDA_glass2_ADOMS, AUC_LDA_glass2_ADASYN, AUC_LDA_glass2_ROSE, AUC_LDA_glass2_SLSMOTE, AUC_LDA_glass2_DBSMOTE, AUC_LDA_glass2_MWMOTE, AUC_LDA_glass2_MDO) 
+k = k + 1
+
+# QDA
+
+tabla2_ANOVA2V[k,] <- c(AUC_QDA_abalone9_18, AUC_QDA_abalone9_18_SMOTE, AUC_QDA_abalone9_18_BorderlineSMOTE, AUC_QDA_abalone9_18_ADOMS, AUC_QDA_abalone9_18_ADASYN, AUC_QDA_abalone9_18_ROSE, AUC_QDA_abalone9_18_SLSMOTE, AUC_QDA_abalone9_18_DBSMOTE, AUC_QDA_abalone9_18_MWMOTE, AUC_QDA_abalone9_18_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_QDA_page_blocks_1_3_4, AUC_QDA_page_blocks_1_3_4_SMOTE, AUC_QDA_page_blocks_1_3_4_BorderlineSMOTE, AUC_QDA_page_blocks_1_3_4_ADOMS, AUC_QDA_page_blocks_1_3_4_ADASYN, AUC_QDA_page_blocks_1_3_4_ROSE, AUC_QDA_page_blocks_1_3_4_SLSMOTE, AUC_QDA_page_blocks_1_3_4_DBSMOTE, AUC_QDA_page_blocks_1_3_4_MWMOTE, AUC_QDA_page_blocks_1_3_4_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_QDA_glass_0_1_6_vs_2, AUC_QDA_glass_0_1_6_vs_2_SMOTE, AUC_QDA_glass_0_1_6_vs_2_BorderlineSMOTE, AUC_QDA_glass_0_1_6_vs_2_ADOMS, AUC_QDA_glass_0_1_6_vs_2_ADASYN, AUC_QDA_glass_0_1_6_vs_2_ROSE, AUC_QDA_glass_0_1_6_vs_2_SLSMOTE, AUC_QDA_glass_0_1_6_vs_2_DBSMOTE, AUC_QDA_glass_0_1_6_vs_2_MWMOTE, AUC_QDA_glass_0_1_6_vs_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_QDA_glass_0_1_4_6_vs_2, AUC_QDA_glass_0_1_4_6_vs_2_SMOTE, AUC_QDA_glass_0_1_4_6_vs_2_BorderlineSMOTE, AUC_QDA_glass_0_1_4_6_vs_2_ADOMS, AUC_QDA_glass_0_1_4_6_vs_2_ADASYN, AUC_QDA_glass_0_1_4_6_vs_2_ROSE, AUC_QDA_glass_0_1_4_6_vs_2_SLSMOTE, AUC_QDA_glass_0_1_4_6_vs_2_DBSMOTE, AUC_QDA_glass_0_1_4_6_vs_2_MWMOTE, AUC_QDA_glass_0_1_4_6_vs_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_QDA_abalone19_peque, AUC_QDA_abalone19_peque_SMOTE, AUC_QDA_abalone19_peque_BorderlineSMOTE, AUC_QDA_abalone19_peque_ADOMS, AUC_QDA_abalone19_peque_ADASYN, AUC_QDA_abalone19_peque_ROSE, AUC_QDA_abalone19_peque_SLSMOTE, AUC_QDA_abalone19_peque_DBSMOTE, AUC_QDA_abalone19_peque_MWMOTE, AUC_QDA_abalone19_peque_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_QDA_page_blocks0_1, AUC_QDA_page_blocks0_1_SMOTE, AUC_QDA_page_blocks0_1_BorderlineSMOTE, AUC_QDA_page_blocks0_1_ADOMS, AUC_QDA_page_blocks0_1_ADASYN, AUC_QDA_page_blocks0_1_ROSE, AUC_QDA_page_blocks0_1_SLSMOTE, AUC_QDA_page_blocks0_1_DBSMOTE, AUC_QDA_page_blocks0_1_MWMOTE, AUC_QDA_page_blocks0_1_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_QDA_page_blocks0_2, AUC_QDA_page_blocks0_2_SMOTE, AUC_QDA_page_blocks0_2_BorderlineSMOTE, AUC_QDA_page_blocks0_2_ADOMS, AUC_QDA_page_blocks0_2_ADASYN, AUC_QDA_page_blocks0_2_ROSE, AUC_QDA_page_blocks0_2_SLSMOTE, AUC_QDA_page_blocks0_2_DBSMOTE, AUC_QDA_page_blocks0_2_MWMOTE, AUC_QDA_page_blocks0_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_QDA_glass2, AUC_QDA_glass2_SMOTE, AUC_QDA_glass2_BorderlineSMOTE, AUC_QDA_glass2_ADOMS, AUC_QDA_glass2_ADASYN, AUC_QDA_glass2_ROSE, AUC_QDA_glass2_SLSMOTE, AUC_QDA_glass2_DBSMOTE, AUC_QDA_glass2_MWMOTE, AUC_QDA_glass2_MDO) 
+k = k + 1
+
+# NAIVE-BAYES
+
+tabla2_ANOVA2V[k,] <- c(AUC_NB_abalone9_18, AUC_NB_abalone9_18_SMOTE, AUC_NB_abalone9_18_BorderlineSMOTE, AUC_NB_abalone9_18_ADOMS, AUC_NB_abalone9_18_ADASYN, AUC_NB_abalone9_18_ROSE, AUC_NB_abalone9_18_SLSMOTE, AUC_NB_abalone9_18_DBSMOTE, AUC_NB_abalone9_18_MWMOTE, AUC_NB_abalone9_18_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_NB_page_blocks_1_3_4, AUC_NB_page_blocks_1_3_4_SMOTE, AUC_NB_page_blocks_1_3_4_BorderlineSMOTE, AUC_NB_page_blocks_1_3_4_ADOMS, AUC_NB_page_blocks_1_3_4_ADASYN, AUC_NB_page_blocks_1_3_4_ROSE, AUC_NB_page_blocks_1_3_4_SLSMOTE, AUC_NB_page_blocks_1_3_4_DBSMOTE, AUC_NB_page_blocks_1_3_4_MWMOTE, AUC_NB_page_blocks_1_3_4_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_NB_glass_0_1_6_vs_2, AUC_NB_glass_0_1_6_vs_2_SMOTE, AUC_NB_glass_0_1_6_vs_2_BorderlineSMOTE, AUC_NB_glass_0_1_6_vs_2_ADOMS, AUC_NB_glass_0_1_6_vs_2_ADASYN, AUC_NB_glass_0_1_6_vs_2_ROSE, AUC_NB_glass_0_1_6_vs_2_SLSMOTE, AUC_NB_glass_0_1_6_vs_2_DBSMOTE, AUC_NB_glass_0_1_6_vs_2_MWMOTE, AUC_NB_glass_0_1_6_vs_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_NB_glass_0_1_4_6_vs_2, AUC_NB_glass_0_1_4_6_vs_2_SMOTE, AUC_NB_glass_0_1_4_6_vs_2_BorderlineSMOTE, AUC_NB_glass_0_1_4_6_vs_2_ADOMS, AUC_NB_glass_0_1_4_6_vs_2_ADASYN, AUC_NB_glass_0_1_4_6_vs_2_ROSE, AUC_NB_glass_0_1_4_6_vs_2_SLSMOTE, AUC_NB_glass_0_1_4_6_vs_2_DBSMOTE, AUC_NB_glass_0_1_4_6_vs_2_MWMOTE, AUC_NB_glass_0_1_4_6_vs_2_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_NB_abalone19_peque, AUC_NB_abalone19_peque_SMOTE, AUC_NB_abalone19_peque_BorderlineSMOTE, AUC_NB_abalone19_peque_ADOMS, AUC_NB_abalone19_peque_ADASYN, AUC_NB_abalone19_peque_ROSE, AUC_NB_abalone19_peque_SLSMOTE, AUC_NB_abalone19_peque_DBSMOTE, AUC_NB_abalone19_peque_MWMOTE, AUC_NB_abalone19_peque_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_NB_page_blocks0_1, AUC_NB_page_blocks0_1_SMOTE, AUC_NB_page_blocks0_1_BorderlineSMOTE, AUC_NB_page_blocks0_1_ADOMS, AUC_NB_page_blocks0_1_ADASYN, AUC_NB_page_blocks0_1_ROSE, AUC_NB_page_blocks0_1_SLSMOTE, AUC_NB_page_blocks0_1_DBSMOTE, AUC_NB_page_blocks0_1_MWMOTE, AUC_NB_page_blocks0_1_MDO) 
+k = k + 1
+
+tabla2_ANOVA2V[k,] <- c(AUC_NB_page_blocks0_2, AUC_NB_page_blocks0_2_SMOTE, AUC_NB_page_blocks0_2_BorderlineSMOTE, AUC_NB_page_blocks0_2_ADOMS, AUC_NB_page_blocks0_2_ADASYN, AUC_NB_page_blocks0_2_ROSE, AUC_NB_page_blocks0_2_SLSMOTE, AUC_NB_page_blocks0_2_DBSMOTE, AUC_NB_page_blocks0_2_MWMOTE, AUC_NB_page_blocks0_2_MDO) 
+k = k + 1 
+
+tabla2_ANOVA2V[k,] <- c(AUC_NB_glass2, AUC_NB_glass2_SMOTE, AUC_NB_glass2_BorderlineSMOTE, AUC_NB_glass2_ADOMS, AUC_NB_glass2_ADASYN, AUC_NB_glass2_ROSE, AUC_NB_glass2_SLSMOTE, AUC_NB_glass2_DBSMOTE, AUC_NB_glass2_MWMOTE, AUC_NB_glass2_MDO) 
+k = k + 1 
+
+
+TAULA2_AUC <- as_tibble(tabla2_ANOVA2V) %>% mutate(classificador = c(rep("RegLog", 8),rep("LDA", 8),rep("QDA", 8),rep("NB", 8))) %>% relocate(classificador)
+
+# Mostrar la tabla_ANOVA2V usando kable
+#kable(TAULA2_AUC, align = 'c', digits = round(4), caption = "Resum dels AUC", knitr.table.format = "latex")
+
+TAULA2_AUC %>% 
+  kable(align='c') %>% 
+  kable_styling(full_width = FALSE, position = "center", font_size = 15, c("striped","hover","condensed")) %>% 
+  column_spec(1, bold = T, background= "#D1D5DD", width = "7em", color = "#183E87") %>% 
+  row_spec(0, bold = T, color = "white", background = "#183E87")
+```
+
+
+```{r}
+head(TAULA2_AUC,15)
+```
+
+
+# Estudi estadístic
+
+En aquest apartat realitzarem un estudi ANOVA per tal de poder assegurar si balancejant les taules de dades millora o no la classificació.
+
+En primer lloc, transfomam la taula anterior per Realitzar l'ANOVA.
+
+
+```{r}
+AUCs <- TAULA2_AUC %>% tidyr::pivot_longer(
+  cols = c("Sense balancejar", "SMOTE", "Borderline-SMOTE", "ADOMS", "ADASYN", "ROSE", "Safe-Level SMOTE", "DBSMOTE", "MWMOTE", "MDO"),
+  names_to = "metodes", 
+  values_to = "AUC"
+)
+
+head(AUCs,10)
+
+```
+
+Afegim una nova variable que combini els dos factors:
+
+```{r}
+df_variancia <- AUCs %>% mutate(factors = paste(AUCs$classificador,AUCs$metodes))
+head(df_variancia,10)
+```
+
+Abans de comprovar si les dades satisfan les condicións per realitzar un ANOVA, anem
+a veure uns quants diagrames de caixes o boxplots sobre els AUCs que tenim, ja que
+a simple vista podrem obtenir molta informació, com la mitjana, la mediana, el rang
+interquartílic, i la dispersió de les mostres. En primer lloc, vegem el diagrama de caixes en funció de la variable factors:
+
+
+```{r}
+ggplot(data = df_variancia, aes(x = factors, y = AUC)) +
+  geom_boxplot(aes(color = factors), width = 1, 
+               show.legend = FALSE) +
+  geom_jitter(aes(color = factors), alpha = 1, 
+              show.legend = FALSE, 
+              position = position_jitter(width = 0.2, seed = 0)) +
+  theme_bw()+
+  labs(title = "Boxplot dels AUC's en funció del classificador i el mètode de balanceig", x = "Factors", y = "AUC")+
+  theme(axis.text.x = element_text(angle=90, size=12,vjust = 1, hjust = 1),
+        axis.title = element_text(size=12, face = "bold"),
+        title = element_text(size=12, face = "bold"))+
+  geom_point(stat = "summary", fun = "mean", shape = 16, size = 1.5, color = "black")
+```
+
+```{r}
+
+ggplot(data = df_variancia, aes(x = metodes, y = AUC)) +
+  geom_boxplot(aes(color = metodes), width = 1, 
+               show.legend = FALSE) +
+  geom_jitter(aes(color = metodes), alpha = 1, 
+              show.legend = FALSE, 
+              position = position_jitter(width = 0.2, seed = 0)) +
+  theme_bw()+
+  labs(title = "Boxplot dels AUC's en funció del mètode de balanceig", x = "Mètodes", y = "AUC")+
+  theme(axis.text.x = element_text(angle=90, size=12,vjust = 1, hjust = 1),
+        axis.title = element_text(size=12, face = "bold"),
+        title = element_text(size=12, face = "bold"))+
+  geom_point(stat = "summary", fun = "mean", shape = 16, size = 1.5, color = "black")
+```
+
+
+
+```{r}
+ggplot(data = df_variancia, aes(x = classificador, y = AUC)) +
+  geom_boxplot(aes(color = classificador), width = 1, 
+               show.legend = FALSE) +
+  geom_jitter(aes(color = classificador), alpha = 1, 
+              show.legend = FALSE, 
+              position = position_jitter(width = 0.2, seed = 0)) +
+  theme_bw()+
+  labs(title = "Boxplot dels AUC's en funció del classificador", x = "Classificador", y = "AUC")+
+  theme(axis.text.x = element_text(angle=90, size=12,vjust = 1, hjust = 1),
+        axis.title = element_text(size=12, face = "bold"),
+        title = element_text(size=12, face = "bold"))+
+  geom_point(stat = "summary", fun = "mean", shape = 16, size = 1.5, color = "black")
+```
+
+
+A continuació volem veure si hi ha alguna diferència significativa entre la classificació utilitzant un conjunt d'entrenament sense balancejar i la classificació utilitzant un conjunt d'entrenament balancejat. Per això, vegem si hi ha un augment significatiu dels AUC sense i balancejant realitzant un ANOVA.
+
+Un l'estudi d'una ANOVA té com a objectiu resoldre un contras d'igualtat de mitjanes. Suposem que tenim $k\geq3$ subpoblacions i $\mu_1,\dots, \mu_k$ les mitjanes d'aquestes subpoblacions. Llavors ens plantejam els següent contrast:
+
+$$\begin{cases}H_0:&\mu_1=\mu_2=\cdots=\mu_k\\ H_1:& \exists i,j\in\{1,\dots,k\}: \mu_i\neq\mu_j\end{cases}$$
+
+Llavors, hem de comprovar primer que es satisfan les condicions per fer una ANOVA:
+
+1. Les $k$ mostres són independents
+2. Cada una de les $k$ subpoblacions segueixen una llei normal
+3. Totes les subpoblacions tenen la mateixa variància (homocedasticitat)
+
+La primera condició se compleix.
+
+Comprovem la segona condició realitzant alguns contrastos de normalitat:
+
+```{r}
+library(nortest)
+```
+
+```{r}
+mostres_LDA_ADASYN <- df_variancia %>% filter(factors == "LDA ADASYN") %>% pull(AUC)
+mostres_LDA_ADOMS <- df_variancia %>% filter(factors == "LDA ADOMS") %>% pull(AUC)
+mostres_LDA_Borderline_SMOTE <- df_variancia %>% filter(factors == "LDA Borderline-SMOTE") %>% pull(AUC)
+mostres_LDA_DBSMOTE <- df_variancia %>% filter(factors == "LDA DBSMOTE") %>% pull(AUC)
+mostres_LDA_MDO <- df_variancia %>% filter(factors == "LDA MDO") %>% pull(AUC)
+mostres_LDA_Safe_Level_SMOTE <- df_variancia %>% filter(factors == "LDA Safe-Level SMOTE") %>% pull(AUC)
+mostres_LDA_Sense_balancejar <- df_variancia %>% filter(factors == "LDA Sense balancejar") %>% pull(AUC)
+mostres_LDA_SMOTE <- df_variancia %>% filter(factors == "LDA SMOTE") %>% pull(AUC)
+mostres_LDA_MWMOTE <- df_variancia %>% filter(factors == "LDA MWMOTE") %>% pull(AUC)
+mostres_LDA_ROSE <- df_variancia %>% filter(factors == "LDA ROSE") %>% pull(AUC)
+mostres_NB_ADASYN <- df_variancia %>% filter(factors == "NB ADASYN") %>% pull(AUC)
+mostres_NB_ADOMS <- df_variancia %>% filter(factors == "NB ADOMS") %>% pull(AUC)
+mostres_NB_Borderline_SMOTE <- df_variancia %>% filter(factors == "NB Borderline-SMOTE") %>% pull(AUC)
+mostres_NB_DBSMOTE <- df_variancia %>% filter(factors == "NB DBSMOTE") %>% pull(AUC)
+mostres_NB_MDO <- df_variancia %>% filter(factors == "NB MDO") %>% pull(AUC)
+mostres_NB_Safe_Level_SMOTE <- df_variancia %>% filter(factors == "NB Safe-Level SMOTE") %>% pull(AUC)
+mostres_NB_Sense_balancejar <- df_variancia %>% filter(factors == "NB Sense balancejar") %>% pull(AUC)
+mostres_NB_SMOTE <- df_variancia %>% filter(factors == "NB SMOTE") %>% pull(AUC)
+mostres_NB_MWMOTE <- df_variancia %>% filter(factors == "NB MWMOTE") %>% pull(AUC)
+mostres_NB_ROSE <- df_variancia %>% filter(factors == "NB ROSE") %>% pull(AUC)
+mostres_QDA_ADASYN <- df_variancia %>% filter(factors == "QDA ADASYN") %>% pull(AUC)
+mostres_QDA_ADOMS <- df_variancia %>% filter(factors == "QDA ADOMS") %>% pull(AUC)
+mostres_QDA_Borderline_SMOTE <- df_variancia %>% filter(factors == "QDA Borderline-SMOTE") %>% pull(AUC)
+mostres_QDA_DBSMOTE <- df_variancia %>% filter(factors == "QDA DBSMOTE") %>% pull(AUC)
+mostres_QDA_MDO <- df_variancia %>% filter(factors == "QDA MDO") %>% pull(AUC)
+mostres_QDA_Safe_Level_SMOTE <- df_variancia %>% filter(factors == "QDA Safe-Level SMOTE") %>% pull(AUC)
+mostres_QDA_Sense_balancejar <- df_variancia %>% filter(factors == "QDA Sense balancejar") %>% pull(AUC)
+mostres_QDA_SMOTE <- df_variancia %>% filter(factors == "QDA SMOTE") %>% pull(AUC)
+mostres_QDA_MWMOTE <- df_variancia %>% filter(factors == "QDA MWMOTE") %>% pull(AUC)
+mostres_QDA_ROSE <- df_variancia %>% filter(factors == "QDA ROSE") %>% pull(AUC)
+mostres_RegLog_ADASYN <- df_variancia %>% filter(factors == "RegLog ADASYN") %>% pull(AUC)
+mostres_RegLog_ADOMS <- df_variancia %>% filter(factors == "RegLog ADOMS") %>% pull(AUC)
+mostres_RegLog_Borderline_SMOTE <- df_variancia %>% filter(factors == "RegLog Borderline-SMOTE") %>% pull(AUC)
+mostres_RegLog_DBSMOTE <- df_variancia %>% filter(factors == "RegLog DBSMOTE") %>% pull(AUC)
+mostres_RegLog_MDO <- df_variancia %>% filter(factors == "RegLog MDO") %>% pull(AUC)
+mostres_RegLog_Safe_Level_SMOTE <- df_variancia %>% filter(factors == "RegLog Safe-Level SMOTE") %>% pull(AUC)
+mostres_RegLog_Sense_balancejar <- df_variancia %>% filter(factors == "RegLog Sense balancejar") %>% pull(AUC)
+mostres_RegLog_SMOTE <- df_variancia %>% filter(factors == "RegLog SMOTE") %>% pull(AUC)
+mostres_RegLog_MWMOTE <- df_variancia %>% filter(factors == "RegLog MWMOTE") %>% pull(AUC)
+mostres_RegLog_ROSE <- df_variancia %>% filter(factors == "RegLog ROSE") %>% pull(AUC)
+```
+
+Apliquem els contrastos de normalitat:
+
+```{r, results='hold'}
+lillie.test(mostres_LDA_ADASYN)
+
+shapiro.test(mostres_LDA_ADASYN)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_LDA_ADOMS)
+
+shapiro.test(mostres_LDA_ADOMS)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_LDA_Borderline_SMOTE)
+
+shapiro.test(mostres_LDA_Borderline_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_LDA_DBSMOTE)
+
+shapiro.test(mostres_LDA_DBSMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_LDA_MDO)
+
+shapiro.test(mostres_LDA_MDO)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_LDA_Safe_Level_SMOTE)
+
+shapiro.test(mostres_LDA_Safe_Level_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_LDA_Sense_balancejar)
+
+shapiro.test(mostres_LDA_Sense_balancejar)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_LDA_SMOTE)
+
+shapiro.test(mostres_LDA_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_LDA_MWMOTE)
+
+shapiro.test(mostres_LDA_MWMOTE)
+```
+```{r, results='hold'}
+lillie.test(mostres_LDA_ROSE)
+
+shapiro.test(mostres_LDA_ROSE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_ADASYN)
+
+shapiro.test(mostres_NB_ADASYN)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_ADOMS)
+
+shapiro.test(mostres_NB_ADOMS)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_Borderline_SMOTE)
+
+shapiro.test(mostres_NB_Borderline_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_DBSMOTE)
+
+shapiro.test(mostres_NB_DBSMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_MDO)
+
+shapiro.test(mostres_NB_MDO)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_Safe_Level_SMOTE)
+
+shapiro.test(mostres_NB_Safe_Level_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_Sense_balancejar)
+
+shapiro.test(mostres_NB_Sense_balancejar)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_SMOTE)
+
+shapiro.test(mostres_NB_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_MWMOTE)
+
+shapiro.test(mostres_NB_MWMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_NB_ROSE)
+
+shapiro.test(mostres_NB_ROSE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_ADASYN)
+
+shapiro.test(mostres_QDA_ADASYN)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_ADOMS)
+
+shapiro.test(mostres_QDA_ADOMS)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_Borderline_SMOTE)
+
+shapiro.test(mostres_QDA_Borderline_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_DBSMOTE)
+
+shapiro.test(mostres_QDA_DBSMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_MDO)
+
+shapiro.test(mostres_QDA_MDO)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_Safe_Level_SMOTE)
+
+shapiro.test(mostres_QDA_Safe_Level_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_Sense_balancejar)
+
+shapiro.test(mostres_QDA_Sense_balancejar)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_SMOTE)
+
+shapiro.test(mostres_QDA_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_MWMOTE)
+
+shapiro.test(mostres_QDA_MWMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_QDA_ROSE)
+
+shapiro.test(mostres_QDA_ROSE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_ADASYN)
+
+shapiro.test(mostres_RegLog_ADASYN)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_ADOMS)
+
+shapiro.test(mostres_RegLog_ADOMS)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_Borderline_SMOTE)
+
+shapiro.test(mostres_RegLog_Borderline_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_DBSMOTE)
+
+shapiro.test(mostres_RegLog_DBSMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_MDO)
+
+shapiro.test(mostres_RegLog_MDO)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_Safe_Level_SMOTE)
+
+shapiro.test(mostres_RegLog_Safe_Level_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_Sense_balancejar)
+
+shapiro.test(mostres_RegLog_Sense_balancejar)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_SMOTE)
+
+shapiro.test(mostres_RegLog_SMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_MWMOTE)
+
+shapiro.test(mostres_RegLog_MWMOTE)
+```
+
+```{r, results='hold'}
+lillie.test(mostres_RegLog_ROSE)
+
+shapiro.test(mostres_RegLog_ROSE)
+```
+
+Comprovant amb 2 tests de normalitat, podem concloure que no hem obtingut evidències suficients per rebutjar la normalitat de les classes. Per tant, acceptam la normalitat de les classes.
+
+Finalment, vegem la homocedasticitat:
+
+Como hem vist anteriorment, les poblacions provenen d'una normal, per tant utilitzarem el test de Bartlett per veure la homocedasticitat:
+
+```{r}
+bartlett.test(df_variancia$AUC~df_variancia$factors)
+```
+Com hem obtingut un p-valor de 0.1297, no tenim evidències suficients com per rebut-
+jar la homocedasticidad. Per tant, podem concloure que les dades satisfan les condici-
+ons per realitzar un ANOVA.
+
+Anem a fer l'ANOVA de 2 vies:
+
+```{r}
+summary(aov(AUC~as.factor(metodes)*as.factor(classificador), data = AUCs))
+```
+
+Finalment, farem un gràfic per veure la interacció que hi ha entre els dos factors.
+
+```{r}
+interaction.plot(as.factor(AUCs$metodes), as.factor(AUCs$classificador), AUCs$AUC)
+```
+
+
+```{r}
+mitjanes <- df_variancia %>% dplyr::select(AUC,factors) %>% 
+  group_by(factors) %>%  summarise_all(mean)
+head(mitjanes,10)
+```
+
+
+```{r}
+ggplot(mitjanes, aes(x = factors, y = AUC)) +
+  geom_segment(aes(x = factors, xend = factors, y = 0, yend = AUC), col="gray") +
+  geom_point(size = 2, pch = 21, bg = rep(c(rep("blue", 9), "red"),4), col = "black") +
+  theme_bw()+
+  labs(title = "Mitjanes dels AUCs de cada mètode i classificador", x = "Factors", y = "AUC")+
+  theme(axis.text.x = element_text(angle=90, size=8,vjust = 1, hjust = 1),
+        axis.title = element_text(size=12, face = "bold"),
+        title = element_text(size=12, face = "bold"))+
+  geom_text(aes(label = round(AUC,3)), color = "black", size = 1.8, nudge_y = 0.03 )
+```
