@@ -1,0 +1,370 @@
+---
+title: "Dades"
+author: "Irene LiFeng Julià Pérez"
+format:
+  html:
+    toc: true
+    toc-depth: 5
+    theme: united
+editor: visual
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(GGally)
+library(smotefamily)
+library(factoextra)
+library(dbscan)
+library(fpc)
+library(igraph)
+library(ROSE)
+library(dplyr)
+```
+
+# Tractament de dades
+
+En aquest document es carregaran les dades, i es dividiran entre el conjunt d'entrenament i el conjunt de validació.
+
+## Dades
+
+
+### abalone9_18
+
+```{r, eval=FALSE}
+abalone9_18 <- read_csv("Taules_de_dades/abalone9_18/abalone9-18.dat", show_col_types = FALSE)
+abalone9_18 <- abalone9_18 %>% 
+  mutate(idx = c(1:nrow(abalone9_18))) %>% relocate(idx) %>% dplyr::select(-Sex)
+abalone9_18 %>% glimpse()
+
+(IR_abalone9_18 <- round(as.numeric(table(abalone9_18$Class)[1]/table(abalone9_18$Class)[2]),3))
+```
+
+```{r, eval=FALSE}
+
+idx_train_abalone9_18 = sample(1:nrow(abalone9_18), round(nrow(abalone9_18)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+abalone9_18_train <- abalone9_18 %>%
+  slice(idx_train_abalone9_18)
+
+abalone9_18_test <- abalone9_18 %>%
+  slice(c(1:nrow(abalone9_18))[-idx_train_abalone9_18])
+
+table(abalone9_18_train$Class)
+table(abalone9_18_test$Class)
+
+#write.csv(abalone9_18_train, file = "Taules_de_dades/abalone9_18/abalone9_18_train.csv", row.names = FALSE)
+#write.csv(abalone9_18_test, file = "Taules_de_dades/abalone9_18/abalone9_18_test.csv", row.names = FALSE)page-blocks-1-3_vs_4
+```
+
+
+### page_blocks_1_3_4
+
+```{r, eval=FALSE}
+page_blocks_1_3_4 <- read_csv("Taules_de_dades/page_blocks_1_3_4/page-blocks-1-3_vs_4.dat", show_col_types = FALSE)
+page_blocks_1_3_4 <- page_blocks_1_3_4 %>% 
+  mutate(idx = c(1:nrow(page_blocks_1_3_4))) %>% relocate(idx)
+page_blocks_1_3_4 %>% glimpse()
+
+(IR_page_blocks_1_3_4 <- round(as.numeric(table(page_blocks_1_3_4$Class)[1]/table(page_blocks_1_3_4$Class)[2]),3))
+```
+
+```{r, eval=FALSE}
+set.seed(22)
+
+idx_train_page_blocks_1_3_4 = sample(1:nrow(page_blocks_1_3_4), round(nrow(page_blocks_1_3_4)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+page_blocks_1_3_4_train <- page_blocks_1_3_4 %>%
+  slice(idx_train_page_blocks_1_3_4)
+
+page_blocks_1_3_4_test <- page_blocks_1_3_4 %>%
+  slice(c(1:nrow(page_blocks_1_3_4))[-idx_train_page_blocks_1_3_4])
+
+table(page_blocks_1_3_4_train$Class)
+table(page_blocks_1_3_4_test$Class)
+
+#write.csv(page_blocks_1_3_4_train, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train.csv", row.names = FALSE)
+#write.csv(page_blocks_1_3_4_test, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_test.csv", row.names = FALSE)
+```
+
+### glass_0_1_6_vs_2
+
+```{r, eval=FALSE}
+glass_0_1_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass-0-1-6_vs_2.dat", show_col_types = FALSE)
+glass_0_1_6_vs_2 <- glass_0_1_6_vs_2 %>% 
+  mutate(idx = c(1:nrow(glass_0_1_6_vs_2))) %>% relocate(idx)
+glass_0_1_6_vs_2 %>% glimpse()
+
+(IR_glass_0_1_6_vs_2 <- round(as.numeric(table(glass_0_1_6_vs_2$Class)[1]/table(glass_0_1_6_vs_2$Class)[2]),3))
+```
+
+```{r, eval=FALSE}
+set.seed(4)
+
+idx_train_glass_0_1_6_vs_2 = sample(1:nrow(glass_0_1_6_vs_2), round(nrow(glass_0_1_6_vs_2)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+glass_0_1_6_vs_2_train <- glass_0_1_6_vs_2 %>%
+  slice(idx_train_glass_0_1_6_vs_2)
+
+glass_0_1_6_vs_2_test <- glass_0_1_6_vs_2 %>%
+  slice(c(1:nrow(glass_0_1_6_vs_2))[-idx_train_glass_0_1_6_vs_2])
+
+table(glass_0_1_6_vs_2_train$Class)
+table(glass_0_1_6_vs_2_test$Class)
+
+#write.csv(glass_0_1_6_vs_2_train, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train.csv", row.names = FALSE)
+#write.csv(glass_0_1_6_vs_2_test, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_test.csv", row.names = FALSE)
+```
+
+
+### glass_0_1_4_6_vs_2
+
+```{r, eval=FALSE}
+glass_0_1_4_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass-0-1-4-6_vs_2.dat", show_col_types = FALSE)
+glass_0_1_4_6_vs_2 <- glass_0_1_4_6_vs_2 %>% 
+  mutate(idx = c(1:nrow(glass_0_1_4_6_vs_2))) %>% relocate(idx)
+glass_0_1_4_6_vs_2 %>% glimpse()
+
+(IR_glass_0_1_4_6_vs_2 <- round(as.numeric(table(glass_0_1_4_6_vs_2$Class)[1]/table(glass_0_1_4_6_vs_2$Class)[2]),3))
+```
+
+```{r, eval=FALSE}
+set.seed(42112)
+
+idx_train_glass_0_1_4_6_vs_2 = sample(1:nrow(glass_0_1_4_6_vs_2), round(nrow(glass_0_1_4_6_vs_2)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+glass_0_1_4_6_vs_2_train <- glass_0_1_4_6_vs_2 %>%
+  slice(idx_train_glass_0_1_4_6_vs_2)
+
+glass_0_1_4_6_vs_2_test <- glass_0_1_4_6_vs_2 %>%
+  slice(c(1:nrow(glass_0_1_4_6_vs_2))[-idx_train_glass_0_1_4_6_vs_2])
+
+table(glass_0_1_4_6_vs_2_train$Class)
+table(glass_0_1_4_6_vs_2_test$Class)
+
+#write.csv(glass_0_1_4_6_vs_2_train, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train.csv", row.names = FALSE)
+#write.csv(glass_0_1_4_6_vs_2_test, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_test.csv", row.names = FALSE)
+```
+
+
+### abalone19
+
+```{r, eval=FALSE}
+abalone19 <- read_csv("Taules_de_dades/abalone19/abalone19.dat", show_col_types = FALSE)
+abalone19 <- abalone19 %>% 
+  mutate(idx = c(1:nrow(abalone19))) %>% relocate(idx)
+abalone19 %>% glimpse()
+
+abalone19_1 <- abalone19 %>% dplyr::select(-Sex)
+
+IR_abalone19 <- round(as.numeric(table(abalone19$Class)[1]/table(abalone19$Class)[2]),3);IR_abalone19
+table(abalone19$Class)
+```
+
+```{r, eval=FALSE}
+set.seed(14)
+
+idx_train_abalone19 = sample(1:nrow(abalone19), round(nrow(abalone19)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+abalone19_train <- abalone19_1 %>%
+  slice(idx_train_abalone19)
+
+abalone19_test <- abalone19_1 %>%
+  slice(c(1:nrow(abalone19))[-idx_train_abalone19])
+
+round(as.numeric(table(abalone19_train$Class)[1]/table(abalone19_train$Class)[2]),3)
+round(as.numeric(table(abalone19_test$Class)[1]/table(abalone19_test$Class)[2]),3)
+table(abalone19_train$Class)
+table(abalone19_test$Class)
+# write.csv(abalone19_train, file = "Taules_de_dades/abalone19/abalone19_train.csv", row.names = FALSE)
+# write.csv(abalone19_test, file = "Taules_de_dades/abalone19/abalone19_test.csv", row.names = FALSE)
+```
+
+Degut a un IR excessivament elevat, hem agafat una submostra de la classe majoritària i hem cormat una taula de dades més petita:
+
+#### abalone19_peque
+
+```{r, eval=FALSE}
+idx_pos <- abalone19_1 %>% filter(Class == "negative") %>% pull(idx)
+llevam <- sample(idx_pos,size = 3850, replace=FALSE)
+abalone19_peque <- abalone19_1 %>% filter(!(idx %in% llevam)) 
+abalone19_peque <- abalone19_peque %>% mutate(idx = c(1:nrow(abalone19_peque)))
+table(abalone19_peque$Class)
+# write.csv(abalone19_peque, file = "Taules_de_dades/abalone19/abalone19_peque.csv", row.names = FALSE)
+```
+
+```{r, eval=FALSE}
+set.seed(147)
+
+idx_train_abalone19_peque = sample(1:nrow(abalone19_peque), round(nrow(abalone19_peque)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+abalone19_peque_train <- abalone19_peque %>%
+  slice(idx_train_abalone19_peque)
+
+abalone19_peque_test <- abalone19_peque %>%
+  slice(c(1:nrow(abalone19_peque))[-idx_train_abalone19_peque])
+
+round(as.numeric(table(abalone19_peque_train$Class)[1]/table(abalone19_peque_train$Class)[2]),3)
+round(as.numeric(table(abalone19_peque_test$Class)[1]/table(abalone19_peque_test$Class)[2]),3)
+table(abalone19_peque_train$Class)
+table(abalone19_peque_test$Class)
+#write.csv(abalone19_peque_train, file = "Taules_de_dades/abalone19/abalone19_peque_train.csv", row.names = FALSE)
+#write.csv(abalone19_peque_test, file = "Taules_de_dades/abalone19/abalone19_peque_test.csv", row.names = FALSE)
+```
+
+### page-blocks0
+
+```{r, eval=FALSE}
+page_blocks0 <- read_csv("Taules_de_dades/page_blocks0/page-blocks0.dat", show_col_types = FALSE)
+page_blocks0 <- page_blocks0 %>% 
+  mutate(idx = c(1:nrow(page_blocks0))) %>% relocate(idx)
+page_blocks0 %>% glimpse()
+
+(IR_page_blocks0 <- round(as.numeric(table(page_blocks0$Class)[1]/table(page_blocks0$Class)[2]),3))
+
+
+```
+
+```{r, eval=FALSE}
+set.seed(4226)
+
+idx_train_page_blocks0 = sample(1:nrow(page_blocks0), round(nrow(page_blocks0)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+page_blocks0_train <- page_blocks0 %>%
+  slice(idx_train_page_blocks0)
+
+page_blocks0_test <- page_blocks0 %>%
+  slice(c(1:nrow(page_blocks0))[-idx_train_page_blocks0])
+
+round(as.numeric(table(page_blocks0_train$Class)[1]/table(page_blocks0_train$Class)[2]),3)
+round(as.numeric(table(page_blocks0_test$Class)[1]/table(page_blocks0_test$Class)[2]),3)
+
+#write.csv(page_blocks0_train, file = "page_blocks0_train.csv", row.names = FALSE)
+#write.csv(page_blocks0_test, file = "page_blocks0_test.csv", row.names = FALSE)
+```
+
+
+```{r, eval=FALSE}
+page_blocks0 <- read_csv("Taules_de_dades/page_blocks0/page-blocks0.dat", show_col_types = FALSE)
+page_blocks0 <- page_blocks0 %>% 
+  mutate(idx = c(1:nrow(page_blocks0))) %>% relocate(idx)
+
+page_blocks0_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train.csv", show_col_types = FALSE)
+page_blocks0_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_test.csv", show_col_types = FALSE)
+table(page_blocks0$Class)
+```
+
+Degut a la magnitud de les dades, hem hagut de reduir la mida i hem creat dos conjunts de dades més petits preservant el mateix IR:
+
+#### page_blocks0_1
+
+```{r, eval=FALSE}
+idx_neg <- page_blocks0 %>% filter(Class=="negative") %>% pull(idx)
+idx_pos <- page_blocks0 %>% filter(Class=="positive") %>% pull(idx)
+
+prova_neg <- sample(idx_neg, 500, replace=FALSE)
+prova_pos <- sample(idx_pos, 56, replace=FALSE)
+```
+
+
+```{r, eval=FALSE}
+page_blocks0_1 <- page_blocks0 %>% filter(idx %in% prova_neg | idx %in% prova_pos)
+# write.csv(page_blocks0_1, file = "Taules_de_dades/page_blocks0/page_blocks0_1.csv", row.names = FALSE)
+```
+
+```{r, eval=FALSE}
+set.seed(22)
+
+idx_train_prova = sample(1:nrow(prova), round(nrow(prova)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+prova_train <- prova %>%
+  slice(idx_train_prova)
+
+prova_test <- prova %>%
+  slice(c(1:nrow(prova))[-idx_train_prova])
+
+table(prova_train$Class)
+table(prova_test$Class)
+
+round(as.numeric(table(prova_train$Class)[1]/table(prova_train$Class)[2]),3)
+round(as.numeric(table(prova_test$Class)[1]/table(prova_test$Class)[2]),3)
+
+# write.csv(prova_train, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train.csv", row.names = FALSE)
+#write.csv(prova_test, file = "Taules_de_dades/page_blocks0/page_blocks0_1_test.csv", row.names = FALSE)
+```
+
+```{r, eval=FALSE}
+page_blocks0_1 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1.csv", show_col_types = FALSE)
+idx1 <- page_blocks0_1$idx
+```
+
+#### page_blocks0_2
+
+```{r, eval=FALSE}
+idx2_neg <- page_blocks0 %>% filter(!(idx %in% idx1)) %>% filter(Class=="negative") %>% pull(idx)
+idx2_pos <- page_blocks0 %>% filter(!(idx %in% idx1)) %>% filter(Class=="positive") %>% pull(idx)
+
+prova_neg <- sample(idx2_neg, 500, replace=FALSE)
+prova_pos <- sample(idx2_pos, 56, replace=FALSE)
+```
+
+```{r, eval=FALSE}
+page_blocks0_2 <- page_blocks0 %>% filter(idx %in% prova_neg | idx %in% prova_pos)
+#write.csv(page_blocks0_2, file = "Taules_de_dades/page_blocks0/page_blocks0_2.csv", row.names = FALSE)
+```
+
+```{r, eval=FALSE}
+page_blocks0_1 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1.csv", show_col_types = FALSE)
+page_blocks0_2 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2.csv", show_col_types = FALSE)
+```
+
+```{r, eval=FALSE}
+set.seed(22)
+
+idx_train_page_blocks0_2 = sample(1:nrow(page_blocks0_2), round(nrow(page_blocks0_2)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+page_blocks0_2_train <- page_blocks0_2 %>%
+  slice(idx_train_page_blocks0_2)
+
+page_blocks0_2_test <- page_blocks0_2 %>%
+  slice(c(1:nrow(page_blocks0_2))[-idx_train_page_blocks0_2])
+
+table(page_blocks0_2_train$Class)
+table(page_blocks0_2_test$Class)
+
+round(as.numeric(table(page_blocks0_2_train$Class)[1]/table(page_blocks0_2_train$Class)[2]),3)
+round(as.numeric(table(page_blocks0_2_test$Class)[1]/table(page_blocks0_2_test$Class)[2]),3)
+
+#write.csv(page_blocks0_2_train, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train.csv", row.names = FALSE)
+#write.csv(page_blocks0_2_test, file = "Taules_de_dades/page_blocks0/page_blocks0_2_test.csv", row.names = FALSE)
+```
+
+
+
+
+
+### glass2
+
+```{r, eval=FALSE}
+glass2 <- read_csv("Taules_de_dades/glass2/glass2.dat", show_col_types = FALSE)
+glass2 <- glass2 %>% 
+  mutate(idx = c(1:nrow(glass2))) %>% relocate(idx)
+glass2 %>% glimpse()
+
+(IR_glass2 <- round(as.numeric(table(glass2$Class)[1]/table(glass2$Class)[2]),3))
+```
+
+```{r, eval=FALSE}
+set.seed(124)
+
+idx_train_glass2 = sample(1:nrow(glass2), round(nrow(glass2)*0.8), replace = FALSE) # selección aleatoria de los índicies del training
+
+glass2_train <- glass2 %>%
+  slice(idx_train_glass2)
+
+glass2_test <- glass2 %>%
+  slice(c(1:nrow(glass2))[-idx_train_glass2])
+
+#write.csv(glass2_train, file = "Taules_de_dades/glass2/glass2_train.csv", row.names = FALSE)
+#write.csv(glass2_test, file = "Taules_de_dades/glass2/glass2_test.csv", row.names = FALSE)
+```
