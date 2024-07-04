@@ -61,7 +61,55 @@ El mètode SMOTE *(Synthetic Minority Over-sampling Technique)* és un mètode d
 
 Vegem l'algoritme de l'SMOTE:
 
+
 ```{r}
+#| label: Algoritme SMOTE
+SMOTE <- function(X,N,k){
+  # X: data frame desbalancejat
+  # N: nombre de noves mostres
+  # k: nombre de veïns que s'utilitzaran en k-NN
+  # output: dataframe amb les noves observacions sintètiques
+  
+  
+  # escollim la classe positiva:
+  
+  X_pos <- X %>% 
+    filter(Class == "positive")
+  pos_idx <- X_pos %>% pull(idx)
+  
+  # Per una mostra es calculen els seus knn i es crearan k mostres noves mitjançant interpolació
+  # Per tant, hem d'escollir N/k mostres aleatories:
+  
+  # select_random = sample(pos_idx, floor(N/k), replace = FALSE)
+
+  new_dataset <- X
+  
+  for (j in pos_idx){               # Per cada una,
+    veins_j <- NN(X_pos,j,k)          # Calculam els seus veïns
+    kNN <- X_pos %>% 
+      filter(idx %in% veins_j) %>% 
+      dplyr::select(-c(idx,Class))               # escollim les variables numèriques
+    
+    xj <- X %>% filter(idx == j) %>% dplyr::select(-c(idx,Class))
+    
+    NN_j <- rbind(xj, kNN)
+
+    for (i in c(1:N)){ # per cada veí
+      q <- sample(c(2:(k+1)),1)
+      dif = NN_j[q,]-NN_j[1,]                 # calculam el vector posició
+      NN_j = rbind(NN_j,NN_j[1,]+runif(1)*dif)  # Cream una nova mostra sintètica
+    }
+    
+    datos_sinteticos <- NN_j[c((k+2):nrow(NN_j)),] %>% 
+      mutate(idx = 0, Class = "positive") %>% relocate(idx)
+
+    new_dataset <- rbind(new_dataset, datos_sinteticos) # afegim les mostres sintètiques al nou dataset
+  }
+  return(new_dataset)
+}
+```
+
+```{.r}
 #| label: Algoritme SMOTE
 SMOTE <- function(X,N,k){
   # X: data frame desbalancejat
@@ -918,10 +966,10 @@ Balanceig:
 ```{r, eval=FALSE}
 # Balanceig de pima amb SMOTE
 
-abalone9_18_train_SMOTE <- SMOTE(abalone9_18_train, 300,10)
+abalone9_18_train_SMOTE <- SMOTE(abalone9_18_train, 15,10)
 table(abalone9_18_train_SMOTE$Class)
 table(abalone9_18_train$Class)
-#write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_SMOTE.csv", row.names = FALSE)
+#write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/SMOTE/abalone9_18_train_SMOTE.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -936,10 +984,10 @@ Balanceig:
 ```{r, eval=FALSE}
 # Balanceig de pima amb SMOTE
 
-page_blocks_1_3_4_train_SMOTE <- SMOTE(page_blocks_1_3_4_train, 250,15)
+page_blocks_1_3_4_train_SMOTE <- SMOTE(page_blocks_1_3_4_train, 20,15)
 table(page_blocks_1_3_4_train_SMOTE$Class)
 table(page_blocks_1_3_4_train$Class)
-# write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_SMOTE.csv", row.names = FALSE)
+# write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks_1_3_4_train_SMOTE.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -954,10 +1002,10 @@ Balanceig:
 ```{r, eval=FALSE}
 # Balanceig de pima amb SMOTE
 
-glass_0_1_6_vs_2_train_SMOTE <- SMOTE(glass_0_1_6_vs_2_train, 110,8)
+glass_0_1_6_vs_2_train_SMOTE <- SMOTE(glass_0_1_6_vs_2_train, 11,8)
 table(glass_0_1_6_vs_2_train_SMOTE$Class)
 table(glass_0_1_6_vs_2_train$Class)
-#write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_SMOTE.csv", row.names = FALSE)
+#write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass_0_1_6_vs_2_train_SMOTE.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -972,10 +1020,10 @@ Balanceig:
 ```{r, eval=FALSE}
 # Balanceig de pima amb SMOTE
 
-glass_0_1_4_6_vs_2_train_SMOTE <- SMOTE(glass_0_1_4_6_vs_2_train, 110,8)
+glass_0_1_4_6_vs_2_train_SMOTE <- SMOTE(glass_0_1_4_6_vs_2_train, 10,8)
 table(glass_0_1_4_6_vs_2_train_SMOTE$Class)
 table(glass_0_1_4_6_vs_2_train$Class)
-#write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_SMOTE.csv", row.names = FALSE)
+# write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass_0_1_4_6_vs_2_train_SMOTE.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -988,9 +1036,9 @@ table(glass_0_1_4_6_vs_2_train_SMOTE$Class)
 Balanceig:
 
 ```{r, eval=FALSE}
-# Balanceig de pima amb SMOTE
+# Balanceig amb SMOTE
 
-page_blocks0_train_SMOTE <- SMOTE(page_blocks0_train, 2500, 8)
+page_blocks0_train_SMOTE <- SMOTE(page_blocks0_train, 250, 8)
 table(page_blocks0_train_SMOTE$Class)
 # write.csv(page_blocks0_train_SMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_SMOTE.csv", row.names = FALSE)
 ```
@@ -1007,10 +1055,10 @@ Balanceig:
 ```{r, eval=FALSE}
 # Balanceig de pima amb SMOTE
 
-page_blocks0_1_train_SMOTE <- SMOTE(page_blocks0_1_train, 350, 10)
+page_blocks0_1_train_SMOTE <- SMOTE(page_blocks0_1_train, 7, 10)
 table(page_blocks0_1_train_SMOTE$Class)
 table(page_blocks0_1_train$Class)
-#write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_SMOTE.csv", row.names = FALSE)
+#write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks0_1_train_SMOTE.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -1025,10 +1073,10 @@ Balanceig:
 ```{r, eval=FALSE}
 # Balanceig de pima amb SMOTE
 
-page_blocks0_2_train_SMOTE <- SMOTE(page_blocks0_2_train, 350, 10)
+page_blocks0_2_train_SMOTE <- SMOTE(page_blocks0_2_train, 8, 10)
 table(page_blocks0_2_train_SMOTE$Class)
 table(page_blocks0_2_train$Class)
-#write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_SMOTE.csv", row.names = FALSE)
+#write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks0_2_train_SMOTE.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -1043,10 +1091,10 @@ Balanceig:
 ```{r, eval=FALSE}
 # Balanceig de pima amb SMOTE
 
-abalone19_peque_train_SMOTE <- SMOTE(abalone19_peque_train, 175,7)
+abalone19_peque_train_SMOTE <- SMOTE(abalone19_peque_train, 8,7)
 table(abalone19_peque_train_SMOTE$Class)
 table(abalone19_peque_train$Class)
-# write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_SMOTE.csv", row.names = FALSE)
+# write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/SMOTE/abalone19_peque_train_SMOTE.csv", row.names = FALSE)
 ```
 
 ```{r, eval=FALSE}
@@ -1062,10 +1110,10 @@ Balanceig:
 ```{r, eval=FALSE}
 # Balanceig de glass2 amb SMOTE
 
-glass2_train_SMOTE <- SMOTE(glass2_train, 120, 10)
+glass2_train_SMOTE <- SMOTE(glass2_train, 11, 10)
 table(glass2_train$Class)
 table(glass2_train_SMOTE$Class)
-#write.csv(glass2_train_SMOTE, file = "Taules_de_dades/glass2/glass2_train_SMOTE.csv", row.names = FALSE)
+# write.csv(glass2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass2_train_SMOTE.csv", row.names = FALSE)
 ```
 
 ```{r}

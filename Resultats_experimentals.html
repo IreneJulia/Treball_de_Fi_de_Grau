@@ -559,7 +559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Dades balancejades</h1>
 <p>A continuació carregarem les taules de dades balancejades realitzades en el document “Balanceig.qmd”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/SMOTE/abalone9_18_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_BorderlineSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train_BorderlineSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_ADOMS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train_ADOMS.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_ADASYN <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train_ADASYN.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
@@ -570,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_ROSE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train_ROSE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/SMOTE/page_blocks_1_3_4_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_BorderlineSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_BorderlineSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_ADOMS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ADOMS.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_ADASYN <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ADASYN.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
@@ -581,7 +581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_ROSE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ROSE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/SMOTE/glass_0_1_6_vs_2_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_BorderlineSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_BorderlineSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_ADOMS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ADOMS.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_ADASYN <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ADASYN.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
@@ -592,7 +592,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ROSE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/SMOTE/glass_0_1_4_6_vs_2_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_BorderlineSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_BorderlineSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_ADOMS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ADOMS.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_ADASYN <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ADASYN.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
@@ -603,7 +603,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ROSE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19/abalone19_peque_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/SMOTE/abalone19_peque_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_BorderlineSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19/abalone19_peque_train_BorderlineSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_ADOMS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19/abalone19_peque_train_ADOMS.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_ADASYN <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19/abalone19_peque_train_ADASYN.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
@@ -614,7 +614,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_ROSE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19/abalone19_peque_train_ROSE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/SMOTE/page_blocks0_1_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_BorderlineSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train_BorderlineSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_ADOMS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train_ADOMS.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_ADASYN <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train_ADASYN.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
@@ -625,7 +625,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_ROSE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train_ROSE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/SMOTE/page_blocks0_2_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_BorderlineSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2_train_BorderlineSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_ADOMS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2_train_ADOMS.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_ADASYN <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2_train_ADASYN.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
@@ -636,7 +636,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2_train_ROSE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>glass2_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>glass2_train_SMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/SMOTE/glass2_train_SMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>glass2_train_BorderlineSMOTE <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_train_BorderlineSMOTE.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>glass2_train_ADOMS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_train_ADOMS.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>glass2_train_ADASYN <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_train_ADASYN.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
@@ -710,7 +710,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">abalone9_18</td>
 <td style="text-align: center;">553</td>
-<td style="text-align: center;">332</td>
+<td style="text-align: center;">512</td>
 <td style="text-align: center;">127</td>
 <td style="text-align: center;">332</td>
 <td style="text-align: center;">483</td>
@@ -723,7 +723,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">page_blocks_1_3_4</td>
 <td style="text-align: center;">361</td>
-<td style="text-align: center;">257</td>
+<td style="text-align: center;">357</td>
 <td style="text-align: center;">89</td>
 <td style="text-align: center;">192</td>
 <td style="text-align: center;">309</td>
@@ -736,7 +736,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">glass_0_1_6_vs_2</td>
 <td style="text-align: center;">141</td>
-<td style="text-align: center;">113</td>
+<td style="text-align: center;">156</td>
 <td style="text-align: center;">112</td>
 <td style="text-align: center;">123</td>
 <td style="text-align: center;">126</td>
@@ -749,7 +749,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">glass_0_1_4_6_vs_2</td>
 <td style="text-align: center;">151</td>
-<td style="text-align: center;">117</td>
+<td style="text-align: center;">143</td>
 <td style="text-align: center;">101</td>
 <td style="text-align: center;">123</td>
 <td style="text-align: center;">135</td>
@@ -762,7 +762,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">abalone19_peque</td>
 <td style="text-align: center;">234</td>
-<td style="text-align: center;">200</td>
+<td style="text-align: center;">225</td>
 <td style="text-align: center;">110</td>
 <td style="text-align: center;">205</td>
 <td style="text-align: center;">198</td>
@@ -775,7 +775,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">page_blocks0_1</td>
 <td style="text-align: center;">404</td>
-<td style="text-align: center;">391</td>
+<td style="text-align: center;">328</td>
 <td style="text-align: center;">291</td>
 <td style="text-align: center;">366</td>
 <td style="text-align: center;">363</td>
@@ -788,7 +788,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">page_blocks0_2</td>
 <td style="text-align: center;">405</td>
-<td style="text-align: center;">390</td>
+<td style="text-align: center;">360</td>
 <td style="text-align: center;">290</td>
 <td style="text-align: center;">360</td>
 <td style="text-align: center;">358</td>
@@ -801,7 +801,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">glass2</td>
 <td style="text-align: center;">158</td>
-<td style="text-align: center;">133</td>
+<td style="text-align: center;">156</td>
 <td style="text-align: center;">85</td>
 <td style="text-align: center;">123</td>
 <td style="text-align: center;">137</td>
@@ -1433,10 +1433,10 @@ Setting direction: controls &lt; cases</code></pre>
 Setting direction: controls &lt; cases</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Area under the curve: 0.9368
-Area under the curve: 0.9522
-Area under the curve: 0.9007
-Area under the curve: 0.8904</code></pre>
+<pre><code>Area under the curve: 0.9353
+Area under the curve: 0.9338
+Area under the curve: 0.8993
+Area under the curve: 0.8919</code></pre>
 </div>
 </div>
 </section>
@@ -1473,10 +1473,10 @@ Setting direction: controls &lt; cases</code></pre>
 Setting direction: controls &lt; cases</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Area under the curve: 0.9469
-Area under the curve: 0.9912
-Area under the curve: 0.9502
-Area under the curve: 0.9792</code></pre>
+<pre><code>Area under the curve: 0.7705
+Area under the curve: 0.988
+Area under the curve: 0.9513
+Area under the curve: 0.9759</code></pre>
 </div>
 </div>
 </section>
@@ -1507,10 +1507,10 @@ Setting direction: controls &lt; cases</code></pre>
 Setting direction: controls &lt; cases</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Area under the curve: 0.9118
-Area under the curve: 0.9118
-Area under the curve: 0.7353
-Area under the curve: 0.6985</code></pre>
+<pre><code>Area under the curve: 0.9265
+Area under the curve: 0.9191
+Area under the curve: 0.7059
+Area under the curve: 0.6838</code></pre>
 </div>
 </div>
 </section>
@@ -1541,9 +1541,9 @@ Setting direction: controls &lt; cases</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Area under the curve: 0.8649
-Area under the curve: 0.8446
-Area under the curve: 0.6216
-Area under the curve: 0.6757</code></pre>
+Area under the curve: 0.8514
+Area under the curve: 0.5811
+Area under the curve: 0.6689</code></pre>
 </div>
 </div>
 </section>
@@ -1573,10 +1573,10 @@ Setting direction: controls &lt; cases</code></pre>
 Setting direction: controls &lt; cases</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Area under the curve: 0.7956
-Area under the curve: 0.803
-Area under the curve: 0.6281
-Area under the curve: 0.6404</code></pre>
+<pre><code>Area under the curve: 0.803
+Area under the curve: 0.798
+Area under the curve: 0.6232
+Area under the curve: 0.6478</code></pre>
 </div>
 </div>
 </section>
@@ -1610,10 +1610,10 @@ Setting direction: controls &lt; cases</code></pre>
 Setting direction: controls &lt; cases</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Area under the curve: 0.9774
-Area under the curve: 0.9812
-Area under the curve: 0.9646
-Area under the curve: 0.9611</code></pre>
+<pre><code>Area under the curve: 0.9767
+Area under the curve: 0.975
+Area under the curve: 0.9639
+Area under the curve: 0.958</code></pre>
 </div>
 </div>
 </section>
@@ -1647,10 +1647,10 @@ Setting direction: controls &lt; cases</code></pre>
 Setting direction: controls &lt; cases</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Area under the curve: 0.8092
-Area under the curve: 0.775
-Area under the curve: 0.7645
-Area under the curve: 0.8243</code></pre>
+<pre><code>Area under the curve: 0.8928
+Area under the curve: 0.7855
+Area under the curve: 0.7658
+Area under the curve: 0.8184</code></pre>
 </div>
 </div>
 </section>
@@ -1683,10 +1683,10 @@ Setting direction: controls &lt; cases</code></pre>
 Setting direction: controls &lt; cases</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Area under the curve: 0.8205
-Area under the curve: 0.8333
-Area under the curve: 0.8462
-Area under the curve: 0.8205</code></pre>
+<pre><code>Area under the curve: 0.8141
+Area under the curve: 0.8269
+Area under the curve: 0.8397
+Area under the curve: 0.8077</code></pre>
 </div>
 </div>
 </section>
@@ -4144,7 +4144,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">RegLog</td>
 <td style="text-align: center;">0.9389706</td>
-<td style="text-align: center;">0.9367647</td>
+<td style="text-align: center;">0.9352941</td>
 <td style="text-align: center;">0.9522059</td>
 <td style="text-align: center;">0.9536765</td>
 <td style="text-align: center;">0.9330882</td>
@@ -4157,7 +4157,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">RegLog</td>
 <td style="text-align: center;">0.8121577</td>
-<td style="text-align: center;">0.9468784</td>
+<td style="text-align: center;">0.7705367</td>
 <td style="text-align: center;">0.8576123</td>
 <td style="text-align: center;">0.9386637</td>
 <td style="text-align: center;">0.8515882</td>
@@ -4170,7 +4170,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">RegLog</td>
 <td style="text-align: center;">0.9044118</td>
-<td style="text-align: center;">0.9117647</td>
+<td style="text-align: center;">0.9264706</td>
 <td style="text-align: center;">0.7500000</td>
 <td style="text-align: center;">0.7794118</td>
 <td style="text-align: center;">0.9117647</td>
@@ -4196,7 +4196,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">RegLog</td>
 <td style="text-align: center;">0.8103448</td>
-<td style="text-align: center;">0.7955665</td>
+<td style="text-align: center;">0.8029557</td>
 <td style="text-align: center;">0.8078818</td>
 <td style="text-align: center;">0.7832512</td>
 <td style="text-align: center;">0.8054187</td>
@@ -4209,7 +4209,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">RegLog</td>
 <td style="text-align: center;">0.9840278</td>
-<td style="text-align: center;">0.9774306</td>
+<td style="text-align: center;">0.9767361</td>
 <td style="text-align: center;">0.9708333</td>
 <td style="text-align: center;">0.9756944</td>
 <td style="text-align: center;">0.9708333</td>
@@ -4222,7 +4222,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">RegLog</td>
 <td style="text-align: center;">0.7782895</td>
-<td style="text-align: center;">0.8092105</td>
+<td style="text-align: center;">0.8927632</td>
 <td style="text-align: center;">0.9302632</td>
 <td style="text-align: center;">0.8694079</td>
 <td style="text-align: center;">0.9256579</td>
@@ -4235,7 +4235,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">RegLog</td>
 <td style="text-align: center;">0.7500000</td>
-<td style="text-align: center;">0.8205128</td>
+<td style="text-align: center;">0.8141026</td>
 <td style="text-align: center;">0.8141026</td>
 <td style="text-align: center;">0.7371795</td>
 <td style="text-align: center;">0.8589744</td>
@@ -4248,7 +4248,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">LDA</td>
 <td style="text-align: center;">0.9625000</td>
-<td style="text-align: center;">0.9522059</td>
+<td style="text-align: center;">0.9338235</td>
 <td style="text-align: center;">0.9617647</td>
 <td style="text-align: center;">0.9558824</td>
 <td style="text-align: center;">0.9382353</td>
@@ -4261,7 +4261,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">LDA</td>
 <td style="text-align: center;">0.9890471</td>
-<td style="text-align: center;">0.9912377</td>
+<td style="text-align: center;">0.9879518</td>
 <td style="text-align: center;">0.9934283</td>
 <td style="text-align: center;">0.9868565</td>
 <td style="text-align: center;">0.9748083</td>
@@ -4274,7 +4274,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">LDA</td>
 <td style="text-align: center;">0.8529412</td>
-<td style="text-align: center;">0.9117647</td>
+<td style="text-align: center;">0.9191176</td>
 <td style="text-align: center;">0.6617647</td>
 <td style="text-align: center;">0.7132353</td>
 <td style="text-align: center;">0.8750000</td>
@@ -4287,7 +4287,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">LDA</td>
 <td style="text-align: center;">0.7837838</td>
-<td style="text-align: center;">0.8445946</td>
+<td style="text-align: center;">0.8513514</td>
 <td style="text-align: center;">0.8378378</td>
 <td style="text-align: center;">0.5675676</td>
 <td style="text-align: center;">0.8040541</td>
@@ -4300,7 +4300,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">LDA</td>
 <td style="text-align: center;">0.8152709</td>
-<td style="text-align: center;">0.8029557</td>
+<td style="text-align: center;">0.7980296</td>
 <td style="text-align: center;">0.8103448</td>
 <td style="text-align: center;">0.7931034</td>
 <td style="text-align: center;">0.7980296</td>
@@ -4313,7 +4313,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">LDA</td>
 <td style="text-align: center;">0.9805556</td>
-<td style="text-align: center;">0.9812500</td>
+<td style="text-align: center;">0.9750000</td>
 <td style="text-align: center;">0.9673611</td>
 <td style="text-align: center;">0.9840278</td>
 <td style="text-align: center;">0.9763889</td>
@@ -4326,7 +4326,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">LDA</td>
 <td style="text-align: center;">0.7809211</td>
-<td style="text-align: center;">0.7750000</td>
+<td style="text-align: center;">0.7855263</td>
 <td style="text-align: center;">0.8427632</td>
 <td style="text-align: center;">0.8282895</td>
 <td style="text-align: center;">0.8427632</td>
@@ -4339,7 +4339,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">LDA</td>
 <td style="text-align: center;">0.7884615</td>
-<td style="text-align: center;">0.8333333</td>
+<td style="text-align: center;">0.8269231</td>
 <td style="text-align: center;">0.8076923</td>
 <td style="text-align: center;">0.7500000</td>
 <td style="text-align: center;">0.8269231</td>
@@ -4352,7 +4352,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">QDA</td>
 <td style="text-align: center;">0.9345588</td>
-<td style="text-align: center;">0.9007353</td>
+<td style="text-align: center;">0.8992647</td>
 <td style="text-align: center;">0.9102941</td>
 <td style="text-align: center;">0.9404412</td>
 <td style="text-align: center;">0.8375000</td>
@@ -4365,7 +4365,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">QDA</td>
 <td style="text-align: center;">0.9496166</td>
-<td style="text-align: center;">0.9501643</td>
+<td style="text-align: center;">0.9512596</td>
 <td style="text-align: center;">0.9036145</td>
 <td style="text-align: center;">0.9277108</td>
 <td style="text-align: center;">0.9507119</td>
@@ -4378,7 +4378,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">QDA</td>
 <td style="text-align: center;">0.7500000</td>
-<td style="text-align: center;">0.7352941</td>
+<td style="text-align: center;">0.7058824</td>
 <td style="text-align: center;">0.7058824</td>
 <td style="text-align: center;">0.6176471</td>
 <td style="text-align: center;">0.7279412</td>
@@ -4391,7 +4391,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">QDA</td>
 <td style="text-align: center;">0.6148649</td>
-<td style="text-align: center;">0.6216216</td>
+<td style="text-align: center;">0.5810811</td>
 <td style="text-align: center;">0.5743243</td>
 <td style="text-align: center;">0.5955882</td>
 <td style="text-align: center;">0.5945946</td>
@@ -4404,7 +4404,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">QDA</td>
 <td style="text-align: center;">0.6798030</td>
-<td style="text-align: center;">0.6280788</td>
+<td style="text-align: center;">0.6231527</td>
 <td style="text-align: center;">0.6847291</td>
 <td style="text-align: center;">0.7709360</td>
 <td style="text-align: center;">0.6798030</td>
@@ -4417,7 +4417,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">QDA</td>
 <td style="text-align: center;">0.9520833</td>
-<td style="text-align: center;">0.9645833</td>
+<td style="text-align: center;">0.9638889</td>
 <td style="text-align: center;">0.9701389</td>
 <td style="text-align: center;">0.9631944</td>
 <td style="text-align: center;">0.9652778</td>
@@ -4430,7 +4430,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">QDA</td>
 <td style="text-align: center;">0.7651316</td>
-<td style="text-align: center;">0.7644737</td>
+<td style="text-align: center;">0.7657895</td>
 <td style="text-align: center;">0.7648026</td>
 <td style="text-align: center;">0.8006579</td>
 <td style="text-align: center;">0.7398026</td>
@@ -4443,7 +4443,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">QDA</td>
 <td style="text-align: center;">0.8589744</td>
-<td style="text-align: center;">0.8461538</td>
+<td style="text-align: center;">0.8397436</td>
 <td style="text-align: center;">0.8333333</td>
 <td style="text-align: center;">0.7756410</td>
 <td style="text-align: center;">0.8397436</td>
@@ -4456,7 +4456,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">NB</td>
 <td style="text-align: center;">0.8808824</td>
-<td style="text-align: center;">0.8904412</td>
+<td style="text-align: center;">0.8919118</td>
 <td style="text-align: center;">0.8830882</td>
 <td style="text-align: center;">0.8794118</td>
 <td style="text-align: center;">0.8860294</td>
@@ -4469,7 +4469,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">NB</td>
 <td style="text-align: center;">0.9759036</td>
-<td style="text-align: center;">0.9791895</td>
+<td style="text-align: center;">0.9759036</td>
 <td style="text-align: center;">0.9802848</td>
 <td style="text-align: center;">0.8680175</td>
 <td style="text-align: center;">0.9780942</td>
@@ -4482,7 +4482,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">NB</td>
 <td style="text-align: center;">0.6985294</td>
-<td style="text-align: center;">0.6985294</td>
+<td style="text-align: center;">0.6838235</td>
 <td style="text-align: center;">0.6764706</td>
 <td style="text-align: center;">0.7058824</td>
 <td style="text-align: center;">0.6691176</td>
@@ -4495,7 +4495,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">NB</td>
 <td style="text-align: center;">0.3378378</td>
-<td style="text-align: center;">0.6756757</td>
+<td style="text-align: center;">0.6689189</td>
 <td style="text-align: center;">0.6621622</td>
 <td style="text-align: center;">0.6891892</td>
 <td style="text-align: center;">0.3783784</td>
@@ -4508,7 +4508,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">NB</td>
 <td style="text-align: center;">0.6477833</td>
-<td style="text-align: center;">0.6403941</td>
+<td style="text-align: center;">0.6477833</td>
 <td style="text-align: center;">0.6379310</td>
 <td style="text-align: center;">0.6477833</td>
 <td style="text-align: center;">0.6453202</td>
@@ -4521,7 +4521,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">NB</td>
 <td style="text-align: center;">0.9461806</td>
-<td style="text-align: center;">0.9611111</td>
+<td style="text-align: center;">0.9579861</td>
 <td style="text-align: center;">0.9666667</td>
 <td style="text-align: center;">0.9305556</td>
 <td style="text-align: center;">0.9552083</td>
@@ -4534,7 +4534,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="odd">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">NB</td>
 <td style="text-align: center;">0.8828947</td>
-<td style="text-align: center;">0.8243421</td>
+<td style="text-align: center;">0.8184211</td>
 <td style="text-align: center;">0.8134868</td>
 <td style="text-align: center;">0.8598684</td>
 <td style="text-align: center;">0.8111842</td>
@@ -4547,7 +4547,7 @@ Area under the curve: 0.8077</code></pre>
 <tr class="even">
 <td style="text-align: center; width: 7em; font-weight: bold; color: #183E87 !important; background-color: #D1D5DD !important;">NB</td>
 <td style="text-align: center;">0.8141026</td>
-<td style="text-align: center;">0.8205128</td>
+<td style="text-align: center;">0.8076923</td>
 <td style="text-align: center;">0.8205128</td>
 <td style="text-align: center;">0.9166667</td>
 <td style="text-align: center;">0.8653846</td>
@@ -4569,21 +4569,21 @@ Area under the curve: 0.8077</code></pre>
 <pre><code># A tibble: 15 × 11
    classificador `Sense balancejar` SMOTE `Borderline-SMOTE` ADOMS ADASYN  ROSE
    &lt;chr&gt;                      &lt;dbl&gt; &lt;dbl&gt;              &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
- 1 RegLog                     0.939 0.937              0.952 0.954  0.933 0.947
- 2 RegLog                     0.812 0.947              0.858 0.939  0.852 1    
- 3 RegLog                     0.904 0.912              0.75  0.779  0.912 0.875
+ 1 RegLog                     0.939 0.935              0.952 0.954  0.933 0.947
+ 2 RegLog                     0.812 0.771              0.858 0.939  0.852 1    
+ 3 RegLog                     0.904 0.926              0.75  0.779  0.912 0.875
  4 RegLog                     0.777 0.865              0.892 0.595  0.865 0.872
- 5 RegLog                     0.810 0.796              0.808 0.783  0.805 0.818
+ 5 RegLog                     0.810 0.803              0.808 0.783  0.805 0.818
  6 RegLog                     0.984 0.977              0.971 0.976  0.971 0.976
- 7 RegLog                     0.778 0.809              0.930 0.869  0.926 0.895
- 8 RegLog                     0.75  0.821              0.814 0.737  0.859 0.846
- 9 LDA                        0.962 0.952              0.962 0.956  0.938 0.944
-10 LDA                        0.989 0.991              0.993 0.987  0.975 0.982
-11 LDA                        0.853 0.912              0.662 0.713  0.875 0.875
-12 LDA                        0.784 0.845              0.838 0.568  0.804 0.824
-13 LDA                        0.815 0.803              0.810 0.793  0.798 0.825
-14 LDA                        0.981 0.981              0.967 0.984  0.976 0.978
-15 LDA                        0.781 0.775              0.843 0.828  0.843 0.776
+ 7 RegLog                     0.778 0.893              0.930 0.869  0.926 0.895
+ 8 RegLog                     0.75  0.814              0.814 0.737  0.859 0.846
+ 9 LDA                        0.962 0.934              0.962 0.956  0.938 0.944
+10 LDA                        0.989 0.988              0.993 0.987  0.975 0.982
+11 LDA                        0.853 0.919              0.662 0.713  0.875 0.875
+12 LDA                        0.784 0.851              0.838 0.568  0.804 0.824
+13 LDA                        0.815 0.798              0.810 0.793  0.798 0.825
+14 LDA                        0.981 0.975              0.967 0.984  0.976 0.978
+15 LDA                        0.781 0.786              0.843 0.828  0.843 0.776
 # ℹ 4 more variables: `Safe-Level SMOTE` &lt;dbl&gt;, DBSMOTE &lt;dbl&gt;, MWMOTE &lt;dbl&gt;,
 #   MDO &lt;dbl&gt;</code></pre>
 </div>
@@ -4607,7 +4607,7 @@ Area under the curve: 0.8077</code></pre>
    classificador metodes            AUC
    &lt;chr&gt;         &lt;chr&gt;            &lt;dbl&gt;
  1 RegLog        Sense balancejar 0.939
- 2 RegLog        SMOTE            0.937
+ 2 RegLog        SMOTE            0.935
  3 RegLog        Borderline-SMOTE 0.952
  4 RegLog        ADOMS            0.954
  5 RegLog        ADASYN           0.933
@@ -4627,7 +4627,7 @@ Area under the curve: 0.8077</code></pre>
    classificador metodes            AUC factors                
    &lt;chr&gt;         &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;                  
  1 RegLog        Sense balancejar 0.939 RegLog Sense balancejar
- 2 RegLog        SMOTE            0.937 RegLog SMOTE           
+ 2 RegLog        SMOTE            0.935 RegLog SMOTE           
  3 RegLog        Borderline-SMOTE 0.952 RegLog Borderline-SMOTE
  4 RegLog        ADOMS            0.954 RegLog ADOMS           
  5 RegLog        ADASYN           0.933 RegLog ADASYN          
@@ -4882,13 +4882,13 @@ W = 0.80898, p-value = 0.03569</code></pre>
     Lilliefors (Kolmogorov-Smirnov) normality test
 
 data:  mostres_LDA_SMOTE
-D = 0.19213, p-value = 0.5192
+D = 0.16745, p-value = 0.7316
 
 
     Shapiro-Wilk normality test
 
 data:  mostres_LDA_SMOTE
-W = 0.91777, p-value = 0.412</code></pre>
+W = 0.91387, p-value = 0.3821</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -5062,13 +5062,13 @@ W = 0.86855, p-value = 0.1459</code></pre>
     Lilliefors (Kolmogorov-Smirnov) normality test
 
 data:  mostres_NB_SMOTE
-D = 0.18294, p-value = 0.5985
+D = 0.20249, p-value = 0.4334
 
 
     Shapiro-Wilk normality test
 
 data:  mostres_NB_SMOTE
-W = 0.92199, p-value = 0.4463</code></pre>
+W = 0.90429, p-value = 0.3156</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -5242,13 +5242,13 @@ W = 0.90496, p-value = 0.32</code></pre>
     Lilliefors (Kolmogorov-Smirnov) normality test
 
 data:  mostres_QDA_SMOTE
-D = 0.14938, p-value = 0.8638
+D = 0.14485, p-value = 0.8905
 
 
     Shapiro-Wilk normality test
 
 data:  mostres_QDA_SMOTE
-W = 0.91382, p-value = 0.3818</code></pre>
+W = 0.93104, p-value = 0.5256</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -5422,13 +5422,13 @@ W = 0.88799, p-value = 0.2242</code></pre>
     Lilliefors (Kolmogorov-Smirnov) normality test
 
 data:  mostres_RegLog_SMOTE
-D = 0.18942, p-value = 0.5424
+D = 0.16646, p-value = 0.7399
 
 
     Shapiro-Wilk normality test
 
 data:  mostres_RegLog_SMOTE
-W = 0.91613, p-value = 0.3993</code></pre>
+W = 0.95834, p-value = 0.7941</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -5477,7 +5477,7 @@ W = 0.94714, p-value = 0.6824</code></pre>
     Bartlett test of homogeneity of variances
 
 data:  df_variancia$AUC by df_variancia$factors
-Bartlett's K-squared = 49.059, df = 39, p-value = 0.1297</code></pre>
+Bartlett's K-squared = 49.492, df = 39, p-value = 0.1211</code></pre>
 </div>
 </div>
 <p>Com hem obtingut un p-valor de 0.1297, no tenim evidències suficients com per rebut- jar la homocedasticidad. Per tant, podem concloure que les dades satisfan les condici- ons per realitzar un ANOVA.</p>
@@ -5486,10 +5486,10 @@ Bartlett's K-squared = 49.059, df = 39, p-value = 0.1297</code></pre>
 <div class="sourceCode cell-code" id="cb983"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb983-1"><a href="#cb983-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(AUC<span class="sc">~</span><span class="fu">as.factor</span>(metodes)<span class="sc">*</span><span class="fu">as.factor</span>(classificador), <span class="at">data =</span> AUCs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                             Df Sum Sq Mean Sq F value   Pr(&gt;F)
-as.factor(metodes)                            9  0.060 0.00669   0.474    0.892
-as.factor(classificador)                      3  0.372 0.12406   8.778 1.39e-05
-as.factor(metodes):as.factor(classificador)  27  0.076 0.00282   0.199    1.000
-Residuals                                   280  3.957 0.01413                 
+as.factor(metodes)                            9  0.057 0.00630   0.443    0.911
+as.factor(classificador)                      3  0.373 0.12444   8.760 1.43e-05
+as.factor(metodes):as.factor(classificador)  27  0.078 0.00289   0.203    1.000
+Residuals                                   280  3.977 0.01420                 
                                                
 as.factor(metodes)                             
 as.factor(classificador)                    ***
@@ -5521,7 +5521,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
  5 LDA MDO              0.849
  6 LDA MWMOTE           0.879
  7 LDA ROSE             0.885
- 8 LDA SMOTE            0.887
+ 8 LDA SMOTE            0.885
  9 LDA Safe-Level SMOTE 0.857
 10 LDA Sense balancejar 0.869</code></pre>
 </div>
