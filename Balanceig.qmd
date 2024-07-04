@@ -23,9 +23,99 @@ library(e1071)
 ```
 
 
-# Mètodes de balanceig
+# Dades
 
-En aquest document podem trobar tots els mètodes de balanceig implementats en R, així com la seva aplicació a totes les taules de dades. 
+Carregam totes les taules de dades necessàries
+
+## abalone9_18
+
+```{r}
+abalone9_18 <- read_csv("Taules_de_dades/abalone9_18/abalone9-18.dat", show_col_types = FALSE)
+abalone9_18 <- abalone9_18 %>% 
+  mutate(idx = c(1:nrow(abalone9_18))) %>% relocate(idx)%>% dplyr::select(-Sex)
+abalone9_18_train <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train.csv", show_col_types = FALSE)
+abalone9_18_test <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_test.csv", show_col_types = FALSE)
+IR_abalone9_18 <- round(as.numeric(table(abalone9_18$Class)[1]/table(abalone9_18$Class)[2]),3)
+```
+
+## page_blocks_1_3_4
+
+```{r}
+page_blocks_1_3_4 <- read_csv("Taules_de_dades/page_blocks_1_3_4/page-blocks-1-3_vs_4.dat", show_col_types = FALSE)
+page_blocks_1_3_4 <- page_blocks_1_3_4 %>% 
+  mutate(idx = c(1:nrow(page_blocks_1_3_4))) %>% relocate(idx)
+page_blocks_1_3_4_train <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train.csv", show_col_types = FALSE)
+page_blocks_1_3_4_test <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_test.csv", show_col_types = FALSE)
+IR_page_blocks_1_3_4 <- round(as.numeric(table(page_blocks_1_3_4$Class)[1]/table(page_blocks_1_3_4$Class)[2]),3)
+```
+
+## glass_0_1_6_vs_2
+
+```{r}
+glass_0_1_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass-0-1-6_vs_2.dat", show_col_types = FALSE)
+glass_0_1_6_vs_2 <- glass_0_1_6_vs_2 %>% 
+  mutate(idx = c(1:nrow(glass_0_1_6_vs_2))) %>% relocate(idx)
+glass_0_1_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_test <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_test.csv", show_col_types = FALSE)
+```
+
+## glass_0_1_4_6_vs_2
+
+```{r}
+glass_0_1_4_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass-0-1-4-6_vs_2.dat", show_col_types = FALSE)
+glass_0_1_4_6_vs_2 <- glass_0_1_4_6_vs_2 %>% 
+  mutate(idx = c(1:nrow(glass_0_1_4_6_vs_2))) %>% relocate(idx)
+glass_0_1_4_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_test <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_test.csv", show_col_types = FALSE)
+```
+
+## page-blocks0
+
+```{r}
+page_blocks0 <- read_csv("Taules_de_dades/page_blocks0/page-blocks0.dat", show_col_types = FALSE)
+page_blocks0 <- page_blocks0 %>% 
+  mutate(idx = c(1:nrow(page_blocks0))) %>% relocate(idx)
+page_blocks0_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train.csv", show_col_types = FALSE)
+page_blocks0_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_test.csv", show_col_types = FALSE)
+IR_page_blocks0 <- round(as.numeric(table(page_blocks0$Class)[1]/table(page_blocks0$Class)[2]),3)
+```
+
+### page_blocks0_1
+```{r}
+page_blocks0_1 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1.csv", show_col_types = FALSE)
+page_blocks0_1_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train.csv", show_col_types = FALSE)
+page_blocks0_1_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_test.csv", show_col_types = FALSE)
+IR_prova <- round(as.numeric(table(page_blocks0_1$Class)[1]/table(page_blocks0_1$Class)[2]),3)
+```
+
+### page_blocks0_2
+```{r}
+page_blocks0_2 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2.csv", show_col_types = FALSE)
+page_blocks0_2_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train.csv", show_col_types = FALSE)
+page_blocks0_2_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_test.csv", show_col_types = FALSE)
+IR_prova <- round(as.numeric(table(page_blocks0_2$Class)[1]/table(page_blocks0_2$Class)[2]),3)
+```
+
+
+## abalone19_peque
+
+```{r}
+abalone19_peque <- read_csv("Taules_de_dades/abalone19/abalone19_peque.csv", show_col_types = FALSE)
+abalone19_peque_train <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train.csv", show_col_types = FALSE)
+abalone19_peque_test <- read_csv("Taules_de_dades/abalone19/abalone19_peque_test.csv", show_col_types = FALSE)
+IR_abalone19_peque <- round(as.numeric(table(abalone19_peque$Class)[1]/table(abalone19_peque$Class)[2]),3)
+```
+
+## glass2
+
+```{r}
+glass2 <- read_csv("Taules_de_dades/glass2/glass2.dat", show_col_types = FALSE)
+glass2_train <- read_csv("Taules_de_dades/glass2/glass2_train.csv", show_col_types = FALSE)
+glass2_test <- read_csv("Taules_de_dades/glass2/glass2_test.csv", show_col_types = FALSE)
+IR_glass2 <- round(as.numeric(table(glass2$Class)[1]/table(glass2$Class)[2]),3); IR_glass2
+```
+
+# Algorismes
 
 ## KNN
 La següent funció és imprescindible per la realització dels mètodes que venen a continuació. Donat l'índex d'una mostra i un conjunt de dades, aquesta funció tornarà els $k$ índexos de les mostres més properes a la mostra inicial.
@@ -52,191 +142,9 @@ NN <- function(X,o,k){
 }
 ```
 
-
-# Algoritmes de balanceig
-
-## SMOTE (Synthetic Minotity Oversampling Technique)
-
-El mètode SMOTE *(Synthetic Minority Over-sampling Technique)* és un mètode de sobre mostreig. La idea principal és crear noves dades sintètiques de la classe minoritària mitjançant la interpolació entre algunes observacions que es troben "aprop". D'aquesta manera s'estaran equilibrant les classes.
-
-Vegem l'algoritme de l'SMOTE:
-
+## ADOMS
 
 ```{r}
-#| label: Algoritme SMOTE
-SMOTE <- function(X,N,k){
-  # X: data frame desbalancejat
-  # N: nombre de noves mostres
-  # k: nombre de veïns que s'utilitzaran en k-NN
-  # output: dataframe amb les noves observacions sintètiques
-  
-  
-  # escollim la classe positiva:
-  
-  X_pos <- X %>% 
-    filter(Class == "positive")
-  pos_idx <- X_pos %>% pull(idx)
-  
-  # Per una mostra es calculen els seus knn i es crearan k mostres noves mitjançant interpolació
-  # Per tant, hem d'escollir N/k mostres aleatories:
-  
-  # select_random = sample(pos_idx, floor(N/k), replace = FALSE)
-
-  new_dataset <- X
-  
-  for (j in pos_idx){               # Per cada una,
-    veins_j <- NN(X_pos,j,k)          # Calculam els seus veïns
-    kNN <- X_pos %>% 
-      filter(idx %in% veins_j) %>% 
-      dplyr::select(-c(idx,Class))               # escollim les variables numèriques
-    
-    xj <- X %>% filter(idx == j) %>% dplyr::select(-c(idx,Class))
-    
-    NN_j <- rbind(xj, kNN)
-
-    for (i in c(1:N)){ # per cada veí
-      q <- sample(c(2:(k+1)),1)
-      dif = NN_j[q,]-NN_j[1,]                 # calculam el vector posició
-      NN_j = rbind(NN_j,NN_j[1,]+runif(1)*dif)  # Cream una nova mostra sintètica
-    }
-    
-    datos_sinteticos <- NN_j[c((k+2):nrow(NN_j)),] %>% 
-      mutate(idx = 0, Class = "positive") %>% relocate(idx)
-
-    new_dataset <- rbind(new_dataset, datos_sinteticos) # afegim les mostres sintètiques al nou dataset
-  }
-  return(new_dataset)
-}
-```
-
-```{.r}
-#| label: Algoritme SMOTE
-SMOTE <- function(X,N,k){
-  # X: data frame desbalancejat
-  # N: nombre de noves mostres
-  # k: nombre de veïns que s'utilitzaran en k-NN
-  # output: dataframe amb les noves observacions sintètiques
-  
-  
-  # escollim la classe positiva:
-  
-  X_pos <- X %>% 
-    filter(Class == "positive")
-  pos_idx <- X_pos %>% pull(idx)
-  
-  # Per una mostra es calculen els seus knn i es crearan k mostres noves mitjançant interpolació
-  # Per tant, hem d'escollir N/k mostres aleatories:
-  
-  select_random = sample(pos_idx, floor(N/k), replace = FALSE)
-
-  new_dataset <- X
-  
-  for (j in select_random){               # Per cada una,
-    veins_j <- NN(X_pos,j,k)          # Calculam els seus veïns
-    kNN <- X_pos %>% 
-      filter(idx %in% veins_j) %>% 
-      dplyr::select(-c(idx,Class))               # escollim les variables numèriques
-    
-    xj <- X %>% filter(idx==j) %>% dplyr::select(-c(idx,Class))
-    
-    NN <- rbind(xj, kNN)
-    
-    for (q in 2:(k+1)){                   # per cada veí
-      dif = NN[q,]-NN[1,]                 # calculam el vector posició
-      NN = rbind(NN,NN[1,]+runif(1)*dif)  # Cream una nova mostra sintètica
-    }
-    
-    datos_sinteticos <- NN[c((k+2):(2*k+1)),] %>% 
-      mutate(idx = 0, Class = "positive") %>% relocate(idx)
-
-    new_dataset <- rbind(new_dataset, datos_sinteticos) # afegim les mostres sintètiques al nou dataset
-  }
-  return(new_dataset)
-}
-```
-
-## Borderline-SMOTE
-
-Les mostres que cauen en les regions límits són més propenses a ser mal classificades. Per això aquest métode utilitzarà la tècnica de sobremostreig SMOTE per generar mostres sintètiques de la classe minoritària que es trobin en la frontera. D'aquesta manera es definirà millor els límits de la classe positiva.
-
-```{r}
-Danger <- function(X, k){
-  # X: dataset sencer
-  # k: nombre de veïns
-  # output: llista dels índexos de les mostres DANGER
-  
-  X_pos <- X %>% 
-    filter(Class == "positive")
-  pos_idx <- X_pos %>% pull(idx)
-  
-  peligro = c()
-  
-  for (o in pos_idx) {
-    veins_o <- NN(X,o,k)
-    df_m <- X %>% 
-      filter(idx %in% veins_o) %>%
-      group_by(Class) %>% 
-      summarise(count = n(), .groups = "drop")%>% 
-      filter(Class=="negative")
-    
-    if(nrow(df_m)==0){
-      m = 0
-    }else{
-      m = df_m %>% pull(count)
-    }
-    
-    if(m>=ceiling(k/2) && m!=k){
-      peligro[length(peligro)+1] = o
-    }
-  }
-  return(peligro)
-}
-```
-
-```{r}
-#| label: Algoritme Borderline-SMOTE
-
-BorderlineSMOTE <- function(X, k){
-  # X: data frame desbalancejat
-  # k: nombre de veïns que s'utilitzaran en k-NN
-  # output: dataframe amb les noves observacions sintètiques (k*length(perills) noves mostres)
-  
-  Perills <- Danger(X,k)
-  # escollim la classe positiva:
-  
-  X_pos <- X %>% 
-    filter(Class == "positive")
-  pos_idx <- X_pos %>% pull(idx)
-
-  new_dataset <- X
-  
-  for (j in Perills){                     # Per cada una,
-    veins <- NN(X_pos,j,k)                # Calculam els seus veïns
-    NN_j <- X_pos %>% 
-      filter(idx %in% c(j,veins)) %>% 
-      dplyr::select(-c(idx,Class))               # escollim les variables numèriques
-    
-    for (q in 2:(k+1)){                   # per cada veí
-      dif = NN_j[q,]-NN_j[1,]                 # calculam el vector posició
-      NN_j = rbind(NN_j,NN_j[1,]+runif(1)*dif)  # Cream una nova mostra sintètica
-    }
-    
-    datos_sinteticos <- NN_j[c((k+2):(2*k+1)),] %>% 
-      mutate(idx = 0, Class = "positive") %>% relocate(idx)
-    
-    new_dataset <- rbind(new_dataset, datos_sinteticos) # afegim les mostres sintètiques al nou dataset
-  }
-  return(new_dataset)
-}
-```
-
-## ADOMS (Adjusting the Direction of the Synthetic Minority Class Examples)
-
-El mètode ADOMS proposa crear nous exemples sintètics al llarg de la primera component principal d’un espai de dades local.
-
-```{r}
-#| label: Algoritme ADOMS
-
 ADOMS <- function(X, k, N){
   # X: data frame desbalancejat
   # k: nombre de veïns que s'utilitzaran en k-NN
@@ -259,11 +167,11 @@ ADOMS <- function(X, k, N){
     knnI <- NN(X,I,k) # calculam els seus knn
     
     NN <- X %>% 
-        filter(idx %in% c(I,knnI)) %>% # cream un tibble amb la mostra I-èssima i els seus knn
-        dplyr::select(-c(idx,Class))      # escollim les variables numèriques
+      filter(idx %in% c(I,knnI)) %>% # cream un tibble amb la mostra I-èssima i els seus knn
+      dplyr::select(-c(idx,Class))      # escollim les variables numèriques
     
     # ara miram que cap variable sigui constant, ja que quan facem ACP, necessitam que sa desviació típica sigui diferent de 0
-  
+    
     eliminate <- c()
     valors <- c()
     noms <- names(NN)
@@ -283,33 +191,28 @@ ADOMS <- function(X, k, N){
     
     veialeatori <- sample(knnI,1) # escollim un dels knn aleatoriament
     
-    mostra <- X %>% filter(idx %in% c(I,veialeatori)) %>% dplyr::select(-c(idx,Class))
+    #mostra <- X %>% filter(idx %in% c(I,veialeatori)) %>% dplyr::select(-c(idx,Class))
     mi <- X %>% filter(idx == veialeatori) %>% dplyr::select(-c(idx,Class))
-  
-      if(length(eliminate)!= 0){
+    
+    if(length(eliminate)!= 0){
       mi <- mi %>% dplyr::select(-noms[eliminate])
       mostraI <- mostraI %>% dplyr::select(-noms[eliminate])
     }
     
-    d <- dist(mostra) # calculam la distancia entre l'I-èssim i el vei aleatoriç
+    mostra <- rbind(mostraI,mi)
     
-    t <- -(sum(mi*cp1)/sum(cp1^2))
+    d <- as.numeric(dist(mostra)) # calculam la distancia entre l'I-èssim i el veï aleatori
     
-    mi_projCP1 <- mi + t*cp1 # projecció sobre la CP1
+    x <- sum((mostraI-mi)*cp1)/norm(cp1,"2")
     
-    dif <- mostraI - mi_projCP1
+    x_vec <- x*(cp1/norm(cp1,"2"))
+    
+    mi_projCP1 = mostraI + x_vec
     
     s = runif(1,0,1) # generam un nombre aleaotri entre 0 i 1
     
-    norm_dif <- dist(rbind(mostraI,mi_projCP1))
-  
-    if(d*s < norm_dif){
-      nova_dada <- mi_projCP1 + as.numeric((norm_dif-d*s)/(norm_dif))*dif 
-    }else{
-      nova_dada <- mi_projCP1 + as.numeric((norm_dif+d*s)/(norm_dif))*dif
-    }
+    nova_dada <- mostraI + s*d*(mi_projCP1-mostraI)/norm(mi_projCP1-mostraI,"2")
     
-  
     count = 1
     for (i in eliminate){
       elimin = as.data.frame(valors[count])
@@ -328,260 +231,7 @@ ADOMS <- function(X, k, N){
 }
 ```
 
-## ADASYN (Adaptative Synthetic Sampling Approach)
-
-ADASYN està bassat en la idea de generar exemples minoritaris per a cada mostra en funció de la seva distribució. Per aquelles dades que són més dificils d'aprendre, es generaran més dades sintetiques que en aquells exemples que són més fàcils.
-
-```{r}
-#| label: Algoritme ADASYN
-ADASYN <- function(X, k, b, dth){
-  # X: data frame desbalancejat
-  # k: nombre de veïns que s'utilitzaran en k-NN
-  # b: nivell de desbalanceig que es vol. b\in(0,1), on b=1 indica un dataframe totalmet balancejat
-  # dth: umbral de màxim de tolerància del grau de balanceig
-  # output: dataframe amb les noves observacions sintètiques
-  
-  new_data <- X
-  
-  ms <- X %>% filter(Class == "positive") %>%   
-    nrow() # nombre d'expemples de la classe positiva
-  
-  ml <- X %>% filter(Class == "negative") %>%   
-    nrow() # nombre d'expemples de la classe negativa
-  
-  d <- ms/ml  # degree of class imbalance
-  
-  while(d < dth){
-    
-    G <- floor((ml-ms)*b) # nombre de dades que es volen generar
-    
-    X_pos_idx <- X %>% filter(Class == "positive") %>% pull(idx)
-    X_neg_idx <- X %>% filter(Class == "negative") %>% pull(idx)
-    
-    df_neg <- as_tibble(X_pos_idx)
-    names(df_neg) <- "idx_pos"
-    r_i <- c()
-    
-    for (x in X_pos_idx){
-      NN_x <- NN(X,x,k)
-      delta_i <- sum(NN_x %in% X_neg_idx) # nombre d'exemples kNN de x que pertanyen a la classe majoritària
-      n_pos <- k-delta_i # nombre d'exemples kNN de x que pertanyen a la classe minoritària
-      # num_pos[length(num_pos)+1] <- n_pos
-      
-      r_i[length(r_i)+1] <- delta_i/k
-    }
-    
-    r_inorm <- r_i/sum(r_i)
-    g_i <- G*r_inorm
-    df_neg <- df_neg %>% mutate(r = r_i, r_norm = r_inorm, dades_a_generar = g_i)
-    
-    for(x in X_pos_idx){
-      mostra_x <- X %>% filter(idx == x) %>% dplyr::select(-c(idx,Class))
-      g <- df_neg %>% filter(idx_pos == x) %>% pull(dades_a_generar) # nombre de dades que generarem per a la mostra x
-      g <- round(g)
-      
-      NN_x <- NN(X,x,k)
-      idx_pos_NN <- NN_x[which(NN_x %in% X_pos_idx)]
-      
-      if(length(idx_pos_NN) == 1){
-        mostra_random <- X %>% filter(idx == idx_pos_NN) %>% dplyr::select(-c(idx,Class))
-        if(g>=1){
-          for(i in c(1:g)){
-            new_mostra <- mostra_x + (mostra_random - mostra_x)*runif(1,0,1)
-            s <- new_mostra %>% mutate(idx = 0, Class = "positive") %>% relocate(idx)
-            new_data <- rbind(new_data, s)
-          }
-        }
-      }else if(length(idx_pos_NN) > 1){
-        if(g>=1){
-          for(i in c(1:g)){
-            idx_aleatori <- sample(idx_pos_NN,1)
-            mostra_random <- mostra_random <- X %>% filter(idx == idx_aleatori) %>% dplyr::select(-c(idx,Class))
-            new_mostra <- mostra_x + (mostra_random - mostra_x)*runif(1,0,1)
-            s <- new_mostra %>% mutate(idx = 0, Class = "positive") %>% relocate(idx)
-            new_data <- rbind(new_data, s)
-          }
-        }
-      }
-    }
-    ms <- new_data %>% filter(Class == "positive") %>%   
-    nrow() # nombre d'expemples de la classe positiva
-  
-    ml <- new_data %>% filter(Class == "negative") %>%   
-    nrow() # nombre d'expemples de la classe negativa
-  
-    d <- ms/ml  # degree of class imbalance
-  }
-  return(new_data)
-}
-```
-
-## Safe-Level-SMOTE
-
-Abans de generar les dades sintètiques, a cada un dels exemples de la classe minoritària se li assigna el seu *nivell de seguretat* (safe level(sl)), on si sl és proper a 0, indica que la dada és renou, i si és proper a k, aquesta dada se li considerarà *segura*. A més, també se li assignarà un nivell de proporcionalitat, que està basat amb el nivell de seguretat dels seus veïns més pròxims
-
--   safe level: $sl=$ nombre de mostres positives entre els KNN
--   safe level ratio: \$sl_ratio = \$ $sl$ d'una mostra positiva / $sl$ d'un KNN seu
-
-```{r}
-SL_SMOTE <- function(X,k){
-  idx_pos <- X %>% filter(Class == "positive") %>% pull(idx)
-  solo_1 <- c(sample(idx_pos,1))
-  
-  new_dataset <- X
-  
-  for (p in idx_pos){
-    KNN_p <- NN(X,p,k)
-    n <- sample(KNN_p,1)
-    KNN_n <- NN(X,n,k)
-    sl_p <- sum(KNN_p %in% idx_pos)
-    sl_n <- sum(KNN_n %in% idx_pos)
-    
-    if (sl_n != 0) {
-      sl_ratio <- sl_p/sl_n
-    }else{
-      sl_ratio <- "inf"
-    }
-    
-    x_p <- X %>% filter(idx == p) %>% dplyr::select(-c(idx,Class))
-    x_n <- X %>% filter(idx == n) %>% dplyr::select(-c(idx,Class))
-    noms <- names(x_p)
-    
-    n_var <- X %>% dplyr::select(-c(idx, Class)) %>% ncol
-    
-    nova_dada <- tibble(idx = 0, Class = "positive")
-
-    if(sl_ratio != "inf" | sl_p != 0){
-      for (m in c(1:n_var)){
-        if (sl_ratio == "inf" & sl_p != 0){
-          gap <- 0
-        }else if(sl_ratio == 1){
-          gap <- runif(1)
-        }else if(sl_ratio > 1){
-          gap <- runif(1, min = 0, max = 1/sl_ratio)
-        }else if(sl_ratio < 1){
-          gap <- runif(1, min = 1-sl_ratio, max = 1)
-        }
-        dif <- x_n[m] - x_p[m]
-        nova_variable <- as.data.frame(as.numeric(x_p[m] + gap * dif))
-        names(nova_variable) <- noms[m]
-        nova_variable <- as_tibble(nova_variable)
-        nova_dada <- cbind(nova_dada,nova_variable)
-      }
-    }else{
-      break
-    }
-    dada_sintetica <- nova_dada %>% relocate(any_of(names(X)))
-    new_dataset <- rbind(new_dataset, dada_sintetica)
-  }
-  return(new_dataset)
-}
-```
-
-## DBSMOTE
-
-```{r}
-DBSMOTE <- function(X, Eps, MinPts){
-  nou_dataset <- X
-  df <- X %>% dplyr::select(-c(idx,Class)) %>% as.matrix
-  X <- X %>% 
-    filter(Class == "positive")
-  df_pos <- X %>% 
-    filter(Class == "positive") %>% 
-    dplyr::select(-c(idx,Class)) %>% as.matrix
-  
-  # Creamos los clusters con DBSCAN
-  dbscan_cluster <- dbscan::dbscan(x = df_pos, eps = Eps, minPts = MinPts)
-  
-  # Resultados de la asignación: print(table(dbscan_cluster$cluster))
-  
-  # creamos un dataframe con una variable que indique a que cluster pertenece
-  
-  df_clusters <- X %>% mutate(clusters = dbscan_cluster$cluster)
-  #df_clusters
-  
-  num_clusters <- sort(unique(dbscan_cluster$cluster))[-1]
-  renou <- df_clusters %>% filter(clusters == 0)
-  
-  # Per cada cluster
-  for (i in c(num_clusters)){
-    nodes_cluster_i <- which(dbscan_cluster$cluster == i) # index de les mostres del cluster i
-    # nodes_cluster_i
-    matriu_adj_i = matrix(0, length(nodes_cluster_i), length(nodes_cluster_i)) # matriu d'adjacència
-    colnames(matriu_adj_i) = nodes_cluster_i
-    rownames(matriu_adj_i) = nodes_cluster_i
-    
-    mostres_i <- X %>% slice(nodes_cluster_i) %>% dplyr::select(-c(idx,Class))
-    M = as.matrix(dist(mostres_i))              # matriu de distàncies
-    for (j in c(1:length(nodes_cluster_i))){
-      NNj <- sum(M[j,] <= Eps)                  # nombre de mostres que hi ha dins l'entorn de radi Eps
-      if (NNj >= MinPts){                       # si el nombre de mostres supera al MinPts
-        for (k in c(1:ncol(matriu_adj_i))){
-          if (M[j,k] <= Eps){
-            matriu_adj_i[j,k] <- M[j,k]
-          }else{
-            matriu_adj_i[j,k] <- 0
-          }
-        }
-      }else{
-        for (k in c(1:ncol(matriu_adj_i))){
-          matriu_adj_i[j,k] <- 0
-        }
-      }
-    }
-    
-    # Cream un graf mitjançant la matriu d'adjacència
-    G <- graph_from_adjacency_matrix(matriu_adj_i, mode='directed', weighted = TRUE)
-    
-    # Cercam el pseudo-centre
-    min <- Eps*nrow(matriu_adj_i)
-    pseudo_centro <- 0
-    
-    for (i in c(1:nrow(matriu_adj_i))){
-      if (sum(matriu_adj_i[i,]) != 0){
-        if (sum(matriu_adj_i[i,]) < min){
-          min <- sum(matriu_adj_i[i,])
-          pseudo_centro <- rownames(matriu_adj_i)[i]
-        }
-      }
-    }
-    
-    # Feim Dijkstra
-    Dijkstra <- shortest.paths(G, v = pseudo_centro, to = V(G), algorithm = "dijkstra")
-    Dijkstra_camins <- shortest_paths(G, pseudo_centro, to = V(G), algorithm = "dijkstra", output = "both")
-    
-    index_centro <- which(names(V(G)) == pseudo_centro)
-    
-    for (i in V(G)){
-      if (i != index_centro){
-        cami_i <- Dijkstra_camins$epath[[i]] # camí de dijkstra
-        if (length(cami_i) == 1){ # només hi ha aresta
-          origen <- as.numeric(names(Dijkstra_camins$vpath[[i]][1]))
-          desti <- as.numeric(names(Dijkstra_camins$vpath[[i]][2]))
-        }else{ # hi ha més arestes
-          aresta_aleatoria <- sample(c(1:length(cami_i)), 1) # escollim una aresta aleatoria
-          origen <- as.numeric(names(Dijkstra_camins$vpath[[i]][aresta_aleatoria]))
-          desti <- origen <- as.numeric(names(Dijkstra_camins$vpath[[i]][aresta_aleatoria + 1]))
-        }
-        
-        mostra_1 <- X %>% slice(origen)%>% dplyr::select(-c(idx,Class))
-        mostra_2 <- X %>% slice(desti)%>% dplyr::select(-c(idx,Class))
-        dif <- mostra_2 - mostra_1
-        gap <- runif(1,0,1)
-        nova_mostra <- mostra_1 + gap*dif
-        
-        mostra_sintetica <- nova_mostra %>% as_tibble %>% 
-          mutate(idx = 0, Class = "positive") %>% relocate(any_of(names(X)))
-        nou_dataset <- rbind(nou_dataset, mostra_sintetica)
-      }
-    }
-  }
-  return(nou_dataset)
-}
-  
-```
-
-## MWMOTE (Majority Weighted Minority Oversampling Technique)
+## MWMOTE
 
 ```{r}
 f <- function(x,Cf_th){
@@ -749,7 +399,8 @@ MWMOTE <- function(X,N,k1,k2,k3,Cf_th,CMAX, C_p){
 }
 ```
 
-## MDO (Mahalanobis Distance-based Oversampling technique)
+
+## MDO
 
 ```{r}
 MDO <- function(X, k1, k2){
@@ -825,1237 +476,816 @@ MDO <- function(X, k1, k2){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Dades
-
-Carregam totes les taules de dades necessàries
-
-## abalone9_18
-
-```{r}
-abalone9_18 <- read_csv("Taules_de_dades/abalone9_18/abalone9-18.dat", show_col_types = FALSE)
-abalone9_18 <- abalone9_18 %>% 
-  mutate(idx = c(1:nrow(abalone9_18))) %>% relocate(idx)%>% dplyr::select(-Sex)
-abalone9_18_train <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train.csv", show_col_types = FALSE)
-abalone9_18_test <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_test.csv", show_col_types = FALSE)
-IR_abalone9_18 <- round(as.numeric(table(abalone9_18$Class)[1]/table(abalone9_18$Class)[2]),3)
-```
-
-## page_blocks_1_3_4
-
-```{r}
-page_blocks_1_3_4 <- read_csv("Taules_de_dades/page_blocks_1_3_4/page-blocks-1-3_vs_4.dat", show_col_types = FALSE)
-page_blocks_1_3_4 <- page_blocks_1_3_4 %>% 
-  mutate(idx = c(1:nrow(page_blocks_1_3_4))) %>% relocate(idx)
-page_blocks_1_3_4_train <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train.csv", show_col_types = FALSE)
-page_blocks_1_3_4_test <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_test.csv", show_col_types = FALSE)
-IR_page_blocks_1_3_4 <- round(as.numeric(table(page_blocks_1_3_4$Class)[1]/table(page_blocks_1_3_4$Class)[2]),3)
-```
-
-## glass_0_1_6_vs_2
-
-```{r}
-glass_0_1_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass-0-1-6_vs_2.dat", show_col_types = FALSE)
-glass_0_1_6_vs_2 <- glass_0_1_6_vs_2 %>% 
-  mutate(idx = c(1:nrow(glass_0_1_6_vs_2))) %>% relocate(idx)
-glass_0_1_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train.csv", show_col_types = FALSE)
-glass_0_1_6_vs_2_test <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_test.csv", show_col_types = FALSE)
-```
-
-## glass_0_1_4_6_vs_2
-
-```{r}
-glass_0_1_4_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass-0-1-4-6_vs_2.dat", show_col_types = FALSE)
-glass_0_1_4_6_vs_2 <- glass_0_1_4_6_vs_2 %>% 
-  mutate(idx = c(1:nrow(glass_0_1_4_6_vs_2))) %>% relocate(idx)
-glass_0_1_4_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train.csv", show_col_types = FALSE)
-glass_0_1_4_6_vs_2_test <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_test.csv", show_col_types = FALSE)
-```
-
-## page-blocks0
-
-```{r}
-page_blocks0 <- read_csv("Taules_de_dades/page_blocks0/page-blocks0.dat", show_col_types = FALSE)
-page_blocks0 <- page_blocks0 %>% 
-  mutate(idx = c(1:nrow(page_blocks0))) %>% relocate(idx)
-page_blocks0_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train.csv", show_col_types = FALSE)
-page_blocks0_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_test.csv", show_col_types = FALSE)
-IR_page_blocks0 <- round(as.numeric(table(page_blocks0$Class)[1]/table(page_blocks0$Class)[2]),3)
-```
-
-### page_blocks0_1
-```{r, eval=FALSE}
-page_blocks0_1 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1.csv", show_col_types = FALSE)
-page_blocks0_1_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train.csv", show_col_types = FALSE)
-page_blocks0_1_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_test.csv", show_col_types = FALSE)
-IR_prova <- round(as.numeric(table(page_blocks0_1$Class)[1]/table(page_blocks0_1$Class)[2]),3)
-```
-
-### page_blocks0_2
-```{r, eval=FALSE}
-page_blocks0_2 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2.csv", show_col_types = FALSE)
-page_blocks0_2_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train.csv", show_col_types = FALSE)
-page_blocks0_2_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_test.csv", show_col_types = FALSE)
-IR_prova <- round(as.numeric(table(page_blocks0_2$Class)[1]/table(page_blocks0_2$Class)[2]),3)
-```
-
-
-## abalone19_peque
-
-```{r}
-abalone19_peque <- read_csv("Taules_de_dades/abalone19/abalone19_peque.csv", show_col_types = FALSE)
-abalone19_peque_train <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train.csv", show_col_types = FALSE)
-abalone19_peque_test <- read_csv("Taules_de_dades/abalone19/abalone19_peque_test.csv", show_col_types = FALSE)
-IR_abalone19_peque <- round(as.numeric(table(abalone19_peque$Class)[1]/table(abalone19_peque$Class)[2]),3)
-```
-
-## glass2
-
-```{r}
-glass2 <- read_csv("Taules_de_dades/glass2/glass2.dat", show_col_types = FALSE)
-glass2_train <- read_csv("Taules_de_dades/glass2/glass2_train.csv", show_col_types = FALSE)
-glass2_test <- read_csv("Taules_de_dades/glass2/glass2_test.csv", show_col_types = FALSE)
-IR_glass2 <- round(as.numeric(table(glass2$Class)[1]/table(glass2$Class)[2]),3); IR_glass2
-```
-
-
-
-<b style = 'color : black; font-size: 40px;'> Problema de dades desbalancejades</b>
-
-Diferents mètodes de balanceig:
-
--   Sobre mostreig aleatori de la classe minoritària
-
--   Sub mostreig aleatori de la classe majoritària
-
-Ens centrarem en els algoritmes SMOTE i les seves variats.
-
-Donades una sèrie de dades, estudariem i programarem els algoritmes, els aplicarem a les dades i després compararem el resultat amb la funció optimitzada que té `r` en el paquet `smotefamily`.
-
-Primer de tot vegem les dades que tenim. Vegem quant de desbalancejada està i dividirem la taula de dades en *training* i *test* per més endavant aplicar-hi un classificador.
-
-
 # Balanceig
 
-En aquest apartat aplicarem els mètodes vists anteriorment a 10 taules de dades tretes de la pagina web: keel.
 
-### SMOTE
+## SMOTE 
 
+### abalone9_18
 
-#### abalone9_18
+```{r}
+abalone9_18_train_smote <- smotefamily::SMOTE(abalone9_18_train[,-c(1,ncol(abalone9_18_train))],abalone9_18_train[,ncol(abalone9_18_train)], K = 4, dup_size = 15)
+abalone9_18_train_SMOTE <- abalone9_18_train_smote$data %>% rename(Class=class)
 
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb SMOTE
-
-abalone9_18_train_SMOTE <- SMOTE(abalone9_18_train, 15,10)
-table(abalone9_18_train_SMOTE$Class)
 table(abalone9_18_train$Class)
+table(abalone9_18_train_SMOTE$Class)
+
 #write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/SMOTE/abalone9_18_train_SMOTE.csv", row.names = FALSE)
 ```
 
+
+### page_blocks_1_3_4
+
 ```{r}
-abalone9_18_train_SMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_SMOTE.csv", show_col_types = FALSE)
-table(abalone9_18_train_SMOTE$Class)
-```
+page_blocks_1_3_4_train_smote <- smotefamily::SMOTE(page_blocks_1_3_4_train[,-c(1,ncol(page_blocks_1_3_4_train))],page_blocks_1_3_4_train[,ncol(page_blocks_1_3_4_train)], K = 4, dup_size = 18)
+page_blocks_1_3_4_train_SMOTE <- page_blocks_1_3_4_train_smote$data %>% rename(Class=class)
 
-#### page_blocks_1_3_4
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb SMOTE
-
-page_blocks_1_3_4_train_SMOTE <- SMOTE(page_blocks_1_3_4_train, 20,15)
-table(page_blocks_1_3_4_train_SMOTE$Class)
 table(page_blocks_1_3_4_train$Class)
-# write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks_1_3_4_train_SMOTE.csv", row.names = FALSE)
+table(page_blocks_1_3_4_train_SMOTE$Class)
+
+#write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks_1_3_4_train_SMOTE.csv", row.names = FALSE)
 ```
+
+
+### glass_0_1_6_vs_2
 
 ```{r}
-page_blocks_1_3_4_train_SMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_SMOTE.csv", show_col_types = FALSE)
-table(page_blocks_1_3_4_train_SMOTE$Class)
-```
+glass_0_1_6_vs_2_train_smote <- smotefamily::SMOTE(glass_0_1_6_vs_2_train[,-c(1,ncol(glass_0_1_6_vs_2_train))],glass_0_1_6_vs_2_train[,ncol(glass_0_1_6_vs_2_train)], K = 4, dup_size = 9)
+glass_0_1_6_vs_2_train_SMOTE <- glass_0_1_6_vs_2_train_smote$data %>% rename(Class=class)
 
-#### glass_0_1_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb SMOTE
-
-glass_0_1_6_vs_2_train_SMOTE <- SMOTE(glass_0_1_6_vs_2_train, 11,8)
-table(glass_0_1_6_vs_2_train_SMOTE$Class)
 table(glass_0_1_6_vs_2_train$Class)
+table(glass_0_1_6_vs_2_train_SMOTE$Class)
+
 #write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass_0_1_6_vs_2_train_SMOTE.csv", row.names = FALSE)
 ```
 
+### glass_0_1_4_6_vs_2
+
 ```{r}
-glass_0_1_6_vs_2_train_SMOTE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_SMOTE.csv", show_col_types = FALSE)
-table(glass_0_1_6_vs_2_train_SMOTE$Class)
-```
+glass_0_1_4_6_vs_2_train_smote <- smotefamily::SMOTE(glass_0_1_4_6_vs_2_train[,-c(1,ncol(glass_0_1_4_6_vs_2_train))],glass_0_1_4_6_vs_2_train[,ncol(glass_0_1_4_6_vs_2_train)], K = 4, dup_size = 10)
+glass_0_1_4_6_vs_2_train_SMOTE <- glass_0_1_4_6_vs_2_train_smote$data %>% rename(Class=class)
 
-#### glass_0_1_4_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb SMOTE
-
-glass_0_1_4_6_vs_2_train_SMOTE <- SMOTE(glass_0_1_4_6_vs_2_train, 10,8)
-table(glass_0_1_4_6_vs_2_train_SMOTE$Class)
 table(glass_0_1_4_6_vs_2_train$Class)
-# write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass_0_1_4_6_vs_2_train_SMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-glass_0_1_4_6_vs_2_train_SMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_SMOTE.csv", show_col_types = FALSE)
 table(glass_0_1_4_6_vs_2_train_SMOTE$Class)
+
+#write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass_0_1_4_6_vs_2_train_SMOTE.csv", row.names = FALSE)
 ```
 
-#### page-blocks0
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SMOTE
-
-page_blocks0_train_SMOTE <- SMOTE(page_blocks0_train, 250, 8)
-table(page_blocks0_train_SMOTE$Class)
-# write.csv(page_blocks0_train_SMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_SMOTE.csv", row.names = FALSE)
-```
+### page_blocks0_1
 
 ```{r}
-page_blocks0_train_SMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train_SMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_train_SMOTE$Class)
-```
+page_blocks0_1_train_smote <- smotefamily::SMOTE(page_blocks0_1_train[,-c(1,ncol(page_blocks0_1_train))],page_blocks0_1_train[,ncol(page_blocks0_1_train)], K = 4, dup_size = 8)
+page_blocks0_1_train_SMOTE <- page_blocks0_1_train_smote$data %>% rename(Class=class)
 
-##### page-blocks0_1
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb SMOTE
-
-page_blocks0_1_train_SMOTE <- SMOTE(page_blocks0_1_train, 7, 10)
-table(page_blocks0_1_train_SMOTE$Class)
 table(page_blocks0_1_train$Class)
+table(page_blocks0_1_train_SMOTE$Class)
+
 #write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks0_1_train_SMOTE.csv", row.names = FALSE)
 ```
 
+### page_blocks0_2
+
 ```{r}
-page_blocks0_1_train_SMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_SMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_1_train_SMOTE$Class)
-```
+page_blocks0_2_train_smote <- smotefamily::SMOTE(page_blocks0_2_train[,-c(1,ncol(page_blocks0_2_train))],page_blocks0_2_train[,ncol(page_blocks0_2_train)], K = 4, dup_size = 8)
+page_blocks0_2_train_SMOTE <- page_blocks0_2_train_smote$data %>% rename(Class=class)
 
-##### page-blocks0_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb SMOTE
-
-page_blocks0_2_train_SMOTE <- SMOTE(page_blocks0_2_train, 8, 10)
-table(page_blocks0_2_train_SMOTE$Class)
 table(page_blocks0_2_train$Class)
+table(page_blocks0_2_train_SMOTE$Class)
+
 #write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks0_2_train_SMOTE.csv", row.names = FALSE)
 ```
 
+### abalone19_peque
+
 ```{r}
-page_blocks0_2_train_SMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_SMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_2_train_SMOTE$Class)
-```
+abalone19_peque_train_smote <- smotefamily::SMOTE(abalone19_peque_train[,-c(1,ncol(abalone19_peque_train))],abalone19_peque_train[,ncol(abalone19_peque_train)], K = 4, dup_size = 8)
+abalone19_peque_train_SMOTE <- abalone19_peque_train_smote$data %>% rename(Class=class)
 
-#### abalone19_peque
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb SMOTE
-
-abalone19_peque_train_SMOTE <- SMOTE(abalone19_peque_train, 8,7)
-table(abalone19_peque_train_SMOTE$Class)
 table(abalone19_peque_train$Class)
-# write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/SMOTE/abalone19_peque_train_SMOTE.csv", row.names = FALSE)
-```
-
-```{r, eval=FALSE}
-abalone19_peque_train_SMOTE <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_SMOTE.csv", show_col_types = FALSE)
 table(abalone19_peque_train_SMOTE$Class)
+
+#write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/SMOTE/abalone19_peque_train_SMOTE.csv", row.names = FALSE)
 ```
 
+### glass2
 
-#### glass2
+```{r}
+glass2_train_smote <- smotefamily::SMOTE(glass2_train[,-c(1,ncol(glass2_train))],glass2_train[,ncol(glass2_train)], K = 4, dup_size = 11)
+glass2_train_SMOTE <- glass2_train_smote$data %>% rename(Class=class)
 
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de glass2 amb SMOTE
-
-glass2_train_SMOTE <- SMOTE(glass2_train, 11, 10)
 table(glass2_train$Class)
 table(glass2_train_SMOTE$Class)
-# write.csv(glass2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass2_train_SMOTE.csv", row.names = FALSE)
+
+#write.csv(glass2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass2_train_SMOTE.csv", row.names = FALSE)
 ```
+
+
+## Borderline-SMOTE
+
+### abalone9_18
 
 ```{r}
-glass2_train_SMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_SMOTE.csv", show_col_types = FALSE)
-table(glass2_train_SMOTE$Class)
-```
+abalone9_18_train_blsmote <- smotefamily::BLSMOTE(abalone9_18_train[,-c(1,ncol(abalone9_18_train))],abalone9_18_train[,ncol(abalone9_18_train)], K = 2, C = 4)
+abalone9_18_train_BorderlineSMOTE <- abalone9_18_train_blsmote$data %>% rename(Class=class)
 
-
-
-
-
-
-### Borderline SMOTE
-
-#### abalone9_18
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb Borderline-SMOTE
-abalone9_18_train_BorderlineSMOTE <- BorderlineSMOTE(abalone9_18_train,5)
-table(abalone9_18_train_BorderlineSMOTE$Class)
-#write.csv(abalone9_18_train_BorderlineSMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_BorderlineSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-abalone9_18_train_BorderlineSMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-table(abalone9_18_train_BorderlineSMOTE$Class)
-```
-
-#### page_blocks_1_3_4
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb Borderline-SMOTE
-page_blocks_1_3_4_train_BorderlineSMOTE <- BorderlineSMOTE(page_blocks_1_3_4_train,9)
-table(page_blocks_1_3_4_train_BorderlineSMOTE$Class)
-table(page_blocks_1_3_4_train$Class)
-# write.csv(page_blocks_1_3_4_train_BorderlineSMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_BorderlineSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks_1_3_4_train_BorderlineSMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-table(page_blocks_1_3_4_train_BorderlineSMOTE$Class)
-```
-
-#### glass_0_1_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb Borderline-SMOTE
-glass_0_1_6_vs_2_train_BorderlineSMOTE <- BorderlineSMOTE(glass_0_1_6_vs_2_train,9)
-table(glass_0_1_6_vs_2_train_BorderlineSMOTE$Class)
-table(glass_0_1_6_vs_2_train$Class)
-#write.csv(glass_0_1_6_vs_2_train_BorderlineSMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_BorderlineSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-glass_0_1_6_vs_2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-table(glass_0_1_6_vs_2_train_BorderlineSMOTE$Class)
-```
-
-#### glass_0_1_4_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb Borderline-SMOTE
-glass_0_1_4_6_vs_2_train_BorderlineSMOTE <- BorderlineSMOTE(glass_0_1_4_6_vs_2_train,8)
-table(glass_0_1_4_6_vs_2_train_BorderlineSMOTE$Class)
-table(glass_0_1_4_6_vs_2_train$Class)
-#write.csv(glass_0_1_4_6_vs_2_train_BorderlineSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_BorderlineSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-glass_0_1_4_6_vs_2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-table(glass_0_1_4_6_vs_2_train_BorderlineSMOTE$Class)
-```
-
-#### abalone19_peque
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb Borderline-SMOTE
-abalone19_peque_train_BorderlineSMOTE <- BorderlineSMOTE(abalone19_peque_train,5)
-table(abalone19_peque_train_BorderlineSMOTE$Class)
-table(abalone19_peque_train$Class)
-#write.csv(abalone19_peque_train_BorderlineSMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_BorderlineSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-abalone19_peque_train_BorderlineSMOTE <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-table(abalone19_peque_train_BorderlineSMOTE$Class)
-```
-
-#### glass2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de glass2 amb Borderline-SMOTE
-glass2_train_BorderlineSMOTE <- BorderlineSMOTE(glass2_train,8)
-table(glass2_train_BorderlineSMOTE$Class)
-#write.csv(glass2_train_BorderlineSMOTE, file = "Taules_de_dades/glass2/glass2_train_BorderlineSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-glass2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-table(glass2_train_BorderlineSMOTE$Class)
-```
-
-#### page-blocks0
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb Borderline-SMOTE
-page_blocks0_train_BorderlineSMOTE <- BorderlineSMOTE(page_blocks0_train,10)
-table(page_blocks0_train_BorderlineSMOTE$Class)
-# write.csv(page_blocks0_train_BorderlineSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_BorderlineSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_train_BorderlineSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_train_BorderlineSMOTE$Class)
-```
-
-##### page_blocks0_1
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb Borderline-SMOTE
-page_blocks0_1_train_BorderlineSMOTE <- BorderlineSMOTE(page_blocks0_1_train,10)
-table(page_blocks0_1_train_BorderlineSMOTE$Class)
-# write.csv(page_blocks0_1_train_BorderlineSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_BorderlineSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_1_train_BorderlineSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_1_train_BorderlineSMOTE$Class)
-```
-
-##### page_blocks0_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig de pima amb Borderline-SMOTE
-page_blocks0_2_train_BorderlineSMOTE <- BorderlineSMOTE(page_blocks0_2_train,10)
-table(page_blocks0_2_train_BorderlineSMOTE$Class)
-#write.csv(page_blocks0_2_train_BorderlineSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_BorderlineSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_2_train_BorderlineSMOTE$Class)
-```
-
-
-
-
-
-### ADOMS
-
-#### abalone9_18
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADOMS
-abalone9_18_train_ADOMS <- ADOMS(abalone9_18_train, 12, 300)
-table(abalone9_18_train_ADOMS$Class)
-# write.csv(abalone9_18_train_ADOMS, file = "Taules_de_dades/abalone9_18/abalone9_18_train_ADOMS.csv", row.names = FALSE)
-```
-
-```{r}
-abalone9_18_train_ADOMS <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_ADOMS.csv", show_col_types = FALSE)
-table(abalone9_18_train_ADOMS$Class)
-```
-
-#### page_blocks_1_3_4
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADOMS
-page_blocks_1_3_4_train_ADOMS <- ADOMS(page_blocks_1_3_4_train, 10, 175)
-table(page_blocks_1_3_4_train_ADOMS$Class)
-# write.csv(page_blocks_1_3_4_train_ADOMS, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ADOMS.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks_1_3_4_train_ADOMS <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ADOMS.csv", show_col_types = FALSE)
-table(page_blocks_1_3_4_train_ADOMS$Class)
-```
-
-#### glass_0_1_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADOMS
-glass_0_1_6_vs_2_train_ADOMS <- ADOMS(glass_0_1_6_vs_2_train, 8, 110)
-table(glass_0_1_6_vs_2_train_ADOMS$Class)
-# write.csv(glass_0_1_6_vs_2_train_ADOMS, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ADOMS.csv", row.names = FALSE)
-```
-
-```{r}
-glass_0_1_6_vs_2_train_ADOMS <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ADOMS.csv", show_col_types = FALSE)
-table(glass_0_1_6_vs_2_train_ADOMS$Class)
-```
-
-#### glass_0_1_4_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADOMS
-glass_0_1_4_6_vs_2_train_ADOMS <- ADOMS(glass_0_1_4_6_vs_2_train, 9, 110)
-table(glass_0_1_4_6_vs_2_train_ADOMS$Class)
-# write.csv(glass_0_1_4_6_vs_2_train_ADOMS, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ADOMS.csv", row.names = FALSE)
-```
-
-```{r}
-glass_0_1_4_6_vs_2_train_ADOMS <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ADOMS.csv", show_col_types = FALSE)
-table(glass_0_1_4_6_vs_2_train_ADOMS$Class)
-```
-
-#### abalone19_peque
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADOMS
-abalone19_peque_train_ADOMS <- ADOMS(abalone19_peque_train, 10, 180)
-table(abalone19_peque_train_ADOMS$Class)
-#write.csv(abalone19_peque_train_ADOMS, file = "Taules_de_dades/abalone19/abalone19_peque_train_ADOMS.csv", row.names = FALSE)
-```
-
-```{r}
-abalone19_peque_train_ADOMS <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_ADOMS.csv", show_col_types = FALSE)
-table(abalone19_peque_train_ADOMS$Class)
-```
-
-#### glass2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADOMS
-glass2_train_ADOMS <- ADOMS(glass2_train, 10, 110)
-table(glass2_train_ADOMS$Class)
-#write.csv(glass2_train_ADOMS, file = "Taules_de_dades/glass2/glass2_train_ADOMS.csv", row.names = FALSE)
-```
-
-```{r}
-glass2_train_ADOMS <- read_csv("Taules_de_dades/glass2/glass2_train_ADOMS.csv", show_col_types = FALSE)
-table(glass2_train_ADOMS$Class)
-```
-
-#### page-blocks0
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADOMS
-page_blocks0_train_ADOMS <- ADOMS(page_blocks0_train, 10, 2500)
-table(page_blocks0_train_ADOMS$Class)
-# write.csv(page_blocks0_train_ADOMS, file = "Taules_de_dades/page_blocks0/page_blocks0_train_ADOMS.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_train_ADOMS <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train_ADOMS.csv", show_col_types = FALSE)
-table(page_blocks0_train_ADOMS$Class)
-```
-
-
-##### page_blocks0_1
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADOMS
-page_blocks0_1_train_ADOMS <- ADOMS(page_blocks0_1_train, 10, 325)
-table(page_blocks0_1_train_ADOMS$Class)
-#write.csv(page_blocks0_1train_ADOMS, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_ADOMS.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_1_train_ADOMS <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_ADOMS.csv", show_col_types = FALSE)
-table(page_blocks0_1_train_ADOMS$Class)
-```
-
-##### page_blocks0_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADOMS
-page_blocks0_2_train_ADOMS <- ADOMS(page_blocks0_2_train, 10, 320)
-table(page_blocks0_2_train_ADOMS$Class)
-#write.csv(page_blocks0_2_train_ADOMS, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_ADOMS.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_2_train_ADOMS <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_ADOMS.csv", show_col_types = FALSE)
-table(page_blocks0_2_train_ADOMS$Class)
-```
-
-
-
-
-
-
-### ADASYN
-
-#### abalone9_18
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADASYN
-abalone9_18_train_ADASYN <- ADASYN(X = abalone9_18_train, k = 12, b = 0.85, dth = 0.8)
-table(abalone9_18_train_ADASYN$Class)
-# write.csv(abalone9_18_train_ADASYN, file = "Taules_de_dades/abalone9_18/abalone9_18_train_ADASYN.csv", row.names = FALSE)
-```
-
-```{r}
-abalone9_18_train_ADASYN <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_ADASYN.csv", show_col_types = FALSE)
-table(abalone9_18_train_ADASYN$Class)
-```
-
-#### page_blocks_1_3_4
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADASYN
-page_blocks_1_3_4_train_ADASYN <- ADASYN(X = page_blocks_1_3_4_train, k = 12, b = 0.85, dth = 0.8)
-table(page_blocks_1_3_4_train_ADASYN$Class)
-# write.csv(page_blocks_1_3_4_train_ADASYN, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ADASYN.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks_1_3_4_train_ADASYN <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ADASYN.csv", show_col_types = FALSE)
-table(page_blocks_1_3_4_train_ADASYN$Class)
-```
-
-#### glass_0_1_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADASYN
-glass_0_1_6_vs_2_train_ADASYN <- ADASYN(X = glass_0_1_6_vs_2_train, k = 8, b = 0.85, dth = 0.8)
-table(glass_0_1_6_vs_2_train_ADASYN$Class)
-# write.csv(glass_0_1_6_vs_2_train_ADASYN, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ADASYN.csv", row.names = FALSE)
-```
-
-```{r}
-glass_0_1_6_vs_2_train_ADASYN <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ADASYN.csv", show_col_types = FALSE)
-table(glass_0_1_6_vs_2_train_ADASYN$Class)
-```
-
-#### glass_0_1_4_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADASYN
-glass_0_1_4_6_vs_2_train_ADASYN <- ADASYN(X = glass_0_1_4_6_vs_2_train, k = 10, b = 0.8, dth = 0.75)
-table(glass_0_1_4_6_vs_2_train_ADASYN$Class)
-# write.csv(glass_0_1_4_6_vs_2_train_ADASYN, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ADASYN.csv", row.names = FALSE)
-```
-
-```{r}
-glass_0_1_4_6_vs_2_train_ADASYN <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ADASYN.csv", show_col_types = FALSE)
-table(glass_0_1_4_6_vs_2_train_ADASYN$Class)
-```
-
-#### abalone19_peque
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADASYN
-abalone19_peque_train_ADASYN <- ADASYN(X = abalone19_peque_train, k = 5, b = 0.85, dth = 0.8)
-table(abalone19_peque_train_ADASYN$Class)
-#write.csv(abalone19_peque_train_ADASYN, file = "Taules_de_dades/abalone19/abalone19_peque_train_ADASYN.csv", row.names = FALSE)
-```
-
-```{r}
-abalone19_peque_train_ADASYN <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_ADASYN.csv", show_col_types = FALSE)
-table(abalone19_peque_train_ADASYN$Class)
-```
-
-
-#### glass2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADASYN
-glass2_train_ADASYN <- ADASYN(X = glass2_train, k = 5, b = 0.85, dth = 0.8)
-table(glass2_train_ADASYN$Class)
-#write.csv(glass2_train_ADASYN, file = "Taules_de_dades/glass2/glass2_train_ADASYN.csv", row.names = FALSE)
-```
-
-```{r}
-glass2_train_ADASYN <- read_csv("Taules_de_dades/glass2/glass2_train_ADASYN.csv", show_col_types = FALSE)
-table(glass2_train_ADASYN$Class)
-```
-
-#### page-blocks0
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADASYN
-page_blocks0_train_ADASYN <- ADASYN(X = page_blocks0_train, k = 6, b = 0.9, dth = 0.85)
-table(page_blocks0_train_ADASYN$Class)
-# write.csv(page_blocks0_train_ADASYN, file = "Taules_de_dades/page_blocks0/page_blocks0_train_ADASYN.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_train_ADASYN <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train_ADASYN.csv", show_col_types = FALSE)
-table(page_blocks0_train_ADASYN$Class)
-```
-
-##### page_blocks0_1
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADASYN
-page_blocks0_1_train_ADASYN <- ADASYN(X = page_blocks0_1_train, k = 6, b = 0.9, dth = 0.85)
-table(page_blocks0_1_train_ADASYN$Class)
-# write.csv(page_blocks0_1_train_ADASYN, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_ADASYN.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_1_train_ADASYN <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_ADASYN.csv", show_col_types = FALSE)
-table(page_blocks0_1_train_ADASYN$Class)
-```
-
-##### page_blocks0_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb ADASYN
-page_blocks0_2_train_ADASYN <- ADASYN(X = page_blocks0_2_train, k = 6, b = 0.9, dth = 0.85)
-table(page_blocks0_2_train_ADASYN$Class)
-#write.csv(page_blocks0_2_train_ADASYN, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_ADASYN.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_2_train_ADASYN <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_ADASYN.csv", show_col_types = FALSE)
-table(page_blocks0_2_train_ADASYN$Class)
-```
-
-
-
-
-
-
-
-### Safe-Level SMOTE
-
-#### abalone9_18
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SAFE-LEVEL SMOTE
-abalone9_18_train_SLSMOTE <- SL_SMOTE(abalone9_18_train,18)
-table(abalone9_18_train_SLSMOTE$Class)
 table(abalone9_18_train$Class)
-# write.csv(abalone9_18_train_SLSMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_SLSMOTE.csv", row.names = FALSE)
+table(abalone9_18_train_BorderlineSMOTE$Class)
+
+# write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/abalone9_18_train_BorderlineSMOTE.csv", row.names = FALSE)
 ```
+
+negative positive 
+     553       32 
+
+### page_blocks_1_3_4
 
 ```{r}
-abalone9_18_train_SLSMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_SLSMOTE.csv", show_col_types = FALSE)
-table(abalone9_18_train_SLSMOTE$Class)
-```
+page_blocks_1_3_4_train_blsmote <- smotefamily::BLSMOTE(page_blocks_1_3_4_train[,-c(1,ncol(page_blocks_1_3_4_train))],page_blocks_1_3_4_train[,ncol(page_blocks_1_3_4_train)], K = 5, C = 7)
+page_blocks_1_3_4_train_BorderlineSMOTE <- page_blocks_1_3_4_train_blsmote$data %>% rename(Class=class)
 
-#### page_blocks_1_3_4
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SAFE-LEVEL SMOTE
-page_blocks_1_3_4_train_SLSMOTE <- SL_SMOTE(page_blocks_1_3_4_train,12)
-table(page_blocks_1_3_4_train_SLSMOTE$Class)
 table(page_blocks_1_3_4_train$Class)
-# write.csv(page_blocks_1_3_4_train_SLSMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_SLSMOTE.csv", row.names = FALSE)
+table(page_blocks_1_3_4_train_BorderlineSMOTE$Class)
+
+# write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/page_blocks_1_3_4_train_BorderlineSMOTE.csv", row.names = FALSE)
 ```
+
+### glass_0_1_6_vs_2
 
 ```{r}
-page_blocks_1_3_4_train_SLSMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_SLSMOTE.csv", show_col_types = FALSE)
-table(page_blocks_1_3_4_train_SLSMOTE$Class)
-```
+glass_0_1_6_vs_2_train_blsmote <- smotefamily::BLSMOTE(glass_0_1_6_vs_2_train[,-c(1,ncol(glass_0_1_6_vs_2_train))],glass_0_1_6_vs_2_train[,ncol(glass_0_1_6_vs_2_train)], K = 5, C = 9)
+glass_0_1_6_vs_2_train_BorderlineSMOTE <- glass_0_1_6_vs_2_train_blsmote$data %>% rename(Class=class)
 
-#### glass_0_1_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SAFE-LEVEL SMOTE
-glass_0_1_6_vs_2_train_SLSMOTE <- SL_SMOTE(glass_0_1_6_vs_2_train,8)
-table(glass_0_1_6_vs_2_train_SLSMOTE$Class)
 table(glass_0_1_6_vs_2_train$Class)
-# write.csv(glass_0_1_6_vs_2_train_SLSMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_SLSMOTE.csv", row.names = FALSE)
+table(glass_0_1_6_vs_2_train_BorderlineSMOTE$Class)
+
+# write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/glass_0_1_6_vs_2_train_BorderlineSMOTE.csv", row.names = FALSE)
 ```
+
+### glass_0_1_4_6_vs_2
 
 ```{r}
-glass_0_1_6_vs_2_train_SLSMOTE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_SLSMOTE.csv", show_col_types = FALSE)
-table(glass_0_1_6_vs_2_train_SLSMOTE$Class)
-```
+glass_0_1_4_6_vs_2_train_blsmote <- smotefamily::BLSMOTE(glass_0_1_4_6_vs_2_train[,-c(1,ncol(glass_0_1_4_6_vs_2_train))],glass_0_1_4_6_vs_2_train[,ncol(glass_0_1_4_6_vs_2_train)], K = 6, C = 8)
+glass_0_1_4_6_vs_2_train_BorderlineSMOTE <- glass_0_1_4_6_vs_2_train_blsmote$data %>% rename(Class=class)
 
-#### glass_0_1_4_6_vs_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SAFE-LEVEL SMOTE
-glass_0_1_4_6_vs_2_train_SLSMOTE <- SL_SMOTE(glass_0_1_4_6_vs_2_train,8)
-table(glass_0_1_4_6_vs_2_train_SLSMOTE$Class)
 table(glass_0_1_4_6_vs_2_train$Class)
-# write.csv(glass_0_1_4_6_vs_2_train_SLSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_SLSMOTE.csv", row.names = FALSE)
+table(glass_0_1_4_6_vs_2_train_BorderlineSMOTE$Class)
+
+# write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/glass_0_1_4_6_vs_2_train_BorderlineSMOTE.csv", row.names = FALSE)
 ```
+
+### page_blocks0_1
 
 ```{r}
-glass_0_1_4_6_vs_2_train_SLSMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_SLSMOTE.csv", show_col_types = FALSE)
-table(glass_0_1_4_6_vs_2_train_SLSMOTE$Class)
-```
+page_blocks0_1_train_blsmote <- smotefamily::BLSMOTE(page_blocks0_1_train[,-c(1,ncol(page_blocks0_1_train))],page_blocks0_1_train[,ncol(page_blocks0_1_train)], K = 5, C = 8)
+page_blocks0_1_train_BorderlineSMOTE <- page_blocks0_1_train_blsmote$data %>% rename(Class=class)
 
-#### abalone19_peque
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SAFE-LEVEL SMOTE
-abalone19_peque_train_SLSMOTE <- SL_SMOTE(abalone19_peque_train,10)
-table(abalone19_peque_train_SLSMOTE$Class)
-table(abalone19_peque_train$Class)
-# write.csv(abalone19_peque_train_SLSMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_SLSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-abalone19_peque_train_SLSMOTE <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train_SLSMOTE.csv", show_col_types = FALSE)
-table(abalone19_peque_train_SLSMOTE$Class)
-```
-
-
-#### glass2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SAFE-LEVEL SMOTE
-glass2_train_SLSMOTE <- SL_SMOTE(glass2_train,9)
-table(glass2_train_SLSMOTE$Class)
-#write.csv(glass2_train_SLSMOTE, file = "Taules_de_dades/glass2/glass2_train_SLSMOTE.csv", row.names = FALSE)
-```
-
-```{r}
-glass2_train_SLSMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_SLSMOTE.csv", show_col_types = FALSE)
-table(glass2_train_SLSMOTE$Class)
-```
-
-#### page-blocks0
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SAFE-LEVEL SMOTE
-page_blocks0_train_SLSMOTE <- SL_SMOTE(page_blocks0_train,10)
-table(page_blocks0_train_SLSMOTE$Class)
-#write.csv(page_blocks0_train_SLSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_SLSMOTE.csv", row.names = FALSE)
-table(page_blocks0_train$Class)
-```
-
-```{r}
-page_blocks0_train_SLSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train_SLSMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_train_SLSMOTE$Class)
-```
-
-##### page_blocks0_1
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SAFE-LEVEL SMOTE
-page_blocks0_1_train_SLSMOTE <- SL_SMOTE(page_blocks0_1_train,25)
-table(page_blocks0_1_train_SLSMOTE$Class)
-#write.csv(page_blocks0_1_train_SLSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_SLSMOTE.csv", row.names = FALSE)
 table(page_blocks0_1_train$Class)
+table(page_blocks0_1_train_BorderlineSMOTE$Class)
+
+#write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/page_blocks0_1_train_BorderlineSMOTE.csv", row.names = FALSE)
 ```
+
+### page_blocks0_2
 
 ```{r}
-page_blocks0_1_train_SLSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_SLSMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_1_train_SLSMOTE$Class)
-```
+page_blocks0_2_train_blsmote <- smotefamily::BLSMOTE(page_blocks0_2_train[,-c(1,ncol(page_blocks0_2_train))],page_blocks0_2_train[,ncol(page_blocks0_2_train)], K = 5, C = 3)
+page_blocks0_2_train_BorderlineSMOTE <- page_blocks0_2_train_blsmote$data %>% rename(Class=class)
 
-
-##### page_blocks0_2
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb SAFE-LEVEL SMOTE
-page_blocks0_2_train_SLSMOTE <- SL_SMOTE(page_blocks0_2_train, 26)
-table(page_blocks0_2_train_SLSMOTE$Class)
-#write.csv(page_blocks0_2_train_SLSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_SLSMOTE.csv", row.names = FALSE)
 table(page_blocks0_2_train$Class)
+table(page_blocks0_2_train_BorderlineSMOTE$Class)
+
+# write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/page_blocks0_2_train_BorderlineSMOTE.csv", row.names = FALSE)
 ```
+
+### abalone19_peque
 
 ```{r}
-page_blocks0_2_train_SLSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_SLSMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_2_train_SLSMOTE$Class)
+abalone19_peque_train_blsmote <- smotefamily::BLSMOTE(abalone19_peque_train[,-c(1,ncol(abalone19_peque_train))],abalone19_peque_train[,ncol(abalone19_peque_train)], K = 4, C = 5)
+abalone19_peque_train_BorderlineSMOTE <- abalone19_peque_train_blsmote$data %>% rename(Class=class)
+
+table(abalone19_peque_train$Class)
+table(abalone19_peque_train_BorderlineSMOTE$Class)
+
+# write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/abalone19_peque_train_BorderlineSMOTE.csv", row.names = FALSE)
 ```
 
+### glass2
 
-### DBSMOTE
+```{r}
+glass2_train_blsmote <- smotefamily::BLSMOTE(glass2_train[,-c(1,ncol(glass2_train))],glass2_train[,ncol(glass2_train)], K = 6, C = 4)
+glass2_train_BorderlineSMOTE <- glass2_train_blsmote$data %>% rename(Class=class)
 
+table(glass2_train$Class)
+table(glass2_train_BorderlineSMOTE$Class)
 
-#### abalone9_18
+# write.csv(glass2_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/glass2_train_BorderlineSMOTE.csv", row.names = FALSE)
+```
 
-Balanceig:
+## ADOMS
+
+### abalone9_18
 
 ```{r, eval=FALSE}
-abalone9_18_train_DBSMOTE <- DBSMOTE(abalone9_18_train, 1, 4)
-table(abalone9_18_train$Class)
-table(abalone9_18_train_DBSMOTE$Class)
+abalone9_18_train_ADOMS <- ADOMS(abalone9_18_train,8,500)
 
-# write.csv(abalone9_18_train_DBSMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv", row.names = FALSE)
+table(abalone9_18_train$Class)
+table(abalone9_18_train_ADOMS$Class)
+
+#write.csv(abalone9_18_train_ADOMS, file = "Taules_de_dades/ADOMS/abalone9_18_train_ADOMS.csv", row.names = FALSE)
 ```
 
+### page_blocks_1_3_4
+
+```{r, eval=FALSE}
+page_blocks_1_3_4_train_ADOMS <- ADOMS(page_blocks_1_3_4_train,8,340)
+
+table(page_blocks_1_3_4_train$Class)
+table(page_blocks_1_3_4_train_ADOMS$Class)
+
+#write.csv(page_blocks_1_3_4_train_ADOMS, file = "Taules_de_dades/ADOMS/page_blocks_1_3_4_train_ADOMS.csv", row.names = FALSE)
+```
+
+### glass_0_1_6_vs_2
+
+```{r, eval=FALSE}
+glass_0_1_6_vs_2_train_ADOMS <- ADOMS(glass_0_1_6_vs_2_train,6,125)
+
+table(glass_0_1_6_vs_2_train$Class)
+table(glass_0_1_6_vs_2_train_ADOMS$Class)
+
+# write.csv(glass_0_1_6_vs_2_train_ADOMS, file = "Taules_de_dades/ADOMS/glass_0_1_6_vs_2_train_ADOMS.csv", row.names = FALSE)
+```
+
+### glass_0_1_4_6_vs_2
+
+```{r, eval=FALSE}
+glass_0_1_4_6_vs_2_train_ADOMS <- ADOMS(glass_0_1_4_6_vs_2_train,8,135)
+
+table(glass_0_1_4_6_vs_2_train$Class)
+table(glass_0_1_4_6_vs_2_train_ADOMS$Class)
+
+#write.csv(glass_0_1_4_6_vs_2_train_ADOMS, file = "Taules_de_dades/ADOMS/glass_0_1_4_6_vs_2_train_ADOMS.csv", row.names = FALSE)
+```
+
+### page_blocks0_1
+
+```{r, eval=FALSE}
+page_blocks0_1_train_ADOMS <- ADOMS(page_blocks0_1_train,7,355)
+
+table(page_blocks0_1_train$Class)
+table(page_blocks0_1_train_ADOMS$Class)
+
+# write.csv(page_blocks0_1_train_ADOMS, file = "Taules_de_dades/ADOMS/page_blocks0_1_train_ADOMS.csv", row.names = FALSE)
+```
+
+### page_blocks0_2
+
+```{r, eval=FALSE}
+page_blocks0_2_train_ADOMS <- ADOMS(page_blocks0_2_train,9,360)
+
+table(page_blocks0_2_train$Class)
+table(page_blocks0_2_train_ADOMS$Class)
+
+# write.csv(page_blocks0_2_train_ADOMS, file = "Taules_de_dades/ADOMS/page_blocks0_2_train_ADOMS.csv", row.names = FALSE)
+```
+
+### abalone19_peque
+
+```{r, eval=FALSE}
+abalone19_peque_train_ADOMS <- ADOMS(abalone19_peque_train,9,205)
+
+table(abalone19_peque_train$Class)
+table(abalone19_peque_train_ADOMS$Class)
+
+# write.csv(abalone19_peque_train_ADOMS, file = "Taules_de_dades/ADOMS/abalone19_peque_train_ADOMS.csv", row.names = FALSE)
+```
+
+### glass2
+
+```{r, eval=FALSE}
+glass2_train_ADOMS <- ADOMS(glass2_train,10,140)
+
+table(glass2_train$Class)
+table(glass2_train_ADOMS$Class)
+
+#write.csv(glass2_train_ADOMS, file = "Taules_de_dades/ADOMS/glass2_train_ADOMS.csv", row.names = FALSE)
+```
+
+## ADASYN
+
+### abalone9_18
+
+```{r, eval=FALSE}
+abalone9_18_train_adasyn <- smotefamily::ADAS(abalone9_18_train[,-c(1,ncol(abalone9_18_train))],abalone9_18_train[,ncol(abalone9_18_train)], K = 8)
+abalone9_18_train_ADASYN <- abalone9_18_train_adasyn$data %>% rename(Class=class)
+
+table(abalone9_18_train$Class)
+table(abalone9_18_train_ADASYN$Class)
+
+#write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/ADASYN/abalone9_18_train_ADASYN.csv", row.names = FALSE)
+```
+
+
+### page_blocks_1_3_4
+
+```{r, eval=FALSE}
+page_blocks_1_3_4_train_adasyn <- smotefamily::ADAS(page_blocks_1_3_4_train[,-c(1,ncol(page_blocks_1_3_4_train))],page_blocks_1_3_4_train[,ncol(page_blocks_1_3_4_train)], K = 8)
+page_blocks_1_3_4_train_ADASYN <- page_blocks_1_3_4_train_adasyn$data %>% rename(Class=class)
+
+table(page_blocks_1_3_4_train$Class)
+table(page_blocks_1_3_4_train_ADASYN$Class)
+
+#write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/ADASYN/page_blocks_1_3_4_train_ADASYN.csv", row.names = FALSE)
+```
+
+
+### glass_0_1_6_vs_2
+
+```{r, eval=FALSE}
+glass_0_1_6_vs_2_train_adasyn <- smotefamily::ADAS(glass_0_1_6_vs_2_train[,-c(1,ncol(glass_0_1_6_vs_2_train))],glass_0_1_6_vs_2_train[,ncol(glass_0_1_6_vs_2_train)], K = 8)
+glass_0_1_6_vs_2_train_ADASYN <- glass_0_1_6_vs_2_train_adasyn$data %>% rename(Class=class)
+
+table(glass_0_1_6_vs_2_train$Class)
+table(glass_0_1_6_vs_2_train_ADASYN$Class)
+
+#write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/ADASYN/glass_0_1_6_vs_2_train_ADASYN.csv", row.names = FALSE)
+```
+
+### glass_0_1_4_6_vs_2
+
+```{r, eval=FALSE}
+glass_0_1_4_6_vs_2_train_adasyn <- smotefamily::ADAS(glass_0_1_4_6_vs_2_train[,-c(1,ncol(glass_0_1_4_6_vs_2_train))],glass_0_1_4_6_vs_2_train[,ncol(glass_0_1_4_6_vs_2_train)], K = 8)
+glass_0_1_4_6_vs_2_train_ADASYN <- glass_0_1_4_6_vs_2_train_adasyn$data %>% rename(Class=class)
+
+table(glass_0_1_4_6_vs_2_train$Class)
+table(glass_0_1_4_6_vs_2_train_ADASYN$Class)
+
+#write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/ADASYN/glass_0_1_4_6_vs_2_train_ADASYN.csv", row.names = FALSE)
+```
+
+### page_blocks0_1
+
+```{r, eval=FALSE}
+page_blocks0_1_train_adasyn <- smotefamily::ADAS(page_blocks0_1_train[,-c(1,ncol(page_blocks0_1_train))],page_blocks0_1_train[,ncol(page_blocks0_1_train)], K = 8)
+page_blocks0_1_train_ADASYN <- page_blocks0_1_train_adasyn$data %>% rename(Class=class)
+
+table(page_blocks0_1_train$Class)
+table(page_blocks0_1_train_ADASYN$Class)
+
+#write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/ADASYN/page_blocks0_1_train_ADASYN.csv", row.names = FALSE)
+```
+
+### page_blocks0_2
+
+```{r, eval=FALSE}
+page_blocks0_2_train_adasyn <- smotefamily::ADAS(page_blocks0_2_train[,-c(1,ncol(page_blocks0_2_train))],page_blocks0_2_train[,ncol(page_blocks0_2_train)], K = 6)
+page_blocks0_2_train_ADASYN <- page_blocks0_2_train_adasyn$data %>% rename(Class=class)
+
+table(page_blocks0_2_train$Class)
+table(page_blocks0_2_train_ADASYN$Class)
+
+# write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/ADASYN/page_blocks0_2_train_ADASYN.csv", row.names = FALSE)
+```
+
+### abalone19_peque
+
+```{r, eval=FALSE}
+abalone19_peque_train_adasyn <- smotefamily::ADAS(abalone19_peque_train[,-c(1,ncol(abalone19_peque_train))],abalone19_peque_train[,ncol(abalone19_peque_train)], K = 8)
+abalone19_peque_train_ADASYN <- abalone19_peque_train_adasyn$data %>% rename(Class=class)
+
+table(abalone19_peque_train$Class)
+table(abalone19_peque_train_ADASYN$Class)
+
+#write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/ADASYN/abalone19_peque_train_ADASYN.csv", row.names = FALSE)
+```
+
+### glass2
+
+```{r, eval=FALSE}
+glass2_train_adasyn <- smotefamily::ADAS(glass2_train[,-c(1,ncol(glass2_train))],glass2_train[,ncol(glass2_train)], K = 8)
+glass2_train_ADASYN <- glass2_train_adasyn$data %>% rename(Class=class)
+
+table(glass2_train$Class)
+table(glass2_train_ADASYN$Class)
+
+# write.csv(glass2_train_SMOTE, file = "Taules_de_dades/ADASYN/glass2_train_ADASYN.csv", row.names = FALSE)
+```
+
+## ROSE
+
+```{r}
+library(ROSE)
+```
+
+### abalone9_18
+
+```{r, eval=FALSE}
+dades_sintetiques_abalone9_18_ROSE <- ROSE(Class~., data = abalone9_18_train[,-1], seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 450)$data
+table(abalone9_18_train$Class)
+
+abalone9_18_train_ROSE <- rbind(abalone9_18_train[-1], dades_sintetiques_abalone9_18_ROSE)
+table(abalone9_18_train_ROSE$Class)
+#write.csv(abalone9_18_train_ROSE, file = "Taules_de_dades/ROSE/abalone9_18_train_ROSE.csv", row.names = FALSE)
+```
+
+
+### page_blocks_1_3_4
+
+```{r, eval=FALSE}
+dades_sintetiques_page_blocks_1_3_4_ROSE <- ROSE(Class~., data = page_blocks_1_3_4_train[,-1], seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 300)$data
+table(page_blocks_1_3_4_train$Class)
+
+page_blocks_1_3_4_train_ROSE <- rbind(page_blocks_1_3_4_train[,-1], dades_sintetiques_page_blocks_1_3_4_ROSE)
+table(page_blocks_1_3_4_train_ROSE$Class)
+#write.csv(page_blocks_1_3_4_train_ROSE, file = "Taules_de_dades/ROSE/page_blocks_1_3_4_train_ROSE.csv", row.names = FALSE)
+```
+
+
+### glass_0_1_6_vs_2
+
+```{r, eval=FALSE}
+dades_sintetiques_glass_0_1_6_vs_2_ROSE <- ROSE(Class~., data = glass_0_1_6_vs_2_train[,-1], seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 110)$data
+table(glass_0_1_6_vs_2_train$Class)
+
+glass_0_1_6_vs_2_train_ROSE <- rbind(glass_0_1_6_vs_2_train[,-1], dades_sintetiques_glass_0_1_6_vs_2_ROSE)
+table(glass_0_1_6_vs_2_train_ROSE$Class)
+#write.csv(glass_0_1_6_vs_2_train_ROSE, file = "Taules_de_dades/ROSE/glass_0_1_6_vs_2_train_ROSE.csv", row.names = FALSE)
+```
+
+
+### glass_0_1_4_6_vs_2
+
+```{r, eval=FALSE}
+dades_sintetiques_glass_0_1_4_6_vs_2_ROSE <- ROSE(Class~., data = glass_0_1_4_6_vs_2_train[,-1], seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 110)$data
+table(glass_0_1_4_6_vs_2_train$Class)
+
+glass_0_1_4_6_vs_2_train_ROSE <- rbind(glass_0_1_4_6_vs_2_train[,-1], dades_sintetiques_glass_0_1_4_6_vs_2_ROSE)
+table(glass_0_1_4_6_vs_2_train_ROSE$Class)
+#write.csv(glass_0_1_4_6_vs_2_train_ROSE, file = "Taules_de_dades/ROSE/glass_0_1_4_6_vs_2_train_ROSE.csv", row.names = FALSE)
+```
+
+
+### abalone19_peque
+
+```{r, eval=FALSE}
+dades_sintetiques_abalone19_peque_ROSE <- ROSE(Class~., data = abalone19_peque_train[,-1], seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 200)$data
+table(abalone19_peque_train$Class)
+
+abalone19_peque_train_ROSE <- rbind(abalone19_peque_train[,-1], dades_sintetiques_abalone19_peque_ROSE)
+table(abalone19_peque_train_ROSE$Class)
+#write.csv(abalone19_peque_train_ROSE, file = "Taules_de_dades/ROSE/abalone19_peque_train_ROSE.csv", row.names = FALSE)
+```
+
+
+### page_blocks0_1
+
+```{r, eval=FALSE}
+dades_sintetiques_page_blocks0_1_ROSE <- ROSE(Class~., data = page_blocks0_1_train[,-1], seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 300)$data
+table(page_blocks0_1_train$Class)
+
+page_blocks0_1_train_ROSE <- rbind(page_blocks0_1_train[,-1], dades_sintetiques_page_blocks0_1_ROSE)
+table(page_blocks0_1_train_ROSE$Class)
+#write.csv(page_blocks0_1_train_ROSE, file = "Taules_de_dades/ROSE/page_blocks0_1_train_ROSE.csv", row.names = FALSE)
+```
+
+
+### page_blocks0_2
+
+```{r, eval=FALSE}
+dades_sintetiques_page_blocks0_2_ROSE <- ROSE(Class~., data = page_blocks0_2_train[,-1], seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 300)$data
+table(page_blocks0_2_train$Class)
+
+page_blocks0_2_train_ROSE <- rbind(page_blocks0_2_train[,-1], dades_sintetiques_page_blocks0_2_ROSE)
+table(page_blocks0_2_train_ROSE$Class)
+#write.csv(page_blocks0_2_train_ROSE, file = "Taules_de_dades/ROSE/page_blocks0_2_train_ROSE.csv", row.names = FALSE)
+```
+
+### glass2
+
+```{r, eval=FALSE}
+dades_sintetiques_glass2_ROSE <- ROSE(Class~., data = glass2_train[,-1], seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 150)$data
+table(glass2_train$Class)
+table(dades_sintetiques_glass2_ROSE$Class)
+
+glass2_train_ROSE <- rbind(glass2_train[,-1], dades_sintetiques_glass2_ROSE)
+table(glass2_train_ROSE$Class)
+#write.csv(glass2_train_ROSE, file = "Taules_de_dades/ROSE/glass2_train_ROSE.csv", row.names = FALSE)
+```
+
+
+
+## Safe-Level SMOTE
+
+
+### abalone9_18
+
+```{r}
+abalone9_18_train_sl <- smotefamily::SLS(abalone9_18_train[,-c(1,ncol(abalone9_18_train))],abalone9_18_train[,ncol(abalone9_18_train)], K = 9, C = 7)
+abalone9_18_train_SLSMOTE <- abalone9_18_train_sl$data %>% rename(Class=class)
+
+table(abalone9_18_train$Class)
+table(abalone9_18_train_SLSMOTE$Class)
+
+# write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/SLSMOTE/abalone9_18_train_SLSMOTE.csv", row.names = FALSE)
+```
+
+
+### page_blocks_1_3_4
+
+```{r}
+page_blocks_1_3_4_train_sl <- smotefamily::SLS(page_blocks_1_3_4_train[,-c(1,ncol(page_blocks_1_3_4_train))],page_blocks_1_3_4_train[,ncol(page_blocks_1_3_4_train)], K = 9, C = 7)
+page_blocks_1_3_4_train_SLSMOTE <- page_blocks_1_3_4_train_sl$data %>% rename(Class=class)
+
+table(page_blocks_1_3_4_train$Class)
+table(page_blocks_1_3_4_train_SLSMOTE$Class)
+
+#write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/SLSMOTE/page_blocks_1_3_4_train_SLSMOTE.csv", row.names = FALSE)
+```
+
+
+### glass_0_1_6_vs_2
+
+```{r}
+glass_0_1_6_vs_2_train_sl <- smotefamily::SLS(glass_0_1_6_vs_2_train[,-c(1,ncol(glass_0_1_6_vs_2_train))],glass_0_1_6_vs_2_train[,ncol(glass_0_1_6_vs_2_train)], K = 5, C = 8 )
+glass_0_1_6_vs_2_train_SLSMOTE <- glass_0_1_6_vs_2_train_sl$data %>% rename(Class=class)
+
+table(glass_0_1_6_vs_2_train$Class)
+table(glass_0_1_6_vs_2_train_SLSMOTE$Class)
+
+# write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/SLSMOTE/glass_0_1_6_vs_2_train_SLSMOTE.csv", row.names = FALSE)
+```
+
+### glass_0_1_4_6_vs_2
+
+```{r}
+glass_0_1_4_6_vs_2_train_sl <- smotefamily::SLS(glass_0_1_4_6_vs_2_train[,-c(1,ncol(glass_0_1_4_6_vs_2_train))],glass_0_1_4_6_vs_2_train[,ncol(glass_0_1_4_6_vs_2_train)], K = 6, C = 8)
+glass_0_1_4_6_vs_2_train_SLSMOTE <- glass_0_1_4_6_vs_2_train_sl$data %>% rename(Class=class)
+
+table(glass_0_1_4_6_vs_2_train$Class)
+table(glass_0_1_4_6_vs_2_train_SLSMOTE$Class)
+
+#write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/SLSMOTE/glass_0_1_4_6_vs_2_train_SLSMOTE.csv", row.names = FALSE)
+```
+
+### page_blocks0_1
+
+```{r}
+page_blocks0_1_train_sl <- smotefamily::SLS(page_blocks0_1_train[,-c(1,ncol(page_blocks0_1_train))],page_blocks0_1_train[,ncol(page_blocks0_1_train)], K = 6, C = 5)
+page_blocks0_1_train_SLSMOTE <- page_blocks0_1_train_sl$data %>% rename(Class=class)
+
+table(page_blocks0_1_train$Class)
+table(page_blocks0_1_train_SLSMOTE$Class)
+
+# write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/SLSMOTE/page_blocks0_1_train_SLSMOTE.csv", row.names = FALSE)
+```
+
+### page_blocks0_2
+
+```{r}
+page_blocks0_2_train_sl <- smotefamily::SLS(page_blocks0_2_train[,-c(1,ncol(page_blocks0_2_train))],page_blocks0_2_train[,ncol(page_blocks0_2_train)], K = 6, C = 8)
+page_blocks0_2_train_SLSMOTE <- page_blocks0_2_train_sl$data %>% rename(Class=class)
+
+table(page_blocks0_2_train$Class)
+table(page_blocks0_2_train_SLSMOTE$Class)
+
+#write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/SLSMOTE/page_blocks0_2_train_SLSMOTE.csv", row.names = FALSE)
+```
+
+### abalone19_peque
+
+```{r}
+abalone19_peque_train_sl <- smotefamily::SLS(abalone19_peque_train[,-c(1,ncol(abalone19_peque_train))],abalone19_peque_train[,ncol(abalone19_peque_train)], K = 5, C = 9)
+abalone19_peque_train_SLSMOTE <- abalone19_peque_train_sl$data %>% rename(Class=class)
+
+table(abalone19_peque_train$Class)
+table(abalone19_peque_train_SLSMOTE$Class)
+
+#write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/SLSMOTE/abalone19_peque_train_SLSMOTE.csv", row.names = FALSE)
+```
+
+### glass2
+
+```{r}
+glass2_train_sl <- smotefamily::SLS(glass2_train[,-c(1,ncol(glass2_train))],glass2_train[,ncol(glass2_train)], K = 9, C = 7)
+glass2_train_SLSMOTE <- glass2_train_sl$data %>% rename(Class=class)
+
+table(glass2_train$Class)
+table(glass2_train_SLSMOTE$Class)
+
+#write.csv(glass2_train_SMOTE, file = "Taules_de_dades/SLSMOTE/glass2_train_SLSMOTE.csv", row.names = FALSE)
+```
+
+
+## DBSMOTE
+
+
+### abalone9_18
+
+Balanceig:
 
 ```{r, eval=FALSE}
 abalone9_18_train_DBSMOTE <- smotefamily::DBSMOTE(abalone9_18_train[,-c(1,ncol(abalone9_18_train))], abalone9_18_train[,ncol(abalone9_18_train)])
 
-abalone9_18_train_DBSMOTE <- abalone9_18_train_DBSMOTE$data %>% rename(Class=class)%>% 
-  mutate(idx = c(1:nrow(abalone9_18_train_DBSMOTE$data))) %>% relocate(idx)
+abalone9_18_train_DBSMOTE <- abalone9_18_train_DBSMOTE$data %>% rename(Class=class)
 
 table(abalone9_18_train$Class)
 table(abalone9_18_train_DBSMOTE$Class)
 
-# write.csv(abalone9_18_train_DBSMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv", row.names = FALSE)
+#write.csv(abalone9_18_train_DBSMOTE, file = "Taules_de_dades/DBSMOTE/abalone9_18_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
-```{r, eval=FALSE}
-abalone9_18_train_DBSMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_DBSMOTE.csv", show_col_types = FALSE)
-table(abalone9_18_train_DBSMOTE$Class)
-```
 
-#### page_blocks_1_3_4
+### page_blocks_1_3_4
 
 Balanceig:
 
 ```{r, eval=FALSE}
 page_blocks_1_3_4_train_DBSMOTE <- smotefamily::DBSMOTE(page_blocks_1_3_4_train[,-c(1,ncol(page_blocks_1_3_4_train))], page_blocks_1_3_4_train[,ncol(page_blocks_1_3_4_train)])
 
-page_blocks_1_3_4_train_DBSMOTE <- page_blocks_1_3_4_train_DBSMOTE$data %>% rename(Class=class)%>% 
-  mutate(idx = c(1:nrow(page_blocks_1_3_4_train_DBSMOTE$data))) %>% relocate(idx)
+page_blocks_1_3_4_train_DBSMOTE <- page_blocks_1_3_4_train_DBSMOTE$data %>% rename(Class=class)
 
 table(page_blocks_1_3_4_train$Class)
 table(page_blocks_1_3_4_train_DBSMOTE$Class)
 
-# write.csv(page_blocks_1_3_4_train_DBSMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv", row.names = FALSE)
-```
-
-```{r, eval=FALSE}
-page_blocks_1_3_4_train_DBSMOTE <- DBSMOTE(page_blocks_1_3_4_train, 1, 4)
-table(page_blocks_1_3_4_train$Class)
-table(page_blocks_1_3_4_train_DBSMOTE$Class)
-
-# write.csv(page_blocks_1_3_4_train_DBSMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv", row.names = FALSE)
+#write.csv(page_blocks_1_3_4_train_DBSMOTE, file = "Taules_de_dades/DBSMOTE/page_blocks_1_3_4_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
 
-```{r, eval=FALSE}
-page_blocks_1_3_4_train_DBSMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_DBSMOTE.csv", show_col_types = FALSE)
-table(page_blocks_1_3_4_train_DBSMOTE$Class)
-```
-
-#### glass_0_1_6_vs_2
+### glass_0_1_6_vs_2
 
 Balanceig:
 
 ```{r, eval=FALSE}
-# Balanceig amb DBSMOTE
-glass_0_1_6_vs_2_train_DBSMOTE <- DBSMOTE(glass_0_1_6_vs_2_train, 1, 4)
-table(glass_0_1_6_vs_2_train_DBSMOTE$Class)
-table(glass_0_1_6_vs_2_train$Class)
+glass_0_1_6_vs_2_train_DBSMOTE <- smotefamily::DBSMOTE(glass_0_1_6_vs_2_train[,-c(1,ncol(glass_0_1_6_vs_2_train))], glass_0_1_6_vs_2_train[,ncol(glass_0_1_6_vs_2_train)])
 
-# write.csv(glass_0_1_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)
+glass_0_1_6_vs_2_train_DBSMOTE <- glass_0_1_6_vs_2_train_DBSMOTE$data %>% rename(Class=class)
+
+table(glass_0_1_6_vs_2_train$Class)
+table(glass_0_1_6_vs_2_train_DBSMOTE$Class)
+
+#write.csv(glass_0_1_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/DBSMOTE/glass_0_1_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
-#### glass_0_1_4_6_vs_2
+### glass_0_1_4_6_vs_2
 
 ```{r, eval=FALSE}
 glass_0_1_4_6_vs_2_train_DBSMOTE <- smotefamily::DBSMOTE(glass_0_1_4_6_vs_2_train[,-c(1,ncol(glass_0_1_4_6_vs_2_train))], glass_0_1_4_6_vs_2_train[,ncol(glass_0_1_4_6_vs_2_train)])
 
-glass_0_1_4_6_vs_2_train_DBSMOTE <- glass_0_1_4_6_vs_2_train_DBSMOTE$data %>% rename(Class=class)%>% 
-  mutate(idx = c(1:nrow(glass_0_1_4_6_vs_2_train_DBSMOTE$data))) %>% relocate(idx)
+glass_0_1_4_6_vs_2_train_DBSMOTE <- glass_0_1_4_6_vs_2_train_DBSMOTE$data %>% rename(Class=class)
 
 table(glass_0_1_4_6_vs_2_train$Class)
 table(glass_0_1_4_6_vs_2_train_DBSMOTE$Class)
 
-# write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)
+#write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/DBSMOTE/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
-```{r, eval=FALSE}
-glass_0_1_4_6_vs_2_train_DBSMOTE <- DBSMOTE(glass_0_1_4_6_vs_2_train, 1, 4)
-table(glass_0_1_4_6_vs_2_train$Class)
-table(glass_0_1_4_6_vs_2_train_DBSMOTE$Class)
-
-# write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", row.names = FALSE)
-```
-
-```{r, eval=FALSE}
-glass_0_1_4_6_vs_2_train_DBSMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", show_col_types = FALSE)
-table(glass_0_1_4_6_vs_2_train_DBSMOTE$Class)
-```
-
-#### abalone19_peque
+### abalone19_peque
 
 ```{r, eval=FALSE}
 abalone19_peque_train_DBSMOTE <- smotefamily::DBSMOTE(abalone19_peque_train[,-c(1,ncol(abalone19_peque_train))], abalone19_peque_train[,ncol(abalone19_peque_train)])
 
-abalone19_peque_train_DBSMOTE <- abalone19_peque_train_DBSMOTE$data %>% rename(Class=class)%>% 
-  mutate(idx = c(1:nrow(abalone19_peque_train_DBSMOTE$data))) %>% relocate(idx)
+abalone19_peque_train_DBSMOTE <- abalone19_peque_train_DBSMOTE$data %>% rename(Class=class)
 
 table(abalone19_peque_train$Class)
 table(abalone19_peque_train_DBSMOTE$Class)
 
-# write.csv(abalone19_peque_train_DBSMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_DBSMOTE.csv", row.names = FALSE)
+#write.csv(abalone19_peque_train_DBSMOTE, file = "Taules_de_dades/DBSMOTE/abalone19_peque_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
-```{r, eval=FALSE}
-abalone19_peque_train_DBSMOTE <- DBSMOTE(abalone19_peque_train, 1, 4)
-table(abalone19_peque_train$Class)
-table(abalone19_peque_train_DBSMOTE$Class)
-
-# write.csv(glass_0_1_4_6_vs_2_train_DBSMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/abalone19_peque_train_DBSMOTE.csv", row.names = FALSE)
-```
-
-```{r, eval=FALSE}
-abalone19_peque_train_DBSMOTE <- read_csv("Taules_de_dades/abalone19_peque/abalone19_peque_train_DBSMOTE.csv", show_col_types = FALSE)
-table(abalone19_peque_train_DBSMOTE$Class)
-```
-
-#### glass2
+### glass2
 
 Balanceig:
 
 ```{r, eval=FALSE}
-# Balanceig amb DBSMOTE
-glass2_train_DBSMOTE <- DBSMOTE(glass2_train, 1,5)
+glass2_train_DBSMOTE <- smotefamily::DBSMOTE(glass2_train[,-c(1,ncol(glass2_train))], glass2_train[,ncol(glass2_train)])
+
+glass2_train_DBSMOTE <- glass2_train_DBSMOTE$data %>% rename(Class=class)
+
+table(glass2_train$Class)
 table(glass2_train_DBSMOTE$Class)
-#write.csv(glass2_train_DBSMOTE, file = "Taules_de_dades/glass2/glass2_train_DBSMOTE.csv", row.names = FALSE)
+
+#write.csv(glass2_train_DBSMOTE, file = "Taules_de_dades/DBSMOTE/glass2_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
-```{r}
-glass2_train_DBSMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_DBSMOTE.csv", show_col_types = FALSE)
-table(glass2_train_DBSMOTE$Class)
-```
-
-#### page-blocks0
+### page_blocks0_1
 
 Balanceig:
 
 ```{r, eval=FALSE}
-# Balanceig amb DBSMOTE
-page_blocks0_train_DBSMOTE <- DBSMOTE(page_blocks0_train, 50, 9)
-table(page_blocks0_train_DBSMOTE$Class)
-# write.csv(page_blocks0_train_DBSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_DBSMOTE.csv", row.names = FALSE)
-```
+page_blocks0_1_train_DBSMOTE <- smotefamily::DBSMOTE(page_blocks0_1_train[,-c(1,ncol(page_blocks0_1_train))], page_blocks0_1_train[,ncol(page_blocks0_1_train)])
 
-```{r}
-page_blocks0_train_DBSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train_DBSMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_train_DBSMOTE$Class)
-```
+page_blocks0_1_train_DBSMOTE <- page_blocks0_1_train_DBSMOTE$data %>% rename(Class=class)
 
-```{r, eval=FALSE}
-exemple_DBSMOTE2 <- smotefamily::DBSMOTE(page_blocks0_train[,-c(1,ncol(page_blocks0_train))], page_blocks0_train[,ncol(page_blocks0_train)]); exemple_DBSMOTE2
-
-exemple_balancejat2 <- exemple_DBSMOTE2$data %>% mutate(Class=class)%>% 
-  mutate(idx = c(1:nrow(exemple_DBSMOTE2$data))) %>% relocate(idx)
-train_DBSMOTE <- exemple_balancejat2[,-(ncol(exemple_balancejat2)-1)]
-```
-
-
-
-
-##### page_blocks0_1
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb DBSMOTE
-page_blocks0_1_train_DBSMOTE <- DBSMOTE(page_blocks0_1_train, 50, 9)
-table(page_blocks0_1_train_DBSMOTE$Class)
-# write.csv(page_blocks0_1_train_DBSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_DBSMOTE.csv", row.names = FALSE)
 table(page_blocks0_1_train$Class)
-```
-
-```{r}
-page_blocks0_1_train_DBSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_DBSMOTE.csv", show_col_types = FALSE)
 table(page_blocks0_1_train_DBSMOTE$Class)
+
+#write.csv(page_blocks0_1_train_DBSMOTE, file = "Taules_de_dades/DBSMOTE/page_blocks0_1_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
-##### page_blocks0_2
+### page_blocks0_2
 
 Balanceig:
 
 ```{r, eval=FALSE}
-# Balanceig amb DBSMOTE
-page_blocks0_2_train_DBSMOTE <- DBSMOTE(page_blocks0_2_train, 50, 9)
+page_blocks0_2_train_DBSMOTE <- smotefamily::DBSMOTE(page_blocks0_2_train[,-c(1,ncol(page_blocks0_2_train))], page_blocks0_2_train[,ncol(page_blocks0_2_train)])
+
+page_blocks0_2_train_DBSMOTE <- page_blocks0_2_train_DBSMOTE$data %>% rename(Class=class)
+
+table(page_blocks0_2_train$Class)
 table(page_blocks0_2_train_DBSMOTE$Class)
-#write.csv(page_blocks0_2_train_DBSMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_DBSMOTE.csv", row.names = FALSE)
+
+#write.csv(page_blocks0_2_train_DBSMOTE, file = "Taules_de_dades/DBSMOTE/page_blocks0_2_train_DBSMOTE.csv", row.names = FALSE)
 ```
 
-```{r}
-page_blocks0_2_train_DBSMOTE <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train_DBSMOTE.csv", show_col_types = FALSE)
-table(page_blocks0_2_train_DBSMOTE$Class)
-```
+## MWMOTE
 
-
-### MWMOTE
-
-#### abalone9_18
+### abalone9_18
 
 ```{r, eval=FALSE}
 # Balanceig amb MWMOTE
 abalone9_18_train_MWMOTE <- MWMOTE(abalone9_18_train, 470,4,7,9,2,2,2)
 table(abalone9_18_train$Class)
 table(abalone9_18_train_MWMOTE$Class)
-# write.csv(abalone9_18_train_MWMOTE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_MWMOTE.csv", row.names = FALSE)
+# write.csv(abalone9_18_train_MWMOTE, file = "Taules_de_dades/MWMOTE/abalone9_18_train_MWMOTE.csv", row.names = FALSE)
 ```
 
-
-
-#### page_blocks_1_3_4
+### page_blocks_1_3_4
 
 ```{r, eval=FALSE}
 # Balanceig amb MWMOTE
-page_blocks_1_3_4_train_MWMOTE <- MWMOTE3(page_blocks_1_3_4_train, 200,4,7,9,2,2,2)
+page_blocks_1_3_4_train_MWMOTE <- MWMOTE(page_blocks_1_3_4_train, 200,4,7,9,2,2,2)
 table(page_blocks_1_3_4_train$Class)
 table(page_blocks_1_3_4_train_MWMOTE$Class)
-#write.csv(page_blocks_1_3_4_train_MWMOTE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MWMOTE.csv", row.names = FALSE)
+#write.csv(page_blocks_1_3_4_train_MWMOTE, file = "Taules_de_dades/MWMOTE/page_blocks_1_3_4_train_MWMOTE.csv", row.names = FALSE)
 ```
 
 
-
-
-
-
-#### glass_0_1_6_vs_2
+### glass_0_1_6_vs_2
 
 ```{r, eval=FALSE}
 # Balanceig amb MWMOTE
 glass_0_1_6_vs_2_train_MWMOTE <- MWMOTE(glass_0_1_6_vs_2_train, 110,2,3,5,2,2,2)
 table(glass_0_1_6_vs_2_train$Class)
 table(glass_0_1_6_vs_2_train_MWMOTE$Class)
-# write.csv(glass_0_1_6_vs_2_train_MWMOTE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MWMOTE.csv", row.names = FALSE)
+# write.csv(glass_0_1_6_vs_2_train_MWMOTE, file = "Taules_de_dades/MWMOTE/glass_0_1_6_vs_2_train_MWMOTE.csv", row.names = FALSE)
 ```
 
-
-
-#### glass_0_1_4_6_vs_2
+### glass_0_1_4_6_vs_2
 
 ```{r, eval=FALSE}
 # Balanceig amb MWMOTE
 glass_0_1_4_6_vs_2_train_MWMOTE <- MWMOTE(glass_0_1_4_6_vs_2_train, 120,2,3,5,2,2,2)
 table(glass_0_1_4_6_vs_2_train$Class)
 table(glass_0_1_4_6_vs_2_train_MWMOTE$Class)
-#write.csv(glass_0_1_4_6_vs_2_train_MWMOTE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MWMOTE.csv", row.names = FALSE)
+#write.csv(glass_0_1_4_6_vs_2_train_MWMOTE, file = "Taules_de_dades/MWMOTE/glass_0_1_4_6_vs_2_train_MWMOTE.csv", row.names = FALSE)
 ```
 
-#### abalone19_peque
+### abalone19_peque
 
 ```{r, eval=FALSE}
 # Balanceig amb MWMOTE
 abalone19_peque_train_MWMOTE <- MWMOTE(abalone19_peque_train, 200,2,3,5,2,2,2)
 table(abalone19_peque_train$Class)
 table(abalone19_peque_train_MWMOTE$Class)
-#write.csv(abalone19_peque_train_MWMOTE, file = "Taules_de_dades/abalone19/abalone19_peque_train_MWMOTE.csv", row.names = FALSE)
+#write.csv(abalone19_peque_train_MWMOTE, file = "Taules_de_dades/MWMOTE/abalone19_peque_train_MWMOTE.csv", row.names = FALSE)
 ```
 
-#### glass2
+### glass2
 
 ```{r, eval=FALSE}
 # Balanceig amb MWMOTE
-glass2_train_MWMOTE <- MWMOTE3(glass2_train, 110,4,7,9,2,2,2)
+glass2_train_MWMOTE <- MWMOTE(glass2_train, 110,4,7,9,2,2,2)
 table(glass2_train$Class)
 table(glass2_train_MWMOTE$Class)
-#write.csv(glass2_train_MWMOTE, file = "Taules_de_dades/glass2/glass2_train_MWMOTE.csv", row.names = FALSE)
+#write.csv(glass2_train_MWMOTE, file = "Taules_de_dades/MWMOTE/glass2_train_MWMOTE.csv", row.names = FALSE)
 ```
 
-#### page_blocks0
+
+### page_blocks0_1
 
 ```{r, eval=FALSE}
 # Balanceig amb MWMOTE
-page_blocks0_train_MWMOTE <- MWMOTE(page_blocks0_train,1500,60,100,200,23,22,24)
-table(page_blocks0_train$Class)
-table(page_blocks0_train_MWMOTE$Class)
-
-# write.csv(page_blocks0_train_MWMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_train_MWMOTE.csv", row.names = FALSE)
-```
-##### page_blocks0_1
-
-```{r, eval=FALSE}
-# Balanceig amb MWMOTE
-page_blocks0_1_train_MWMOTE <- MWMOTE3(page_blocks0_1_train, 200,2,3,4,2,2,2)
+page_blocks0_1_train_MWMOTE <- MWMOTE(page_blocks0_1_train, 200,2,3,4,2,2,2)
 table(page_blocks0_1_train$Class)
 table(page_blocks0_1_train_MWMOTE$Class)
 
-#write.csv(page_blocks0_1_train_MWMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_MWMOTE.csv", row.names = FALSE)
+#write.csv(page_blocks0_1_train_MWMOTE, file = "Taules_de_dades/MWMOTE/page_blocks0_1_train_MWMOTE.csv", row.names = FALSE)
 ```
 
-##### page_blocks0_2
+### page_blocks0_2
 
 ```{r, eval=FALSE}
 # Balanceig amb MWMOTE
-page_blocks0_2_train_MWMOTE <- MWMOTE3(page_blocks0_2_train, 200,2,3,4,2,2,2)
+page_blocks0_2_train_MWMOTE <- MWMOTE(page_blocks0_2_train, 200,2,3,4,2,2,2)
 table(page_blocks0_2_train$Class)
 table(page_blocks0_2_train_MWMOTE$Class)
 
-#write.csv(page_blocks0_2_train_MWMOTE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_MWMOTE.csv", row.names = FALSE)
+#write.csv(page_blocks0_2_train_MWMOTE, file = "Taules_de_dades/MWMOTE/page_blocks0_2_train_MWMOTE.csv", row.names = FALSE)
 ```
 
+## MDO
 
-### MDO
-
-#### abalone9_18
+### abalone9_18
 
 Balanceig:
 
@@ -2063,16 +1293,11 @@ Balanceig:
 # Balanceig amb MDO
 abalone9_18_train_MDO <- MDO(abalone9_18_train, 3,10)
 table(abalone9_18_train_MDO$Class)
-# PROBLEMA: no control es nombre de dades que se fan
+
 #write.csv(abalone9_18_train_MDO, file = "Taules_de_dades/abalone9_18/abalone9_18_train_MDO.csv", row.names = FALSE)
 ```
 
-```{r}
-abalone9_18_train_MDO <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_MDO.csv", show_col_types = FALSE)
-table(abalone9_18_train_MDO$Class)
-```
-
-#### page_blocks_1_3_4
+### page_blocks_1_3_4
 
 Balanceig:
 
@@ -2080,16 +1305,12 @@ Balanceig:
 # Balanceig amb MDO
 page_blocks_1_3_4_train_MDO <- MDO(page_blocks_1_3_4_train, 3,8)
 table(page_blocks_1_3_4_train_MDO$Class)
-# PROBLEMA: no control es nombre de dades que se fan
+
 # write.csv(page_blocks_1_3_4_train_MDO, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MDO.csv", row.names = FALSE)
 ```
 
-```{r}
-page_blocks_1_3_4_train_MDO <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MDO.csv", show_col_types = FALSE)
-table(page_blocks_1_3_4_train_MDO$Class)
-```
 
-#### glass_0_1_6_vs_2
+### glass_0_1_6_vs_2
 
 Balanceig:
 
@@ -2097,11 +1318,11 @@ Balanceig:
 # Balanceig amb MDO
 glass_0_1_6_vs_2_train_MDO <- MDO(glass_0_1_6_vs_2_train, 2,7)
 table(glass_0_1_6_vs_2_train_MDO$Class)
-# PROBLEMA: no control es nombre de dades que se fan
+
 # write.csv(glass_0_1_6_vs_2_train_MDO, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MDO.csv", row.names = FALSE)
 ```
 
-#### glass_0_1_4_6_vs_2
+### glass_0_1_4_6_vs_2
 
 Balanceig:
 
@@ -2109,11 +1330,11 @@ Balanceig:
 # Balanceig amb MDO
 glass_0_1_4_6_vs_2_train_MDO <- MDO(glass_0_1_4_6_vs_2_train, 2,7)
 table(glass_0_1_4_6_vs_2_train_MDO$Class)
-# PROBLEMA: no control es nombre de dades que se fan
+
 # write.csv(glass_0_1_4_6_vs_2_train_MDO, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MDO.csv", row.names = FALSE)
 ```
 
-#### abalone19_peque
+### abalone19_peque
 
 Balanceig:
 
@@ -2121,11 +1342,11 @@ Balanceig:
 # Balanceig amb MDO
 abalone19_peque_train_MDO <- MDO(abalone19_peque_train, 1,4)
 table(abalone19_peque_train_MDO$Class)
-# PROBLEMA: no control es nombre de dades que se fan
+
 # write.csv(abalone19_peque_train_MDO, file = "Taules_de_dades/abalone19/abalone19_peque_train_MDO.csv", row.names = FALSE)
 ```
 
-#### glass2
+### glass2
 
 Balanceig:
 
@@ -2133,36 +1354,11 @@ Balanceig:
 # Balanceig amb MDO
 glass2_train_MDO <- MDO(glass2_train,1,13)
 table(glass2_train_MDO$Class)
-# PROBLEMA: no control es nombre de dades que se fan
+
 write.csv(glass2_train_MDO, file = "Taules_de_dades/glass2/glass2_train_MDO.csv", row.names = FALSE)
 ```
 
-```{r}
-glass2_train_MDO <- read_csv("Taules_de_dades/glass2/glass2_train_MDO.csv", show_col_types = FALSE)
-table(glass2_train_MDO$Class)
-```
-
-
-#### page-blocks0
-
-Balanceig:
-
-```{r, eval=FALSE}
-# Balanceig amb MDO
-page_blocks0_train_MDO <- MDO(page_blocks0_train, 3,5)
-table(page_blocks0_train_MDO$Class)
-# PROBLEMA: no control es nombre de dades que se fan
-# write.csv(page_blocks0_train_MDO, file = "Taules_de_dades/page_blocks0/page_blocks0_train_MDO.csv", row.names = FALSE)
-```
-
-```{r}
-page_blocks0_train_MDO <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train_MDO.csv", show_col_types = FALSE)
-table(page_blocks0_train_MDO$Class)
-```
-
-
-
-##### page_blocks0_1
+### page_blocks0_1
 
 Balanceig:
 
@@ -2170,17 +1366,12 @@ Balanceig:
 # Balanceig amb MDO
 page_blocks0_1_train_MDO <- MDO(page_blocks0_1_train, 2,4)
 table(page_blocks0_1_train_MDO$Class)
-# PROBLEMA: no control es nombre de dades que se fan
+
 #write.csv(page_blocks0_1_train_MDO, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_MDO.csv", row.names = FALSE)
 ```
 
-```{r}
-page_blocks0_1_train_MDO <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train_MDO.csv", show_col_types = FALSE)
-table(page_blocks0_1_train_MDO$Class)
-```
 
-
-##### page_blocks0_2
+### page_blocks0_2
 
 Balanceig:
 
@@ -2188,110 +1379,8 @@ Balanceig:
 # Balanceig amb MDO
 page_blocks0_2_train_MDO <- MDO(page_blocks0_2_train, 2,4)
 table(page_blocks0_2_train_MDO$Class)
-# PROBLEMA: no control es nombre de dades que se fan
+
 #write.csv(page_blocks0_2_train_MDO, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_MDO.csv", row.names = FALSE)
 ```
 
 
-
-
-### ROSE
-
-```{r}
-library(ROSE)
-```
-
-#### abalone9_18
-
-```{r, eval=FALSE}
-dades_sintetiques_abalone9_18_ROSE <- ROSE(Class~., data = abalone9_18_train, seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 450)$data
-table(abalone9_18_train$Class)
-
-abalone9_18_train_ROSE <- rbind(abalone9_18_train, dades_sintetiques_abalone9_18_ROSE)
-table(abalone9_18_train_ROSE$Class)
-#write.csv(abalone9_18_train_ROSE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_ROSE.csv", row.names = FALSE)
-```
-
-
-#### page_blocks_1_3_4
-
-```{r, eval=FALSE}
-dades_sintetiques_page_blocks_1_3_4_ROSE <- ROSE(Class~., data = page_blocks_1_3_4_train, seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 300)$data
-table(page_blocks_1_3_4_train$Class)
-
-page_blocks_1_3_4_train_ROSE <- rbind(page_blocks_1_3_4_train, dades_sintetiques_page_blocks_1_3_4_ROSE)
-table(page_blocks_1_3_4_train_ROSE$Class)
-#write.csv(page_blocks_1_3_4_train_ROSE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ROSE.csv", row.names = FALSE)
-```
-
-
-#### glass_0_1_6_vs_2
-
-```{r, eval=FALSE}
-dades_sintetiques_glass_0_1_6_vs_2_ROSE <- ROSE(Class~., data = glass_0_1_6_vs_2_train, seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 110)$data
-table(glass_0_1_6_vs_2_train$Class)
-
-glass_0_1_6_vs_2_train_ROSE <- rbind(glass_0_1_6_vs_2_train, dades_sintetiques_glass_0_1_6_vs_2_ROSE)
-table(glass_0_1_6_vs_2_train_ROSE$Class)
-#write.csv(glass_0_1_6_vs_2_train_ROSE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ROSE.csv", row.names = FALSE)
-```
-
-
-#### glass_0_1_4_6_vs_2
-
-```{r, eval=FALSE}
-dades_sintetiques_glass_0_1_4_6_vs_2_ROSE <- ROSE(Class~., data = glass_0_1_4_6_vs_2_train, seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 110)$data
-table(glass_0_1_4_6_vs_2_train$Class)
-
-glass_0_1_4_6_vs_2_train_ROSE <- rbind(glass_0_1_4_6_vs_2_train, dades_sintetiques_glass_0_1_4_6_vs_2_ROSE)
-table(glass_0_1_4_6_vs_2_train_ROSE$Class)
-#write.csv(glass_0_1_4_6_vs_2_train_ROSE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ROSE.csv", row.names = FALSE)
-```
-
-
-#### abalone19_peque
-
-```{r, eval=FALSE}
-dades_sintetiques_abalone19_peque_ROSE <- ROSE(Class~., data = abalone19_peque_train, seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 200)$data
-table(abalone19_peque_train$Class)
-
-abalone19_peque_train_ROSE <- rbind(abalone19_peque_train, dades_sintetiques_abalone19_peque_ROSE)
-table(abalone19_peque_train_ROSE$Class)
-#write.csv(abalone19_peque_train_ROSE, file = "Taules_de_dades/abalone19/abalone19_peque_train_ROSE.csv", row.names = FALSE)
-```
-
-
-#### page_blocks0_1
-
-```{r, eval=FALSE}
-dades_sintetiques_page_blocks0_1_ROSE <- ROSE(Class~., data = page_blocks0_1_train, seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 300)$data
-table(page_blocks0_1_train$Class)
-
-page_blocks0_1_train_ROSE <- rbind(page_blocks0_1_train, dades_sintetiques_page_blocks0_1_ROSE)
-table(page_blocks0_1_train_ROSE$Class)
-#write.csv(page_blocks0_1_train_ROSE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_ROSE.csv", row.names = FALSE)
-```
-
-
-#### page_blocks0_2
-
-```{r, eval=FALSE}
-dades_sintetiques_page_blocks0_2_ROSE <- ROSE(Class~., data = page_blocks0_2_train, seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 300)$data
-table(page_blocks0_2_train$Class)
-
-page_blocks0_2_train_ROSE <- rbind(page_blocks0_2_train, dades_sintetiques_page_blocks0_2_ROSE)
-table(page_blocks0_2_train_ROSE$Class)
-#write.csv(page_blocks0_2_train_ROSE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_ROSE.csv", row.names = FALSE)
-```
-
-#### glass2
-
-```{r, eval=FALSE}
-dades_sintetiques_glass2_ROSE <- ROSE(Class~., data = glass2_train, seed=1, hmult.majo = 0, hmult.mino = 0.2,p = 0.99, N = 150)$data
-table(glass2_train$Class)
-table(dades_sintetiques_glass2_ROSE$Class)
-
-glass2_train_ROSE <- rbind(glass2_train, dades_sintetiques_glass2_ROSE)
-table(glass2_train_ROSE$Class)
-# write.csv(glass2_train_ROSE, file = "Taules_de_dades/glass2/glass2_train_ROSE.csv", row.names = FALSE)
-```
