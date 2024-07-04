@@ -40,7 +40,7 @@ Carregam totes les taules de dades necessàries
 abalone9_18 <- read_csv("Taules_de_dades/abalone9_18/abalone9-18.dat", show_col_types = FALSE)
 abalone9_18 <- abalone9_18 %>% 
   mutate(idx = c(1:nrow(abalone9_18))) %>% relocate(idx)%>% dplyr::select(-Sex)
-abalone9_18_train <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train.csv", show_col_types = FALSE)
+abalone9_18_train <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 abalone9_18_test <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_test.csv", show_col_types = FALSE)
 IR_abalone9_18 <- round(as.numeric(table(abalone9_18$Class)[1]/table(abalone9_18$Class)[2]),3)
 ```
@@ -51,7 +51,7 @@ IR_abalone9_18 <- round(as.numeric(table(abalone9_18$Class)[1]/table(abalone9_18
 page_blocks_1_3_4 <- read_csv("Taules_de_dades/page_blocks_1_3_4/page-blocks-1-3_vs_4.dat", show_col_types = FALSE)
 page_blocks_1_3_4 <- page_blocks_1_3_4 %>% 
   mutate(idx = c(1:nrow(page_blocks_1_3_4))) %>% relocate(idx)
-page_blocks_1_3_4_train <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 page_blocks_1_3_4_test <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_test.csv", show_col_types = FALSE)
 IR_page_blocks_1_3_4 <- round(as.numeric(table(page_blocks_1_3_4$Class)[1]/table(page_blocks_1_3_4$Class)[2]),3)
 ```
@@ -62,7 +62,7 @@ IR_page_blocks_1_3_4 <- round(as.numeric(table(page_blocks_1_3_4$Class)[1]/table
 glass_0_1_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass-0-1-6_vs_2.dat", show_col_types = FALSE)
 glass_0_1_6_vs_2 <- glass_0_1_6_vs_2 %>% 
   mutate(idx = c(1:nrow(glass_0_1_6_vs_2))) %>% relocate(idx)
-glass_0_1_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 glass_0_1_6_vs_2_test <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_test.csv", show_col_types = FALSE)
 IR_glass_0_1_6_vs_2 <- round(as.numeric(table(glass_0_1_6_vs_2$Class)[1]/table(glass_0_1_6_vs_2$Class)[2]),3); IR_glass_0_1_6_vs_2
 ```
@@ -73,7 +73,7 @@ IR_glass_0_1_6_vs_2 <- round(as.numeric(table(glass_0_1_6_vs_2$Class)[1]/table(g
 glass_0_1_4_6_vs_2 <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass-0-1-4-6_vs_2.dat", show_col_types = FALSE)
 glass_0_1_4_6_vs_2 <- glass_0_1_4_6_vs_2 %>% 
   mutate(idx = c(1:nrow(glass_0_1_4_6_vs_2))) %>% relocate(idx)
-glass_0_1_4_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 glass_0_1_4_6_vs_2_test <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_test.csv", show_col_types = FALSE)
 IR_glass_0_1_4_6_vs_2 <- round(as.numeric(table(glass_0_1_4_6_vs_2$Class)[1]/table(glass_0_1_4_6_vs_2$Class)[2]),3); IR_glass_0_1_4_6_vs_2
 ```
@@ -84,7 +84,7 @@ IR_glass_0_1_4_6_vs_2 <- round(as.numeric(table(glass_0_1_4_6_vs_2$Class)[1]/tab
 
 ```{r}
 abalone19_peque <- read_csv("Taules_de_dades/abalone19/abalone19_peque.csv", show_col_types = FALSE)
-abalone19_peque_train <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train.csv", show_col_types = FALSE)
+abalone19_peque_train <- read_csv("Taules_de_dades/abalone19/abalone19_peque_train.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 abalone19_peque_test <- read_csv("Taules_de_dades/abalone19/abalone19_peque_test.csv", show_col_types = FALSE)
 IR_abalone19_peque <- round(as.numeric(table(abalone19_peque$Class)[1]/table(abalone19_peque$Class)[2]),3); IR_abalone19_peque
 ```
@@ -93,7 +93,7 @@ IR_abalone19_peque <- round(as.numeric(table(abalone19_peque$Class)[1]/table(aba
 
 ```{r}
 glass2 <- read_csv("Taules_de_dades/glass2/glass2.dat", show_col_types = FALSE)
-glass2_train <- read_csv("Taules_de_dades/glass2/glass2_train.csv", show_col_types = FALSE)
+glass2_train <- read_csv("Taules_de_dades/glass2/glass2_train.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 glass2_test <- read_csv("Taules_de_dades/glass2/glass2_test.csv", show_col_types = FALSE)
 IR_glass2 <- round(as.numeric(table(glass2$Class)[1]/table(glass2$Class)[2]),3); IR_glass2
 ```
@@ -102,7 +102,7 @@ IR_glass2 <- round(as.numeric(table(glass2$Class)[1]/table(glass2$Class)[2]),3);
 page_blocks0 <- read_csv("Taules_de_dades/page_blocks0/page-blocks0.dat", show_col_types = FALSE)
 page_blocks0 <- page_blocks0 %>% 
   mutate(idx = c(1:nrow(page_blocks0))) %>% relocate(idx)
-page_blocks0_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train.csv", show_col_types = FALSE)
+page_blocks0_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_train.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 page_blocks0_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_test.csv", show_col_types = FALSE)
 IR_page_blocks0 <- round(as.numeric(table(page_blocks0$Class)[1]/table(page_blocks0$Class)[2]),3)
 ```
@@ -110,7 +110,7 @@ IR_page_blocks0 <- round(as.numeric(table(page_blocks0$Class)[1]/table(page_bloc
 ### page_blocks0_1
 ```{r}
 page_blocks0_1 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1.csv", show_col_types = FALSE)
-page_blocks0_1_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train.csv", show_col_types = FALSE)
+page_blocks0_1_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_train.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 page_blocks0_1_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_1_test.csv", show_col_types = FALSE)
 IR_page_blocks0_1 <- round(as.numeric(table(page_blocks0_1$Class)[1]/table(page_blocks0_1$Class)[2]),3)
 ```
@@ -118,17 +118,10 @@ IR_page_blocks0_1 <- round(as.numeric(table(page_blocks0_1$Class)[1]/table(page_
 ### page_blocks0_2
 ```{r}
 page_blocks0_2 <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2.csv", show_col_types = FALSE)
-page_blocks0_2_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train.csv", show_col_types = FALSE)
+page_blocks0_2_train <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_train.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 page_blocks0_2_test <- read_csv("Taules_de_dades/page_blocks0/page_blocks0_2_test.csv", show_col_types = FALSE)
 IR_page_blocks0_2 <- round(as.numeric(table(page_blocks0_2$Class)[1]/table(page_blocks0_2$Class)[2]),3)
 ```
-
-
-
-
-
-
-
 
 
 
@@ -552,7 +545,7 @@ Classificació:
 
 D1_abalone9_18 <- abalone9_18_train %>% mutate(Class = case_when(
       Class == "positive" ~ 1,
-      Class == "negative" ~ 0)) %>% dplyr::select(-idx)
+      Class == "negative" ~ 0))
 
 D2_abalone9_18 <- abalone9_18_test %>% dplyr::select(-c(idx))
 
@@ -568,7 +561,7 @@ AUC_RegLog_abalone9_18 <- auc(roc); AUC_RegLog_abalone9_18
 ```{r}
 # LDA:
 
-lda.fit_abalone9_18 <- lda(Class ~ ., data = abalone9_18_train[,-1])
+lda.fit_abalone9_18 <- lda(Class ~ ., data = abalone9_18_train)
 
 lda.pred_abalone9_18 <- predict(lda.fit_abalone9_18, abalone9_18_test[,-c(1)], type = "response")
 prediccions.LDA <- as.factor(ifelse(lda.pred_abalone9_18$Class=="negative",0,1))
@@ -603,7 +596,7 @@ legend("bottomright",legend=paste("AUC =",round(AUC_LDA_abalone9_18,4)))
 ```{r}
 # QDA:
 
-qda.fit_abalone9_18 <- qda(Class ~ ., data = abalone9_18_train[,-1])
+qda.fit_abalone9_18 <- qda(Class ~ ., data = abalone9_18_train)
 
 qda.pred_abalone9_18 <- predict(qda.fit_abalone9_18, abalone9_18_test[,-c(1)], type = "response")
 prediccions.QDA <- as.factor(ifelse(qda.pred_abalone9_18$Class=="negative",0,1))
@@ -631,7 +624,7 @@ legend("bottomright",legend=paste("AUC =",round(AUC_QDA_abalone9_18,4)))
 ```{r}
 # Naive Bayes
 
-nb.fit_abalone9_18 <- naiveBayes(Class ~ ., data = abalone9_18_train[,-1])
+nb.fit_abalone9_18 <- naiveBayes(Class ~ ., data = abalone9_18_train)
 nb.probs_abalone9_18 <- predict(nb.fit_abalone9_18, abalone9_18_test[,-c(1,ncol(abalone9_18))], type = "raw")
 
 roc <- roc(abalone9_18_test$Class, nb.probs_abalone9_18[,2])
