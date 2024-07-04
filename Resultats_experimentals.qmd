@@ -201,101 +201,101 @@ kable(taula2_info_train_test, align = 'c', caption = "Divisió entre training i 
 A continuació carregarem les taules de dades balancejades realitzades en el document "Balanceig.qmd"
 
 
-```{r, eval=FALSE}
+```{r}
 abalone9_18_train_SMOTE <- read_csv("Taules_de_dades/SMOTE/abalone9_18_train_SMOTE.csv", show_col_types = FALSE)
 abalone9_18_train_BorderlineSMOTE <- read_csv("Taules_de_dades/BORDERLINE_SMOTE/abalone9_18_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-abalone9_18_train_ADOMS <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_ADOMS.csv", show_col_types = FALSE)
+abalone9_18_train_ADOMS <- read_csv("Taules_de_dades/ADOMS/abalone9_18_train_ADOMS.csv", show_col_types = FALSE)
 abalone9_18_train_ADASYN <- read_csv("Taules_de_dades/ADASYN/abalone9_18_train_ADASYN.csv", show_col_types = FALSE)
 abalone9_18_train_SLSMOTE <- read_csv("Taules_de_dades/SLSMOTE/abalone9_18_train_SLSMOTE.csv", show_col_types = FALSE)
 abalone9_18_train_DBSMOTE <- read_csv("Taules_de_dades/DBSMOTE/abalone9_18_train_DBSMOTE.csv", show_col_types = FALSE)
-abalone9_18_train_MWMOTE <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_MWMOTE.csv", show_col_types = FALSE)
+abalone9_18_train_MWMOTE <- read_csv("Taules_de_dades/MWMOTE/abalone9_18_train_MWMOTE.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 abalone9_18_train_MDO <- read_csv("Taules_de_dades/abalone9_18/abalone9_18_train_MDO.csv", show_col_types = FALSE)
 abalone9_18_train_ROSE <- read_csv("Taules_de_dades/ROSE/abalone9_18_train_ROSE.csv", show_col_types = FALSE)
 ```
 
 
 
-```{r, eval=FALSE}
+```{r}
 page_blocks_1_3_4_train_SMOTE <- read_csv("Taules_de_dades/SMOTE/page_blocks_1_3_4_train_SMOTE.csv", show_col_types = FALSE)
 page_blocks_1_3_4_train_BorderlineSMOTE <- read_csv("Taules_de_dades/BORDERLINE_SMOTE/page_blocks_1_3_4_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-page_blocks_1_3_4_train_ADOMS <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ADOMS.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train_ADOMS <- read_csv("Taules_de_dades/ADOMS/page_blocks_1_3_4_train_ADOMS.csv", show_col_types = FALSE)
 page_blocks_1_3_4_train_ADASYN <- read_csv("Taules_de_dades/ADASYN/page_blocks_1_3_4_train_ADASYN.csv", show_col_types = FALSE)
 page_blocks_1_3_4_train_SLSMOTE <- read_csv("Taules_de_dades/SLSMOTE/page_blocks_1_3_4_train_SLSMOTE.csv", show_col_types = FALSE)
 page_blocks_1_3_4_train_DBSMOTE <- read_csv("Taules_de_dades/DBSMOTE/page_blocks_1_3_4_train_DBSMOTE.csv", show_col_types = FALSE)
-page_blocks_1_3_4_train_MWMOTE <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MWMOTE.csv", show_col_types = FALSE)
+page_blocks_1_3_4_train_MWMOTE <- read_csv("Taules_de_dades/MWMOTE/page_blocks_1_3_4_train_MWMOTE.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 page_blocks_1_3_4_train_MDO <- read_csv("Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_MDO.csv", show_col_types = FALSE)
 page_blocks_1_3_4_train_ROSE <- read_csv("Taules_de_dades/ROSE/page_blocks_1_3_4_train_ROSE.csv", show_col_types = FALSE)
 ```
 
-```{r, eval=FALSE}
+```{r}
 glass_0_1_6_vs_2_train_SMOTE <- read_csv("Taules_de_dades/SMOTE/glass_0_1_6_vs_2_train_SMOTE.csv", show_col_types = FALSE)
 glass_0_1_6_vs_2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/BORDERLINE_SMOTE/glass_0_1_6_vs_2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-glass_0_1_6_vs_2_train_ADOMS <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ADOMS.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_ADOMS <- read_csv("Taules_de_dades/ADOMS/glass_0_1_6_vs_2_train_ADOMS.csv", show_col_types = FALSE)
 glass_0_1_6_vs_2_train_ADASYN <- read_csv("Taules_de_dades/ADASYN/glass_0_1_6_vs_2_train_ADASYN.csv", show_col_types = FALSE)
 glass_0_1_6_vs_2_train_SLSMOTE <- read_csv("Taules_de_dades/SLSMOTE/glass_0_1_6_vs_2_train_SLSMOTE.csv", show_col_types = FALSE)
 glass_0_1_6_vs_2_train_DBSMOTE <- read_csv("Taules_de_dades/DBSMOTE/glass_0_1_6_vs_2_train_DBSMOTE.csv", show_col_types = FALSE)
-glass_0_1_6_vs_2_train_MWMOTE <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MWMOTE.csv", show_col_types = FALSE)
+glass_0_1_6_vs_2_train_MWMOTE <- read_csv("Taules_de_dades/MWMOTE/glass_0_1_6_vs_2_train_MWMOTE.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 glass_0_1_6_vs_2_train_MDO <- read_csv("Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_MDO.csv", show_col_types = FALSE)
 glass_0_1_6_vs_2_train_ROSE <- read_csv("Taules_de_dades/ROSE/glass_0_1_6_vs_2_train_ROSE.csv", show_col_types = FALSE)
 ```
 
 
-```{r, eval=FALSE}
+```{r}
 glass_0_1_4_6_vs_2_train_SMOTE <- read_csv("Taules_de_dades/SMOTE/glass_0_1_4_6_vs_2_train_SMOTE.csv", show_col_types = FALSE)
 glass_0_1_4_6_vs_2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/BORDERLINE_SMOTE/glass_0_1_4_6_vs_2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-glass_0_1_4_6_vs_2_train_ADOMS <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ADOMS.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train_ADOMS <- read_csv("Taules_de_dades/ADOMS/glass_0_1_4_6_vs_2_train_ADOMS.csv", show_col_types = FALSE)
 glass_0_1_4_6_vs_2_train_ADASYN <- read_csv("Taules_de_dades/ADASYN/glass_0_1_4_6_vs_2_train_ADASYN.csv", show_col_types = FALSE)
 glass_0_1_4_6_vs_2_train_SLSMOTE <- read_csv("Taules_de_dades/SLSMOTE/glass_0_1_4_6_vs_2_train_SLSMOTE.csv", show_col_types = FALSE)
 glass_0_1_4_6_vs_2_train_DBSMOTE <- read_csv("Taules_de_dades/DBSMOTE/glass_0_1_4_6_vs_2_train_DBSMOTE.csv", show_col_types = FALSE)
-glass_0_1_4_6_vs_2_train_MWMOTE <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MWMOTE.csv", show_col_types = FALSE)
+glass_0_1_4_6_vs_2_train_MWMOTE <- read_csv("Taules_de_dades/MWMOTE/glass_0_1_4_6_vs_2_train_MWMOTE.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 glass_0_1_4_6_vs_2_train_MDO <- read_csv("Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_MDO.csv", show_col_types = FALSE)
 glass_0_1_4_6_vs_2_train_ROSE <- read_csv("Taules_de_dades/ROSE/glass_0_1_4_6_vs_2_train_ROSE.csv", show_col_types = FALSE)
 ```
 
-```{r, eval=FALSE}
+```{r}
 abalone19_peque_train_SMOTE <- read_csv("Taules_de_dades/SMOTE/abalone19_peque_train_SMOTE.csv", show_col_types = FALSE)
 abalone19_peque_train_BorderlineSMOTE <- read_csv("Taules_de_dades/BORDERLINE_SMOTE/abalone19_peque_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-abalone19_peque_train_ADOMS <- read_csv("Taules_de_dades/abalone19_peque/abalone19_peque_train_ADOMS.csv", show_col_types = FALSE)
+abalone19_peque_train_ADOMS <- read_csv("Taules_de_dades/ADOMS/abalone19_peque_train_ADOMS.csv", show_col_types = FALSE)
 abalone19_peque_train_ADASYN <- read_csv("Taules_de_dades/ADASYN/abalone19_peque_train_ADASYN.csv", show_col_types = FALSE)
 abalone19_peque_train_SLSMOTE <- read_csv("Taules_de_dades/SLSMOTE/abalone19_peque_train_SLSMOTE.csv", show_col_types = FALSE)
 abalone19_peque_train_DBSMOTE <- read_csv("Taules_de_dades/DBSMOTE/abalone19_peque_train_DBSMOTE.csv", show_col_types = FALSE)
-abalone19_peque_train_MWMOTE <- read_csv("Taules_de_dades/abalone19_peque/abalone19_peque_train_MWMOTE.csv", show_col_types = FALSE)
+abalone19_peque_train_MWMOTE <- read_csv("Taules_de_dades/MWMOTE/abalone19_peque_train_MWMOTE.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 abalone19_peque_train_MDO <- read_csv("Taules_de_dades/abalone19_peque/abalone19_peque_train_MDO.csv", show_col_types = FALSE)
 abalone19_peque_train_ROSE <- read_csv("Taules_de_dades/ROSE/abalone19_peque_train_ROSE.csv", show_col_types = FALSE)
 ```
 
-```{r, eval=FALSE}
+```{r}
 page_blocks0_1_train_SMOTE <- read_csv("Taules_de_dades/SMOTE/page_blocks0_1_train_SMOTE.csv", show_col_types = FALSE)
 page_blocks0_1_train_BorderlineSMOTE <- read_csv("Taules_de_dades/BORDERLINE_SMOTE/page_blocks0_1_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-page_blocks0_1_train_ADOMS <- read_csv("Taules_de_dades/page_blocks0_1/page_blocks0_1_train_ADOMS.csv", show_col_types = FALSE)
+page_blocks0_1_train_ADOMS <- read_csv("Taules_de_dades/ADOMS/page_blocks0_1_train_ADOMS.csv", show_col_types = FALSE)
 page_blocks0_1_train_ADASYN <- read_csv("Taules_de_dades/ADASYN/page_blocks0_1_train_ADASYN.csv", show_col_types = FALSE)
 page_blocks0_1_train_SLSMOTE <- read_csv("Taules_de_dades/SLSMOTE/page_blocks0_1_train_SLSMOTE.csv", show_col_types = FALSE)
 page_blocks0_1_train_DBSMOTE <- read_csv("Taules_de_dades/DBSMOTE/page_blocks0_1_train_DBSMOTE.csv", show_col_types = FALSE)
-page_blocks0_1_train_MWMOTE <- read_csv("Taules_de_dades/page_blocks0_1/page_blocks0_1_train_MWMOTE.csv", show_col_types = FALSE)
+page_blocks0_1_train_MWMOTE <- read_csv("Taules_de_dades/MWMOTE/page_blocks0_1_train_MWMOTE.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 page_blocks0_1_train_MDO <- read_csv("Taules_de_dades/page_blocks0_1/page_blocks0_1_train_MDO.csv", show_col_types = FALSE)
 page_blocks0_1_train_ROSE <- read_csv("Taules_de_dades/ROSE/page_blocks0_1_train_ROSE.csv", show_col_types = FALSE)
 ```
 
-```{r, eval=FALSE}
+```{r}
 page_blocks0_2_train_SMOTE <- read_csv("Taules_de_dades/SMOTE/page_blocks0_2_train_SMOTE.csv", show_col_types = FALSE)
 page_blocks0_2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/BORDERLINE_SMOTE/page_blocks0_2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-page_blocks0_2_train_ADOMS <- read_csv("Taules_de_dades/page_blocks0_2/page_blocks0_2_train_ADOMS.csv", show_col_types = FALSE)
+page_blocks0_2_train_ADOMS <- read_csv("Taules_de_dades/ADOMS/page_blocks0_2_train_ADOMS.csv", show_col_types = FALSE)
 page_blocks0_2_train_ADASYN <- read_csv("Taules_de_dades/ADASYN/page_blocks0_2_train_ADASYN.csv", show_col_types = FALSE)
 page_blocks0_2_train_SLSMOTE <- read_csv("Taules_de_dades/SLSMOTE/page_blocks0_2_train_SLSMOTE.csv", show_col_types = FALSE)
 page_blocks0_2_train_DBSMOTE <- read_csv("Taules_de_dades/DBSMOTE/page_blocks0_2_train_DBSMOTE.csv", show_col_types = FALSE)
-page_blocks0_2_train_MWMOTE <- read_csv("Taules_de_dades/page_blocks0_2/page_blocks0_2_train_MWMOTE.csv", show_col_types = FALSE)
+page_blocks0_2_train_MWMOTE <- read_csv("Taules_de_dades/MWMOTE/page_blocks0_2_train_MWMOTE.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 page_blocks0_2_train_MDO <- read_csv("Taules_de_dades/page_blocks0_2/page_blocks0_2_train_MDO.csv", show_col_types = FALSE)
 page_blocks0_2_train_ROSE <- read_csv("Taules_de_dades/ROSE/page_blocks0_2_train_ROSE.csv", show_col_types = FALSE)
 ```
 
-```{r, eval=FALSE}
+```{r}
 glass2_train_SMOTE <- read_csv("Taules_de_dades/SMOTE/glass2_train_SMOTE.csv", show_col_types = FALSE)
 glass2_train_BorderlineSMOTE <- read_csv("Taules_de_dades/BORDERLINE_SMOTE/glass2_train_BorderlineSMOTE.csv", show_col_types = FALSE)
-glass2_train_ADOMS <- read_csv("Taules_de_dades/glass2/glass2_train_ADOMS.csv", show_col_types = FALSE)
+glass2_train_ADOMS <- read_csv("Taules_de_dades/ADOMS/glass2_train_ADOMS.csv", show_col_types = FALSE)
 glass2_train_ADASYN <- read_csv("Taules_de_dades/ADASYN/glass2_train_ADASYN.csv", show_col_types = FALSE)
 glass2_train_SLSMOTE <- read_csv("Taules_de_dades/SLSMOTE/glass2_train_SLSMOTE.csv", show_col_types = FALSE)
 glass2_train_DBSMOTE <- read_csv("Taules_de_dades/DBSMOTE/glass2_train_DBSMOTE.csv", show_col_types = FALSE)
-glass2_train_MWMOTE <- read_csv("Taules_de_dades/glass2/glass2_train_MWMOTE.csv", show_col_types = FALSE)
+glass2_train_MWMOTE <- read_csv("Taules_de_dades/MWMOTE/glass2_train_MWMOTE.csv", show_col_types = FALSE) %>% dplyr::select(-idx)
 glass2_train_MDO <- read_csv("Taules_de_dades/glass2/glass2_train_MDO.csv", show_col_types = FALSE)
 glass2_train_ROSE <- read_csv("Taules_de_dades/ROSE/glass2_train_ROSE.csv", show_col_types = FALSE)
 ```
