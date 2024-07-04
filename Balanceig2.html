@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Irene LiFeng Julià Pérez">
+
+<title>Mètodes de balanceig</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Balanceig2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Balanceig2_files/libs/quarto-html/quarto.js"></script>
+<script src="Balanceig2_files/libs/quarto-html/popper.min.js"></script>
+<script src="Balanceig2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Balanceig2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Balanceig2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Balanceig2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Balanceig2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Balanceig2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Balanceig2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#dades" id="toc-dades" class="nav-link active" data-scroll-target="#dades">Dades</a>
+  <ul>
+  <li><a href="#abalone9_18" id="toc-abalone9_18" class="nav-link" data-scroll-target="#abalone9_18">abalone9_18</a></li>
+  <li><a href="#page_blocks_1_3_4" id="toc-page_blocks_1_3_4" class="nav-link" data-scroll-target="#page_blocks_1_3_4">page_blocks_1_3_4</a></li>
+  <li><a href="#glass_0_1_6_vs_2" id="toc-glass_0_1_6_vs_2" class="nav-link" data-scroll-target="#glass_0_1_6_vs_2">glass_0_1_6_vs_2</a></li>
+  <li><a href="#glass_0_1_4_6_vs_2" id="toc-glass_0_1_4_6_vs_2" class="nav-link" data-scroll-target="#glass_0_1_4_6_vs_2">glass_0_1_4_6_vs_2</a></li>
+  <li><a href="#page-blocks0" id="toc-page-blocks0" class="nav-link" data-scroll-target="#page-blocks0">page-blocks0</a>
+  <ul>
+  <li><a href="#page_blocks0_1" id="toc-page_blocks0_1" class="nav-link" data-scroll-target="#page_blocks0_1">page_blocks0_1</a></li>
+  <li><a href="#page_blocks0_2" id="toc-page_blocks0_2" class="nav-link" data-scroll-target="#page_blocks0_2">page_blocks0_2</a></li>
+  </ul></li>
+  <li><a href="#abalone19_peque" id="toc-abalone19_peque" class="nav-link" data-scroll-target="#abalone19_peque">abalone19_peque</a></li>
+  <li><a href="#glass2" id="toc-glass2" class="nav-link" data-scroll-target="#glass2">glass2</a></li>
+  </ul></li>
+  <li><a href="#balanceig" id="toc-balanceig" class="nav-link" data-scroll-target="#balanceig">Balanceig</a>
+  <ul>
+  <li><a href="#smote" id="toc-smote" class="nav-link" data-scroll-target="#smote">SMOTE</a>
+  <ul>
+  <li><a href="#abalone9_18-1" id="toc-abalone9_18-1" class="nav-link" data-scroll-target="#abalone9_18-1">abalone9_18</a></li>
+  <li><a href="#page_blocks_1_3_4-1" id="toc-page_blocks_1_3_4-1" class="nav-link" data-scroll-target="#page_blocks_1_3_4-1">page_blocks_1_3_4</a></li>
+  <li><a href="#glass_0_1_6_vs_2-1" id="toc-glass_0_1_6_vs_2-1" class="nav-link" data-scroll-target="#glass_0_1_6_vs_2-1">glass_0_1_6_vs_2</a></li>
+  <li><a href="#glass_0_1_4_6_vs_2-1" id="toc-glass_0_1_4_6_vs_2-1" class="nav-link" data-scroll-target="#glass_0_1_4_6_vs_2-1">glass_0_1_4_6_vs_2</a></li>
+  <li><a href="#page_blocks0_1-1" id="toc-page_blocks0_1-1" class="nav-link" data-scroll-target="#page_blocks0_1-1">page_blocks0_1</a></li>
+  <li><a href="#page_blocks0_2-1" id="toc-page_blocks0_2-1" class="nav-link" data-scroll-target="#page_blocks0_2-1">page_blocks0_2</a></li>
+  <li><a href="#abalone19_peque-1" id="toc-abalone19_peque-1" class="nav-link" data-scroll-target="#abalone19_peque-1">abalone19_peque</a></li>
+  <li><a href="#glass2-1" id="toc-glass2-1" class="nav-link" data-scroll-target="#glass2-1">glass2</a></li>
+  </ul></li>
+  <li><a href="#borderline-smote" id="toc-borderline-smote" class="nav-link" data-scroll-target="#borderline-smote">Borderline-SMOTE</a>
+  <ul>
+  <li><a href="#abalone9_18-2" id="toc-abalone9_18-2" class="nav-link" data-scroll-target="#abalone9_18-2">abalone9_18</a></li>
+  <li><a href="#page_blocks_1_3_4-2" id="toc-page_blocks_1_3_4-2" class="nav-link" data-scroll-target="#page_blocks_1_3_4-2">page_blocks_1_3_4</a></li>
+  <li><a href="#glass_0_1_6_vs_2-2" id="toc-glass_0_1_6_vs_2-2" class="nav-link" data-scroll-target="#glass_0_1_6_vs_2-2">glass_0_1_6_vs_2</a></li>
+  <li><a href="#glass_0_1_4_6_vs_2-2" id="toc-glass_0_1_4_6_vs_2-2" class="nav-link" data-scroll-target="#glass_0_1_4_6_vs_2-2">glass_0_1_4_6_vs_2</a></li>
+  <li><a href="#page_blocks0_1-2" id="toc-page_blocks0_1-2" class="nav-link" data-scroll-target="#page_blocks0_1-2">page_blocks0_1</a></li>
+  <li><a href="#page_blocks0_2-2" id="toc-page_blocks0_2-2" class="nav-link" data-scroll-target="#page_blocks0_2-2">page_blocks0_2</a></li>
+  <li><a href="#abalone19_peque-2" id="toc-abalone19_peque-2" class="nav-link" data-scroll-target="#abalone19_peque-2">abalone19_peque</a></li>
+  <li><a href="#glass2-2" id="toc-glass2-2" class="nav-link" data-scroll-target="#glass2-2">glass2</a></li>
+  </ul></li>
+  <li><a href="#adoms" id="toc-adoms" class="nav-link" data-scroll-target="#adoms">ADOMS</a>
+  <ul>
+  <li><a href="#abalone9_18-3" id="toc-abalone9_18-3" class="nav-link" data-scroll-target="#abalone9_18-3">abalone9_18</a></li>
+  <li><a href="#page_blocks_1_3_4-3" id="toc-page_blocks_1_3_4-3" class="nav-link" data-scroll-target="#page_blocks_1_3_4-3">page_blocks_1_3_4</a></li>
+  <li><a href="#glass_0_1_6_vs_2-3" id="toc-glass_0_1_6_vs_2-3" class="nav-link" data-scroll-target="#glass_0_1_6_vs_2-3">glass_0_1_6_vs_2</a></li>
+  <li><a href="#glass_0_1_4_6_vs_2-3" id="toc-glass_0_1_4_6_vs_2-3" class="nav-link" data-scroll-target="#glass_0_1_4_6_vs_2-3">glass_0_1_4_6_vs_2</a></li>
+  <li><a href="#page_blocks0_1-3" id="toc-page_blocks0_1-3" class="nav-link" data-scroll-target="#page_blocks0_1-3">page_blocks0_1</a></li>
+  <li><a href="#page_blocks0_2-3" id="toc-page_blocks0_2-3" class="nav-link" data-scroll-target="#page_blocks0_2-3">page_blocks0_2</a></li>
+  <li><a href="#abalone19_peque-3" id="toc-abalone19_peque-3" class="nav-link" data-scroll-target="#abalone19_peque-3">abalone19_peque</a></li>
+  <li><a href="#glass2-3" id="toc-glass2-3" class="nav-link" data-scroll-target="#glass2-3">glass2</a></li>
+  </ul></li>
+  <li><a href="#adasyn" id="toc-adasyn" class="nav-link" data-scroll-target="#adasyn">ADASYN</a>
+  <ul>
+  <li><a href="#abalone9_18-4" id="toc-abalone9_18-4" class="nav-link" data-scroll-target="#abalone9_18-4">abalone9_18</a></li>
+  <li><a href="#page_blocks_1_3_4-4" id="toc-page_blocks_1_3_4-4" class="nav-link" data-scroll-target="#page_blocks_1_3_4-4">page_blocks_1_3_4</a></li>
+  <li><a href="#glass_0_1_6_vs_2-4" id="toc-glass_0_1_6_vs_2-4" class="nav-link" data-scroll-target="#glass_0_1_6_vs_2-4">glass_0_1_6_vs_2</a></li>
+  <li><a href="#glass_0_1_4_6_vs_2-4" id="toc-glass_0_1_4_6_vs_2-4" class="nav-link" data-scroll-target="#glass_0_1_4_6_vs_2-4">glass_0_1_4_6_vs_2</a></li>
+  <li><a href="#page_blocks0_1-4" id="toc-page_blocks0_1-4" class="nav-link" data-scroll-target="#page_blocks0_1-4">page_blocks0_1</a></li>
+  <li><a href="#page_blocks0_2-4" id="toc-page_blocks0_2-4" class="nav-link" data-scroll-target="#page_blocks0_2-4">page_blocks0_2</a></li>
+  <li><a href="#abalone19_peque-4" id="toc-abalone19_peque-4" class="nav-link" data-scroll-target="#abalone19_peque-4">abalone19_peque</a></li>
+  <li><a href="#glass2-4" id="toc-glass2-4" class="nav-link" data-scroll-target="#glass2-4">glass2</a></li>
+  </ul></li>
+  <li><a href="#rose" id="toc-rose" class="nav-link" data-scroll-target="#rose">ROSE</a>
+  <ul>
+  <li><a href="#abalone9_18-5" id="toc-abalone9_18-5" class="nav-link" data-scroll-target="#abalone9_18-5">abalone9_18</a></li>
+  <li><a href="#page_blocks_1_3_4-5" id="toc-page_blocks_1_3_4-5" class="nav-link" data-scroll-target="#page_blocks_1_3_4-5">page_blocks_1_3_4</a></li>
+  <li><a href="#glass_0_1_6_vs_2-5" id="toc-glass_0_1_6_vs_2-5" class="nav-link" data-scroll-target="#glass_0_1_6_vs_2-5">glass_0_1_6_vs_2</a></li>
+  <li><a href="#glass_0_1_4_6_vs_2-5" id="toc-glass_0_1_4_6_vs_2-5" class="nav-link" data-scroll-target="#glass_0_1_4_6_vs_2-5">glass_0_1_4_6_vs_2</a></li>
+  <li><a href="#abalone19_peque-5" id="toc-abalone19_peque-5" class="nav-link" data-scroll-target="#abalone19_peque-5">abalone19_peque</a></li>
+  <li><a href="#page_blocks0_1-5" id="toc-page_blocks0_1-5" class="nav-link" data-scroll-target="#page_blocks0_1-5">page_blocks0_1</a></li>
+  <li><a href="#page_blocks0_2-5" id="toc-page_blocks0_2-5" class="nav-link" data-scroll-target="#page_blocks0_2-5">page_blocks0_2</a></li>
+  <li><a href="#glass2-5" id="toc-glass2-5" class="nav-link" data-scroll-target="#glass2-5">glass2</a></li>
+  </ul></li>
+  <li><a href="#safe-level-smote" id="toc-safe-level-smote" class="nav-link" data-scroll-target="#safe-level-smote">Safe-Level SMOTE</a>
+  <ul>
+  <li><a href="#abalone9_18-6" id="toc-abalone9_18-6" class="nav-link" data-scroll-target="#abalone9_18-6">abalone9_18</a></li>
+  <li><a href="#page_blocks_1_3_4-6" id="toc-page_blocks_1_3_4-6" class="nav-link" data-scroll-target="#page_blocks_1_3_4-6">page_blocks_1_3_4</a></li>
+  <li><a href="#glass_0_1_6_vs_2-6" id="toc-glass_0_1_6_vs_2-6" class="nav-link" data-scroll-target="#glass_0_1_6_vs_2-6">glass_0_1_6_vs_2</a></li>
+  <li><a href="#glass_0_1_4_6_vs_2-6" id="toc-glass_0_1_4_6_vs_2-6" class="nav-link" data-scroll-target="#glass_0_1_4_6_vs_2-6">glass_0_1_4_6_vs_2</a></li>
+  <li><a href="#page_blocks0_1-6" id="toc-page_blocks0_1-6" class="nav-link" data-scroll-target="#page_blocks0_1-6">page_blocks0_1</a></li>
+  <li><a href="#page_blocks0_2-6" id="toc-page_blocks0_2-6" class="nav-link" data-scroll-target="#page_blocks0_2-6">page_blocks0_2</a></li>
+  <li><a href="#abalone19_peque-6" id="toc-abalone19_peque-6" class="nav-link" data-scroll-target="#abalone19_peque-6">abalone19_peque</a></li>
+  <li><a href="#glass2-6" id="toc-glass2-6" class="nav-link" data-scroll-target="#glass2-6">glass2</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Mètodes de balanceig</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Irene LiFeng Julià Pérez </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="dades" class="level1">
+<h1>Dades</h1>
+<p>Carregam totes les taules de dades necessàries</p>
+<section id="abalone9_18" class="level2">
+<h2 class="anchored" data-anchor-id="abalone9_18">abalone9_18</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>abalone9_18 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9-18.dat"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>abalone9_18 <span class="ot">&lt;-</span> abalone9_18 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(abalone9_18))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)<span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Sex)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>abalone9_18_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_train.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>abalone9_18_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone9_18/abalone9_18_test.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>IR_abalone9_18 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">table</span>(abalone9_18<span class="sc">$</span>Class)[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">table</span>(abalone9_18<span class="sc">$</span>Class)[<span class="dv">2</span>]),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks_1_3_4" class="level2">
+<h2 class="anchored" data-anchor-id="page_blocks_1_3_4">page_blocks_1_3_4</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page-blocks-1-3_vs_4.dat"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4 <span class="ot">&lt;-</span> page_blocks_1_3_4 <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(page_blocks_1_3_4))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_test.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>IR_page_blocks_1_3_4 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">table</span>(page_blocks_1_3_4<span class="sc">$</span>Class)[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">table</span>(page_blocks_1_3_4<span class="sc">$</span>Class)[<span class="dv">2</span>]),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_6_vs_2" class="level2">
+<h2 class="anchored" data-anchor-id="glass_0_1_6_vs_2">glass_0_1_6_vs_2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_6_vs_2/glass-0-1-6_vs_2.dat"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2 <span class="ot">&lt;-</span> glass_0_1_6_vs_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(glass_0_1_6_vs_2))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_test.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_4_6_vs_2" class="level2">
+<h2 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2">glass_0_1_4_6_vs_2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass-0-1-4-6_vs_2.dat"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2 <span class="ot">&lt;-</span> glass_0_1_4_6_vs_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(glass_0_1_4_6_vs_2))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_test.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page-blocks0" class="level2">
+<h2 class="anchored" data-anchor-id="page-blocks0">page-blocks0</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>page_blocks0 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page-blocks0.dat"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>page_blocks0 <span class="ot">&lt;-</span> page_blocks0 <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idx =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(page_blocks0))) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(idx)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>page_blocks0_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_train.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>page_blocks0_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_test.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>IR_page_blocks0 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">table</span>(page_blocks0<span class="sc">$</span>Class)[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">table</span>(page_blocks0<span class="sc">$</span>Class)[<span class="dv">2</span>]),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="page_blocks0_1" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_1">page_blocks0_1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_train.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_1_test.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>IR_prova <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">table</span>(page_blocks0_1<span class="sc">$</span>Class)[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">table</span>(page_blocks0_1<span class="sc">$</span>Class)[<span class="dv">2</span>]),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_2" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_2">page_blocks0_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2_train.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/page_blocks0/page_blocks0_2_test.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>IR_prova <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">table</span>(page_blocks0_2<span class="sc">$</span>Class)[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">table</span>(page_blocks0_2<span class="sc">$</span>Class)[<span class="dv">2</span>]),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="abalone19_peque" class="level2">
+<h2 class="anchored" data-anchor-id="abalone19_peque">abalone19_peque</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19/abalone19_peque.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19/abalone19_peque_train.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>abalone19_peque_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/abalone19/abalone19_peque_test.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>IR_abalone19_peque <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">table</span>(abalone19_peque<span class="sc">$</span>Class)[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">table</span>(abalone19_peque<span class="sc">$</span>Class)[<span class="dv">2</span>]),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass2" class="level2">
+<h2 class="anchored" data-anchor-id="glass2">glass2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>glass2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2.dat"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>glass2_train <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_train.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>glass2_test <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Taules_de_dades/glass2/glass2_test.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>IR_glass2 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">table</span>(glass2<span class="sc">$</span>Class)[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">table</span>(glass2<span class="sc">$</span>Class)[<span class="dv">2</span>]),<span class="dv">3</span>); IR_glass2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11.588</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="balanceig" class="level1">
+<h1>Balanceig</h1>
+<section id="smote" class="level2">
+<h2 class="anchored" data-anchor-id="smote">SMOTE</h2>
+<section id="abalone9_18-1" class="level3">
+<h3 class="anchored" data-anchor-id="abalone9_18-1">abalone9_18</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_smote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SMOTE</span>(abalone9_18_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone9_18_train))],abalone9_18_train[,<span class="fu">ncol</span>(abalone9_18_train)], <span class="at">K =</span> <span class="dv">4</span>, <span class="at">dup_size =</span> <span class="dv">15</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_SMOTE <span class="ot">&lt;-</span> abalone9_18_train_smote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     553       32 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_SMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     553      512 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/SMOTE/abalone9_18_train_SMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks_1_3_4-1" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks_1_3_4-1">page_blocks_1_3_4</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_smote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SMOTE</span>(page_blocks_1_3_4_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks_1_3_4_train))],page_blocks_1_3_4_train[,<span class="fu">ncol</span>(page_blocks_1_3_4_train)], <span class="at">K =</span> <span class="dv">4</span>, <span class="at">dup_size =</span> <span class="dv">18</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_SMOTE <span class="ot">&lt;-</span> page_blocks_1_3_4_train_smote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     361       17 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_SMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     361      323 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks_1_3_4_train_SMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_6_vs_2-1" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_6_vs_2-1">glass_0_1_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_smote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SMOTE</span>(glass_0_1_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_6_vs_2_train))],glass_0_1_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_6_vs_2_train)], <span class="at">K =</span> <span class="dv">4</span>, <span class="at">dup_size =</span> <span class="dv">9</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_SMOTE <span class="ot">&lt;-</span> glass_0_1_6_vs_2_train_smote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     141       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_SMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     141      130 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass_0_1_6_vs_2_train_SMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_4_6_vs_2-1" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-1">glass_0_1_4_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_smote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SMOTE</span>(glass_0_1_4_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train))],glass_0_1_4_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train)], <span class="at">K =</span> <span class="dv">4</span>, <span class="at">dup_size =</span> <span class="dv">10</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_SMOTE <span class="ot">&lt;-</span> glass_0_1_4_6_vs_2_train_smote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     151       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_SMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     151      143 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass_0_1_4_6_vs_2_train_SMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_1-1" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_1-1">page_blocks0_1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_smote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SMOTE</span>(page_blocks0_1_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_1_train))],page_blocks0_1_train[,<span class="fu">ncol</span>(page_blocks0_1_train)], <span class="at">K =</span> <span class="dv">4</span>, <span class="at">dup_size =</span> <span class="dv">8</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_SMOTE <span class="ot">&lt;-</span> page_blocks0_1_train_smote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     404       41 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_SMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     404      369 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks0_1_train_SMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_2-1" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_2-1">page_blocks0_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_smote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SMOTE</span>(page_blocks0_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_2_train))],page_blocks0_2_train[,<span class="fu">ncol</span>(page_blocks0_2_train)], <span class="at">K =</span> <span class="dv">4</span>, <span class="at">dup_size =</span> <span class="dv">8</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_SMOTE <span class="ot">&lt;-</span> page_blocks0_2_train_smote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     405       40 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_SMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     405      360 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/SMOTE/page_blocks0_2_train_SMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="abalone19_peque-1" class="level3">
+<h3 class="anchored" data-anchor-id="abalone19_peque-1">abalone19_peque</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_smote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SMOTE</span>(abalone19_peque_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone19_peque_train))],abalone19_peque_train[,<span class="fu">ncol</span>(abalone19_peque_train)], <span class="at">K =</span> <span class="dv">4</span>, <span class="at">dup_size =</span> <span class="dv">8</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_SMOTE <span class="ot">&lt;-</span> abalone19_peque_train_smote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     234       25 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_SMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     234      225 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/SMOTE/abalone19_peque_train_SMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass2-1" class="level3">
+<h3 class="anchored" data-anchor-id="glass2-1">glass2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>glass2_train_smote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SMOTE</span>(glass2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass2_train))],glass2_train[,<span class="fu">ncol</span>(glass2_train)], <span class="at">K =</span> <span class="dv">4</span>, <span class="at">dup_size =</span> <span class="dv">11</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>glass2_train_SMOTE <span class="ot">&lt;-</span> glass2_train_smote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     158       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_SMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     158      156 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass2_train_SMOTE, file = "Taules_de_dades/SMOTE/glass2_train_SMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="borderline-smote" class="level2">
+<h2 class="anchored" data-anchor-id="borderline-smote">Borderline-SMOTE</h2>
+<section id="abalone9_18-2" class="level3">
+<h3 class="anchored" data-anchor-id="abalone9_18-2">abalone9_18</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_blsmote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">BLSMOTE</span>(abalone9_18_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone9_18_train))],abalone9_18_train[,<span class="fu">ncol</span>(abalone9_18_train)], <span class="at">K =</span> <span class="dv">2</span>, <span class="at">C =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Borderline-SMOTE done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_BorderlineSMOTE <span class="ot">&lt;-</span> abalone9_18_train_blsmote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     553       32 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_BorderlineSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     553      536 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/abalone9_18_train_BorderlineSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>negative positive 553 32</p>
+</section>
+<section id="page_blocks_1_3_4-2" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks_1_3_4-2">page_blocks_1_3_4</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_blsmote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">BLSMOTE</span>(page_blocks_1_3_4_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks_1_3_4_train))],page_blocks_1_3_4_train[,<span class="fu">ncol</span>(page_blocks_1_3_4_train)], <span class="at">K =</span> <span class="dv">5</span>, <span class="at">C =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Borderline-SMOTE done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_BorderlineSMOTE <span class="ot">&lt;-</span> page_blocks_1_3_4_train_blsmote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     361       17 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_BorderlineSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     361      360 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/page_blocks_1_3_4_train_BorderlineSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_6_vs_2-2" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_6_vs_2-2">glass_0_1_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_blsmote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">BLSMOTE</span>(glass_0_1_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_6_vs_2_train))],glass_0_1_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_6_vs_2_train)], <span class="at">K =</span> <span class="dv">5</span>, <span class="at">C =</span> <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Borderline-SMOTE done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_BorderlineSMOTE <span class="ot">&lt;-</span> glass_0_1_6_vs_2_train_blsmote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     141       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_BorderlineSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     141      134 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/glass_0_1_6_vs_2_train_BorderlineSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_4_6_vs_2-2" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-2">glass_0_1_4_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_blsmote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">BLSMOTE</span>(glass_0_1_4_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train))],glass_0_1_4_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train)], <span class="at">K =</span> <span class="dv">6</span>, <span class="at">C =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Borderline-SMOTE done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_BorderlineSMOTE <span class="ot">&lt;-</span> glass_0_1_4_6_vs_2_train_blsmote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     151       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_BorderlineSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     151      145 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/glass_0_1_4_6_vs_2_train_BorderlineSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_1-2" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_1-2">page_blocks0_1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_blsmote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">BLSMOTE</span>(page_blocks0_1_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_1_train))],page_blocks0_1_train[,<span class="fu">ncol</span>(page_blocks0_1_train)], <span class="at">K =</span> <span class="dv">5</span>, <span class="at">C =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Borderline-SMOTE done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_BorderlineSMOTE <span class="ot">&lt;-</span> page_blocks0_1_train_blsmote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     404       41 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_BorderlineSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     404      402 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/page_blocks0_1_train_BorderlineSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_2-2" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_2-2">page_blocks0_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_blsmote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">BLSMOTE</span>(page_blocks0_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_2_train))],page_blocks0_2_train[,<span class="fu">ncol</span>(page_blocks0_2_train)], <span class="at">K =</span> <span class="dv">5</span>, <span class="at">C =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Borderline-SMOTE done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_BorderlineSMOTE <span class="ot">&lt;-</span> page_blocks0_2_train_blsmote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     405       40 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_BorderlineSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     405      400 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/page_blocks0_2_train_BorderlineSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="abalone19_peque-2" class="level3">
+<h3 class="anchored" data-anchor-id="abalone19_peque-2">abalone19_peque</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_blsmote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">BLSMOTE</span>(abalone19_peque_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone19_peque_train))],abalone19_peque_train[,<span class="fu">ncol</span>(abalone19_peque_train)], <span class="at">K =</span> <span class="dv">4</span>, <span class="at">C =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Borderline-SMOTE done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_BorderlineSMOTE <span class="ot">&lt;-</span> abalone19_peque_train_blsmote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     234       25 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_BorderlineSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     234      229 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/abalone19_peque_train_BorderlineSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass2-2" class="level3">
+<h3 class="anchored" data-anchor-id="glass2-2">glass2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>glass2_train_blsmote <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">BLSMOTE</span>(glass2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass2_train))],glass2_train[,<span class="fu">ncol</span>(glass2_train)], <span class="at">K =</span> <span class="dv">6</span>, <span class="at">C =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Borderline-SMOTE done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>glass2_train_BorderlineSMOTE <span class="ot">&lt;-</span> glass2_train_blsmote<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     158       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_BorderlineSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     158      153 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass2_train_SMOTE, file = "Taules_de_dades/BORDERLINE_SMOTE/glass2_train_BorderlineSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="adoms" class="level2">
+<h2 class="anchored" data-anchor-id="adoms">ADOMS</h2>
+<section id="abalone9_18-3" class="level3">
+<h3 class="anchored" data-anchor-id="abalone9_18-3">abalone9_18</h3>
+</section>
+<section id="page_blocks_1_3_4-3" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks_1_3_4-3">page_blocks_1_3_4</h3>
+</section>
+<section id="glass_0_1_6_vs_2-3" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_6_vs_2-3">glass_0_1_6_vs_2</h3>
+</section>
+<section id="glass_0_1_4_6_vs_2-3" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-3">glass_0_1_4_6_vs_2</h3>
+</section>
+<section id="page_blocks0_1-3" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_1-3">page_blocks0_1</h3>
+</section>
+<section id="page_blocks0_2-3" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_2-3">page_blocks0_2</h3>
+</section>
+<section id="abalone19_peque-3" class="level3">
+<h3 class="anchored" data-anchor-id="abalone19_peque-3">abalone19_peque</h3>
+</section>
+<section id="glass2-3" class="level3">
+<h3 class="anchored" data-anchor-id="glass2-3">glass2</h3>
+</section>
+</section>
+<section id="adasyn" class="level2">
+<h2 class="anchored" data-anchor-id="adasyn">ADASYN</h2>
+<section id="abalone9_18-4" class="level3">
+<h3 class="anchored" data-anchor-id="abalone9_18-4">abalone9_18</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_adasyn <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">ADAS</span>(abalone9_18_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone9_18_train))],abalone9_18_train[,<span class="fu">ncol</span>(abalone9_18_train)], <span class="at">K =</span> <span class="dv">8</span>)</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_ADASYN <span class="ot">&lt;-</span> abalone9_18_train_adasyn<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     553       32 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_ADASYN<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     553      552 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/ADASYN/abalone9_18_train_ADASYN.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks_1_3_4-4" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks_1_3_4-4">page_blocks_1_3_4</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_adasyn <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">ADAS</span>(page_blocks_1_3_4_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks_1_3_4_train))],page_blocks_1_3_4_train[,<span class="fu">ncol</span>(page_blocks_1_3_4_train)], <span class="at">K =</span> <span class="dv">8</span>)</span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_ADASYN <span class="ot">&lt;-</span> page_blocks_1_3_4_train_adasyn<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     361       17 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_ADASYN<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     361      362 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/ADASYN/page_blocks_1_3_4_train_ADASYN.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_6_vs_2-4" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_6_vs_2-4">glass_0_1_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_adasyn <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">ADAS</span>(glass_0_1_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_6_vs_2_train))],glass_0_1_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_6_vs_2_train)], <span class="at">K =</span> <span class="dv">8</span>)</span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_ADASYN <span class="ot">&lt;-</span> glass_0_1_6_vs_2_train_adasyn<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     141       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_ADASYN<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     141      138 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/ADASYN/glass_0_1_6_vs_2_train_ADASYN.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_4_6_vs_2-4" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-4">glass_0_1_4_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_adasyn <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">ADAS</span>(glass_0_1_4_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train))],glass_0_1_4_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train)], <span class="at">K =</span> <span class="dv">8</span>)</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_ADASYN <span class="ot">&lt;-</span> glass_0_1_4_6_vs_2_train_adasyn<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     151       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_ADASYN<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     151      149 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/ADASYN/glass_0_1_4_6_vs_2_train_ADASYN.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_1-4" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_1-4">page_blocks0_1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_adasyn <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">ADAS</span>(page_blocks0_1_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_1_train))],page_blocks0_1_train[,<span class="fu">ncol</span>(page_blocks0_1_train)], <span class="at">K =</span> <span class="dv">8</span>)</span>
+<span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_ADASYN <span class="ot">&lt;-</span> page_blocks0_1_train_adasyn<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb127-3"><a href="#cb127-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-4"><a href="#cb127-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     404       41 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_ADASYN<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     404      410 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/ADASYN/page_blocks0_1_train_ADASYN.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_2-4" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_2-4">page_blocks0_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_adasyn <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">ADAS</span>(page_blocks0_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_2_train))],page_blocks0_2_train[,<span class="fu">ncol</span>(page_blocks0_2_train)], <span class="at">K =</span> <span class="dv">6</span>)</span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_ADASYN <span class="ot">&lt;-</span> page_blocks0_2_train_adasyn<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     405       40 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_ADASYN<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     405      407 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/ADASYN/page_blocks0_2_train_ADASYN.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="abalone19_peque-4" class="level3">
+<h3 class="anchored" data-anchor-id="abalone19_peque-4">abalone19_peque</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_adasyn <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">ADAS</span>(abalone19_peque_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone19_peque_train))],abalone19_peque_train[,<span class="fu">ncol</span>(abalone19_peque_train)], <span class="at">K =</span> <span class="dv">8</span>)</span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_ADASYN <span class="ot">&lt;-</span> abalone19_peque_train_adasyn<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     234       25 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_ADASYN<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     234      235 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/ADASYN/abalone19_peque_train_ADASYN.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass2-4" class="level3">
+<h3 class="anchored" data-anchor-id="glass2-4">glass2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>glass2_train_adasyn <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">ADAS</span>(glass2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass2_train))],glass2_train[,<span class="fu">ncol</span>(glass2_train)], <span class="at">K =</span> <span class="dv">8</span>)</span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>glass2_train_ADASYN <span class="ot">&lt;-</span> glass2_train_adasyn<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     158       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_ADASYN<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     158      159 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass2_train_SMOTE, file = "Taules_de_dades/ADASYN/glass2_train_ADASYN.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="rose" class="level2">
+<h2 class="anchored" data-anchor-id="rose">ROSE</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ROSE' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loaded ROSE 0.0-4</code></pre>
+</div>
+</div>
+<section id="abalone9_18-5" class="level3">
+<h3 class="anchored" data-anchor-id="abalone9_18-5">abalone9_18</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_abalone9_18_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> abalone9_18_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">450</span>)<span class="sc">$</span>data</span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span>
+<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-4"><a href="#cb150-4" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(abalone9_18_train, dades_sintetiques_abalone9_18_ROSE)</span>
+<span id="cb150-5"><a href="#cb150-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb150-6"><a href="#cb150-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone9_18_train_ROSE, file = "Taules_de_dades/abalone9_18/abalone9_18_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks_1_3_4-5" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks_1_3_4-5">page_blocks_1_3_4</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_page_blocks_1_3_4_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> page_blocks_1_3_4_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">300</span>)<span class="sc">$</span>data</span>
+<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span>
+<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(page_blocks_1_3_4_train, dades_sintetiques_page_blocks_1_3_4_ROSE)</span>
+<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb151-6"><a href="#cb151-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks_1_3_4_train_ROSE, file = "Taules_de_dades/page_blocks_1_3_4/page_blocks_1_3_4_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_6_vs_2-5" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_6_vs_2-5">glass_0_1_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_glass_0_1_6_vs_2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> glass_0_1_6_vs_2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">110</span>)<span class="sc">$</span>data</span>
+<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span>
+<span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-4"><a href="#cb152-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(glass_0_1_6_vs_2_train, dades_sintetiques_glass_0_1_6_vs_2_ROSE)</span>
+<span id="cb152-5"><a href="#cb152-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb152-6"><a href="#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_6_vs_2_train_ROSE, file = "Taules_de_dades/glass_0_1_6_vs_2/glass_0_1_6_vs_2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_4_6_vs_2-5" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-5">glass_0_1_4_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_glass_0_1_4_6_vs_2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> glass_0_1_4_6_vs_2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">110</span>)<span class="sc">$</span>data</span>
+<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span>
+<span id="cb153-3"><a href="#cb153-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-4"><a href="#cb153-4" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(glass_0_1_4_6_vs_2_train, dades_sintetiques_glass_0_1_4_6_vs_2_ROSE)</span>
+<span id="cb153-5"><a href="#cb153-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb153-6"><a href="#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_4_6_vs_2_train_ROSE, file = "Taules_de_dades/glass_0_1_4_6_vs_2/glass_0_1_4_6_vs_2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="abalone19_peque-5" class="level3">
+<h3 class="anchored" data-anchor-id="abalone19_peque-5">abalone19_peque</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_abalone19_peque_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> abalone19_peque_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">200</span>)<span class="sc">$</span>data</span>
+<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span>
+<span id="cb154-3"><a href="#cb154-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-4"><a href="#cb154-4" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(abalone19_peque_train, dades_sintetiques_abalone19_peque_ROSE)</span>
+<span id="cb154-5"><a href="#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb154-6"><a href="#cb154-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone19_peque_train_ROSE, file = "Taules_de_dades/abalone19/abalone19_peque_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_1-5" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_1-5">page_blocks0_1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_page_blocks0_1_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> page_blocks0_1_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">300</span>)<span class="sc">$</span>data</span>
+<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span>
+<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(page_blocks0_1_train, dades_sintetiques_page_blocks0_1_ROSE)</span>
+<span id="cb155-5"><a href="#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb155-6"><a href="#cb155-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_1_train_ROSE, file = "Taules_de_dades/page_blocks0/page_blocks0_1_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_2-5" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_2-5">page_blocks0_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_page_blocks0_2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> page_blocks0_2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">300</span>)<span class="sc">$</span>data</span>
+<span id="cb156-2"><a href="#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train<span class="sc">$</span>Class)</span>
+<span id="cb156-3"><a href="#cb156-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-4"><a href="#cb156-4" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(page_blocks0_2_train, dades_sintetiques_page_blocks0_2_ROSE)</span>
+<span id="cb156-5"><a href="#cb156-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb156-6"><a href="#cb156-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_ROSE, file = "Taules_de_dades/page_blocks0/page_blocks0_2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass2-5" class="level3">
+<h3 class="anchored" data-anchor-id="glass2-5">glass2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>dades_sintetiques_glass2_ROSE <span class="ot">&lt;-</span> <span class="fu">ROSE</span>(Class<span class="sc">~</span>., <span class="at">data =</span> glass2_train, <span class="at">seed=</span><span class="dv">1</span>, <span class="at">hmult.majo =</span> <span class="dv">0</span>, <span class="at">hmult.mino =</span> <span class="fl">0.2</span>,<span class="at">p =</span> <span class="fl">0.99</span>, <span class="at">N =</span> <span class="dv">150</span>)<span class="sc">$</span>data</span>
+<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train<span class="sc">$</span>Class)</span>
+<span id="cb157-3"><a href="#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dades_sintetiques_glass2_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb157-4"><a href="#cb157-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-5"><a href="#cb157-5" aria-hidden="true" tabindex="-1"></a>glass2_train_ROSE <span class="ot">&lt;-</span> <span class="fu">rbind</span>(glass2_train, dades_sintetiques_glass2_ROSE)</span>
+<span id="cb157-6"><a href="#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_ROSE<span class="sc">$</span>Class)</span>
+<span id="cb157-7"><a href="#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass2_train_ROSE, file = "Taules_de_dades/glass2/glass2_train_ROSE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="safe-level-smote" class="level2">
+<h2 class="anchored" data-anchor-id="safe-level-smote">Safe-Level SMOTE</h2>
+<section id="abalone9_18-6" class="level3">
+<h3 class="anchored" data-anchor-id="abalone9_18-6">abalone9_18</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_sl <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SLS</span>(abalone9_18_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone9_18_train))],abalone9_18_train[,<span class="fu">ncol</span>(abalone9_18_train)], <span class="at">K =</span> <span class="dv">9</span>, <span class="at">C =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SLS done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a>abalone9_18_train_SLSMOTE <span class="ot">&lt;-</span> abalone9_18_train_sl<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-3"><a href="#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     553       32 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone9_18_train_SLSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     553      400 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(abalone9_18_train_SMOTE, file = "Taules_de_dades/SLSMOTE/abalone9_18_train_SLSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks_1_3_4-6" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks_1_3_4-6">page_blocks_1_3_4</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_sl <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SLS</span>(page_blocks_1_3_4_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks_1_3_4_train))],page_blocks_1_3_4_train[,<span class="fu">ncol</span>(page_blocks_1_3_4_train)], <span class="at">K =</span> <span class="dv">9</span>, <span class="at">C =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SLS done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a>page_blocks_1_3_4_train_SLSMOTE <span class="ot">&lt;-</span> page_blocks_1_3_4_train_sl<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb167-2"><a href="#cb167-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-3"><a href="#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     361       17 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks_1_3_4_train_SLSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     361      317 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks_1_3_4_train_SMOTE, file = "Taules_de_dades/SLSMOTE/page_blocks_1_3_4_train_SLSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_6_vs_2-6" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_6_vs_2-6">glass_0_1_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_sl <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SLS</span>(glass_0_1_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_6_vs_2_train))],glass_0_1_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_6_vs_2_train)], <span class="at">K =</span> <span class="dv">5</span>, <span class="at">C =</span> <span class="dv">8</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SLS done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_6_vs_2_train_SLSMOTE <span class="ot">&lt;-</span> glass_0_1_6_vs_2_train_sl<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb174-2"><a href="#cb174-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb174-3"><a href="#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     141       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_6_vs_2_train_SLSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     141      112 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(glass_0_1_6_vs_2_train_SMOTE, file = "Taules_de_dades/SLSMOTE/glass_0_1_6_vs_2_train_SLSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass_0_1_4_6_vs_2-6" class="level3">
+<h3 class="anchored" data-anchor-id="glass_0_1_4_6_vs_2-6">glass_0_1_4_6_vs_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_sl <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SLS</span>(glass_0_1_4_6_vs_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train))],glass_0_1_4_6_vs_2_train[,<span class="fu">ncol</span>(glass_0_1_4_6_vs_2_train)], <span class="at">K =</span> <span class="dv">6</span>, <span class="at">C =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SLS done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>glass_0_1_4_6_vs_2_train_SLSMOTE <span class="ot">&lt;-</span> glass_0_1_4_6_vs_2_train_sl<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-3"><a href="#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     151       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass_0_1_4_6_vs_2_train_SLSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     151      123 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass_0_1_4_6_vs_2_train_SMOTE, file = "Taules_de_dades/SLSMOTE/glass_0_1_4_6_vs_2_train_SLSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_1-6" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_1-6">page_blocks0_1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_sl <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SLS</span>(page_blocks0_1_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_1_train))],page_blocks0_1_train[,<span class="fu">ncol</span>(page_blocks0_1_train)], <span class="at">K =</span> <span class="dv">6</span>, <span class="at">C =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SLS done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_1_train_SLSMOTE <span class="ot">&lt;-</span> page_blocks0_1_train_sl<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb188-2"><a href="#cb188-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-3"><a href="#cb188-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     404       41 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_1_train_SLSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     404      265 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(page_blocks0_1_train_SMOTE, file = "Taules_de_dades/SLSMOTE/page_blocks0_1_train_SLSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_blocks0_2-6" class="level3">
+<h3 class="anchored" data-anchor-id="page_blocks0_2-6">page_blocks0_2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_sl <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SLS</span>(page_blocks0_2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(page_blocks0_2_train))],page_blocks0_2_train[,<span class="fu">ncol</span>(page_blocks0_2_train)], <span class="at">K =</span> <span class="dv">6</span>, <span class="at">C =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SLS done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a>page_blocks0_2_train_SLSMOTE <span class="ot">&lt;-</span> page_blocks0_2_train_sl<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb195-2"><a href="#cb195-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb195-3"><a href="#cb195-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     405       40 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(page_blocks0_2_train_SLSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     405      346 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(page_blocks0_2_train_SMOTE, file = "Taules_de_dades/SLSMOTE/page_blocks0_2_train_SLSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="abalone19_peque-6" class="level3">
+<h3 class="anchored" data-anchor-id="abalone19_peque-6">abalone19_peque</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_sl <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SLS</span>(abalone19_peque_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(abalone19_peque_train))],abalone19_peque_train[,<span class="fu">ncol</span>(abalone19_peque_train)], <span class="at">K =</span> <span class="dv">5</span>, <span class="at">C =</span> <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SLS done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a>abalone19_peque_train_SLSMOTE <span class="ot">&lt;-</span> abalone19_peque_train_sl<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb202-2"><a href="#cb202-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb202-3"><a href="#cb202-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     234       25 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(abalone19_peque_train_SLSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     234      193 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(abalone19_peque_train_SMOTE, file = "Taules_de_dades/SLSMOTE/abalone19_peque_train_SLSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="glass2-6" class="level3">
+<h3 class="anchored" data-anchor-id="glass2-6">glass2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a>glass2_train_sl <span class="ot">&lt;-</span> smotefamily<span class="sc">::</span><span class="fu">SLS</span>(glass2_train[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">ncol</span>(glass2_train))],glass2_train[,<span class="fu">ncol</span>(glass2_train)], <span class="at">K =</span> <span class="dv">9</span>, <span class="at">C =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SLS done"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1" aria-hidden="true" tabindex="-1"></a>glass2_train_SLSMOTE <span class="ot">&lt;-</span> glass2_train_sl<span class="sc">$</span>data <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Class=</span>class)</span>
+<span id="cb209-2"><a href="#cb209-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-3"><a href="#cb209-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     158       13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb211"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb211-1"><a href="#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(glass2_train_SLSMOTE<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+negative positive 
+     158      112 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb213"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(glass2_train_SMOTE, file = "Taules_de_dades/SLSMOTE/glass2_train_SLSMOTE.csv", row.names = FALSE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
